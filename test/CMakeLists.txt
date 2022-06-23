@@ -31,9 +31,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 
-file(GLOB UNITTEST_FILE "*_test.cc")
+file(GLOB UNITTEST_FILE "*_test.cc" "**/*_test.cc")
 add_executable(
     unit_test
     ${UNITTEST_FILE}
@@ -57,7 +58,7 @@ DISCOVERY_TIMEOUT  # how long to wait (in seconds) before crashing
     240
 )
 
-file(GLOB BENCHMARK_FILE "*_benchmark.cc")
+file(GLOB BENCHMARK_FILE "*_benchmark.cc" "**/*_benchmark.cc")
 add_executable(
     unit_benchmark
     ${BENCHMARK_FILE}
