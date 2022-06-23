@@ -15,12 +15,32 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
+include(FetchContent)
+
+FetchContent_Declare(
+    rapidjson
+    GIT_REPOSITORY https://github.com/Tencent/rapidjson.git
+    GIT_TAG v1.1.0
+)
+
+set(RAPIDJSON_BUILD_DOC OFF CACHE INTERNAL "")
+set(RAPIDJSON_BUILD_EXAMPLES OFF CACHE INTERNAL "")
+set(RAPIDJSON_BUILD_TESTS OFF CACHE INTERNAL "")
+
+FetchContent_MakeAvailable(rapidjson)
+FetchContent_GetProperties(rapidjson)
+set(RAPIDJSON_INCLUDE_DIR ${rapidjson_SOURCE_DIR}/include)
+
 include_directories(
     ${PROJECT_SOURCE_DIR}/include/
+    ${RAPIDJSON_INCLUDE_DIR}
 )
 
 add_library(rapidjson-utils INTERFACE)
-target_include_directories(rapidjson-utils INTERFACE ${PROJECT_SOURCE_DIR}/include/)
+target_include_directories(rapidjson-utils INTERFACE
+    ${PROJECT_SOURCE_DIR}/include/
+    ${RAPIDJSON_INCLUDE_DIR}
+)
 
 if(rapidjson_utils_build_tests)
     enable_testing()
