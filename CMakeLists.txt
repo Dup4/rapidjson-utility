@@ -1,4 +1,4 @@
-option(rapidjson_utils_build_tests "Build all of rapidjson-utils's own tests." OFF)
+option(RAPIDJSON_UTILS_BUILD_TESTS "Build all of rapidjson-utils's own tests." OFF)
 
 cmake_minimum_required(VERSION 3.14)
 
@@ -42,7 +42,7 @@ target_include_directories(rapidjson-utils INTERFACE
     ${RAPIDJSON_INCLUDE_DIR}
 )
 
-if(rapidjson_utils_build_tests)
+if(RAPIDJSON_UTILS_BUILD_TESTS)
     enable_testing()
 
     add_subdirectory(test/)
