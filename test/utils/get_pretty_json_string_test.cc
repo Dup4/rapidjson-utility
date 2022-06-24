@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "snapshot/snapshot.h"
 
-#include "rapidjson_utils/utils/get_pretty_format_json_string.h"
+#include "rapidjson_utils/utils/get_pretty_json_string.h"
 #include "rapidjson_utils/utils/get_pretty_parse_error_message.h"
 
 namespace rapidjson::utils {
@@ -13,7 +13,7 @@ protected:
 
 TEST_F(GetPrettyFormatJsonStringTest, get_pretty_format_json_string_test) {
     {
-        auto res = GetPrettyFormatJsonString("{]");
+        auto res = GetPrettyJsonString("{]");
         EXPECT_FALSE(res.IsOK());
         EXPECT_EQ(res.Message(), std::string("Missing a name for object member. at offset 1"));
     }
@@ -50,7 +50,7 @@ TEST_F(GetPrettyFormatJsonStringTest, get_pretty_format_json_string_test) {
 }
     )";
 
-        auto res = GetPrettyFormatJsonString(json_string);
+        auto res = GetPrettyJsonString(json_string);
         EXPECT_TRUE(res.IsOK());
         EXPECT_EQ(res.Message(), std::string("OK"));
 

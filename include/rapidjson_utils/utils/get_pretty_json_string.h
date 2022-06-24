@@ -16,7 +16,7 @@ namespace rapidjson::utils {
 
 namespace internal {
 
-class GetPrettyFormatJsonStringClass {
+class GetPrettyJsonStringClass {
 public:
     std::string operator()(const Document &doc) const {
         auto buffer = StringBuffer();
@@ -39,7 +39,7 @@ public:
 
 }  // namespace internal
 
-static const auto GetPrettyFormatJsonString = internal::GetPrettyFormatJsonStringClass();
+static const auto GetPrettyJsonString = internal::GetPrettyJsonStringClass();
 
 }  // namespace rapidjson::utils
 
