@@ -11,11 +11,9 @@ protected:
 
 TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
     {
-        auto [err, pretty_json_string] = rapidjson::utils::GetPrettyFormatJsonString("{]");
-        EXPECT_TRUE(err.IsError());
-        EXPECT_EQ(err.Offset(), 1);
-        EXPECT_EQ(rapidjson::utils::GetPrettyParseResultMessage(err),
-                std::string("Missing a name for object member. at offset 1"));
+        auto res = rapidjson::utils::GetPrettyFormatJsonString("{]");
+        EXPECT_FALSE(res.IsOK());
+        EXPECT_EQ(res.ErrorMessage(), std::string("Missing a name for object member. at offset 1"));
     }
 
     {
@@ -50,12 +48,11 @@ TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
 }
     )";
 
-        auto [err, pretty_json_string] = rapidjson::utils::GetPrettyFormatJsonString(json_string);
-        EXPECT_FALSE(err.IsError());
-        auto error_message = rapidjson::utils::GetPrettyParseResultMessage(err);
-        EXPECT_EQ(error_message, std::string("No error."));
+        auto res = rapidjson::utils::GetPrettyFormatJsonString(json_string);
+        EXPECT_TRUE(res.IsOK());
+        EXPECT_EQ(res.ErrorMessage(), std::string("No error."));
 
-        EXPECT_EQ(pretty_json_string, std::string(R"({
+        auto expected_pretty_json_string = std::string(R"({
     "a": 1,
     "b": 2,
     "c": 3,
@@ -82,6 +79,9 @@ TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
     "x": 24,
     "y": 25,
     "z": 26
-})"));
+})");
+
+        EXPECT_EQ(res.Value(), expected_pretty_json_string);
+        EXPECT_EQ(*res, expected_pretty_json_string);
     }
 }

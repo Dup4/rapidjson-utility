@@ -8,6 +8,9 @@
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 
+#include "../internal/result.h"
+#include "./get_pretty_parse_result_message.h"
+
 namespace rapidjson::utils {
 
 namespace internal {
@@ -22,28 +25,19 @@ public:
         return std::string(buffer.GetString());
     }
 
-    std::tuple<ParseResult, std::string> operator()(const char *json_string) const {
+    Result<std::string> operator()(const char *json_string) const {
         auto doc = Document();
 
         ParseResult err = doc.Parse(json_string);
         if (err.IsError()) {
-            return std::make_tuple(err, "");
+            return Result<std::string>(ResultErrorCode::kParseError, GetPrettyParseResultMessage(err));
         }
 
-        return std::make_tuple(err, operator()(doc));
+        return operator()(doc);
     }
 
-    std::tuple<ParseResult, std::string> operator()(const std::string &json_string) const {
+    Result<std::string> operator()(const std::string &json_string) const {
         return operator()(json_string.c_str());
-    }
-
-    std::string Must(const char *json_string) const {
-        auto [err, pretty_json_string] = operator()(json_string);
-        return pretty_json_string;
-    }
-
-    std::string Must(const std::string &json_string) const {
-        return Must(json_string.c_str());
     }
 };
 
