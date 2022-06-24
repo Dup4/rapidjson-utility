@@ -71,7 +71,12 @@ public:
             return doc_src;
         }
 
-        return operator()(doc_dst.Value(), doc_src.Value(), doc_dst.Value().GetAllocator());
+        auto res = operator()(doc_dst.Value(), doc_src.Value(), doc_dst.Value().GetAllocator());
+        if (!res.IsOK()) {
+            return res;
+        }
+
+        return GetJsonString(doc_dst.Value());
     }
 };
 

@@ -4,14 +4,16 @@
 #include "rapidjson_utils/utils/get_pretty_format_json_string.h"
 #include "rapidjson_utils/utils/get_pretty_parse_error_message.h"
 
-class GetPrettyFormatJsonString : public testing::Test {
+namespace rapidjson::utils {
+
+class GetPrettyFormatJsonStringTest : public testing::Test {
 protected:
     virtual void SetUp() override {}
 };
 
-TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
+TEST_F(GetPrettyFormatJsonStringTest, get_pretty_format_json_string_test) {
     {
-        auto res = rapidjson::utils::GetPrettyFormatJsonString("{]");
+        auto res = GetPrettyFormatJsonString("{]");
         EXPECT_FALSE(res.IsOK());
         EXPECT_EQ(res.Message(), std::string("Missing a name for object member. at offset 1"));
     }
@@ -48,7 +50,7 @@ TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
 }
     )";
 
-        auto res = rapidjson::utils::GetPrettyFormatJsonString(json_string);
+        auto res = GetPrettyFormatJsonString(json_string);
         EXPECT_TRUE(res.IsOK());
         EXPECT_EQ(res.Message(), std::string("OK"));
 
@@ -85,3 +87,5 @@ TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
         EXPECT_EQ(*res, expected_pretty_json_string);
     }
 }
+
+}  // namespace rapidjson::utils
