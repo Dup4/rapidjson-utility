@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_GET_PRETTY_JSON_STRING_H
-#define RAPIDJSON_UTILS_GET_PRETTY_JSON_STRING_H
+#ifndef RAPIDJSON_UTILS_UTILS_GET_PRETTY_JSON_STRING_H
+#define RAPIDJSON_UTILS_UTILS_GET_PRETTY_JSON_STRING_H
 
 #include <string>
 
@@ -43,4 +43,4 @@ static const auto GetPrettyJsonString = internal::GetPrettyJsonStringClass();
 
 }  // namespace rapidjson::utils
 
-#endif  // RAPIDJSON_UTILS_GET_PRETTY_JSON_STRING_H
+#endif  // RAPIDJSON_UTILS_UTILS_GET_PRETTY_JSON_STRING_H

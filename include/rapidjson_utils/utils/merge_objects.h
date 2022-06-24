@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_MERGE_OBJECTS_H
-#define RAPIDJSON_UTILS_MERGE_OBJECTS_H
+#ifndef RAPIDJSON_UTILS_UTILS_MERGE_OBJECTS_H
+#define RAPIDJSON_UTILS_UTILS_MERGE_OBJECTS_H
 
 #include <string>
 
@@ -86,4 +86,4 @@ static const auto MergeObjects = internal::MergeObjectsClass();
 
 }  // namespace rapidjson::utils
 
-#endif  // RAPIDJSON_UTILS_MERGE_OBJECTS_H
+#endif  // RAPIDJSON_UTILS_UTILS_MERGE_OBJECTS_H
