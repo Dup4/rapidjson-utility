@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_GET_PRETTY_PARSE_RESULT_MESSAGE_H
-#define RAPIDJSON_UTILS_GET_PRETTY_PARSE_RESULT_MESSAGE_H
+#ifndef RAPIDJSON_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H
+#define RAPIDJSON_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H
 
 #include <string>
 
@@ -10,7 +10,7 @@ namespace rapidjson::utils {
 
 namespace internal {
 
-class GetPrettyParseResultMessageClass {
+class GetPrettyParseErrorMessageClass {
 public:
     std::string operator()(const ParseResult &parse_result) const {
         if (!parse_result.IsError()) {
@@ -24,8 +24,8 @@ public:
 
 }  // namespace internal
 
-static const auto GetPrettyParseResultMessage = internal::GetPrettyParseResultMessageClass();
+static const auto GetPrettyParseErrorMessage = internal::GetPrettyParseErrorMessageClass();
 
 }  // namespace rapidjson::utils
 
-#endif  // RAPIDJSON_UTILS_GET_PRETTY_PARSE_RESULT_MESSAGE_H
+#endif  // RAPIDJSON_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H

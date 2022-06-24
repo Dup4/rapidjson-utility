@@ -1,95 +1,84 @@
 #ifndef RAPIDJSON_UTILS_INTERNAL_RESULT_H
 #define RAPIDJSON_UTILS_INTERNAL_RESULT_H
 
+#include <map>
 #include <string>
 
 namespace rapidjson::utils {
 
-namespace internal {
-
-enum class ResultErrorCode {
-    kNoError = 0,
+enum class ErrorCode {
+    kOK = 0,
     kParseError,
+    kValidateError,
+    kOtherError,
 };
 
-template <typename T>
+static std::map<ErrorCode, std::string> ErrorCodeToStr = {
+        {ErrorCode::kOK, "OK"},
+        {ErrorCode::kParseError, "ParseError"},
+        {ErrorCode::kValidateError, "ValidateError"},
+        {ErrorCode::kOtherError, "OtherError"},
+};
+
 class Result {
 public:
     Result() = default;
-    template <typename U>
-    Result(U&& value) : value_(std::move(value)) {}
-    Result(ResultErrorCode error_code, const std::string& error_message = "")
+    Result(ErrorCode error_code, std::string_view error_message = "")
             : error_code_(error_code), error_message_(error_message) {}
 
-    const T& Value() const& {
-        return value_;
-    }
-
-    T& Value() & {
-        return value_;
-    }
-
-    const T&& Value() const&& {
-        return std::move(value_);
-    }
-
-    T&& Value() && {
-        return std::move(value_);
-    }
-
-    const T& operator*() const& {
-        return value_;
-    }
-
-    T& operator*() & {
-        return value_;
-    }
-
-    const T&& operator*() const&& {
-        return std::move(value_);
-    }
-
-    T&& operator*() && {
-        return std::move(value_);
-    }
+    Result(const Result&) = default;
+    Result& operator=(const Result&) = default;
+    Result(Result&&) = default;
+    Result& operator=(Result&&) = default;
 
     bool IsOK() const {
-        return error_code_ == ResultErrorCode::kNoError;
+        return error_code_ == ErrorCode::kOK;
     }
 
-    template <typename U>
-    T ValueOr(U&& default_value) const& {
-        if (IsOK()) {
-            return value_;
-        }
-
-        return std::forward<U>(default_value);
-    }
-
-    template <typename U>
-    T ValueOr(U&& default_value) && {
-        if (IsOK()) {
-            return std::move(value_);
-        }
-
-        return std::forward<U>(default_value);
-    }
-
-    ResultErrorCode ErrorCode() const {
+    ErrorCode Code() const {
         return error_code_;
     }
 
-    std::string ErrorMessage() const {
+    std::string Message() const {
         return error_message_;
     }
 
 private:
-    ResultErrorCode error_code_{ResultErrorCode::kNoError};
-    std::string error_message_{"No error."};
-    T value_;
+    ErrorCode error_code_{ErrorCode::kOK};
+    std::string error_message_{ErrorCodeToStr.at(ErrorCode::kOK)};
 };
 
-}  // namespace internal
+inline bool IsOK(const Result& result) {
+    return result.Code() == ErrorCode::kOK;
+}
+
+inline bool IsParseError(const Result& result) {
+    return result.Code() == ErrorCode::kParseError;
+}
+
+inline bool IsValidateError(const Result& result) {
+    return result.Code() == ErrorCode::kValidateError;
+}
+
+inline bool IsOtherError(const Result& result) {
+    return result.Code() == ErrorCode::kOtherError;
+}
+
+inline Result OKResult(std::string_view error_message = ErrorCodeToStr.at(ErrorCode::kOK)) {
+    return Result(ErrorCode::kOK, error_message);
+}
+
+inline Result ParseErrorResult(std::string_view error_message = ErrorCodeToStr.at(ErrorCode::kParseError)) {
+    return Result(ErrorCode::kParseError, error_message);
+}
+
+inline Result ValidateErrorResult(std::string_view error_message = ErrorCodeToStr.at(ErrorCode::kValidateError)) {
+    return Result(ErrorCode::kValidateError, error_message);
+}
+
+inline Result OtherErrorResult(std::string_view error_message = ErrorCodeToStr.at(ErrorCode::kOtherError)) {
+    return Result(ErrorCode::kOtherError, error_message);
+}
 
 }  // namespace rapidjson::utils
 

@@ -8,8 +8,9 @@
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 
-#include "../internal/result.h"
-#include "./get_pretty_parse_result_message.h"
+#include "../internal/result_or.h"
+#include "./get_document.h"
+#include "./get_pretty_parse_error_message.h"
 
 namespace rapidjson::utils {
 
@@ -20,24 +21,19 @@ public:
     std::string operator()(const Document &doc) const {
         auto buffer = StringBuffer();
         auto pretty_writer = PrettyWriter<StringBuffer>(buffer);
+
         doc.Accept(pretty_writer);
 
         return std::string(buffer.GetString());
     }
 
-    Result<std::string> operator()(const char *json_string) const {
-        auto doc = Document();
-
-        ParseResult err = doc.Parse(json_string);
-        if (err.IsError()) {
-            return Result<std::string>(ResultErrorCode::kParseError, GetPrettyParseResultMessage(err));
+    ResultOr<std::string> operator()(std::string_view json_string) const {
+        auto doc_res = GetDocument(json_string);
+        if (!doc_res.IsOK()) {
+            return doc_res;
         }
 
-        return operator()(doc);
-    }
-
-    Result<std::string> operator()(const std::string &json_string) const {
-        return operator()(json_string.c_str());
+        return operator()(doc_res.Value());
     }
 };
 

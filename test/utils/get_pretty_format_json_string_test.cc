@@ -2,7 +2,7 @@
 #include "snapshot/snapshot.h"
 
 #include "rapidjson_utils/utils/get_pretty_format_json_string.h"
-#include "rapidjson_utils/utils/get_pretty_parse_result_message.h"
+#include "rapidjson_utils/utils/get_pretty_parse_error_message.h"
 
 class GetPrettyFormatJsonString : public testing::Test {
 protected:
@@ -13,7 +13,7 @@ TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
     {
         auto res = rapidjson::utils::GetPrettyFormatJsonString("{]");
         EXPECT_FALSE(res.IsOK());
-        EXPECT_EQ(res.ErrorMessage(), std::string("Missing a name for object member. at offset 1"));
+        EXPECT_EQ(res.Message(), std::string("Missing a name for object member. at offset 1"));
     }
 
     {
@@ -50,7 +50,7 @@ TEST_F(GetPrettyFormatJsonString, get_pretty_format_json_string_test) {
 
         auto res = rapidjson::utils::GetPrettyFormatJsonString(json_string);
         EXPECT_TRUE(res.IsOK());
-        EXPECT_EQ(res.ErrorMessage(), std::string("No error."));
+        EXPECT_EQ(res.Message(), std::string("OK"));
 
         auto expected_pretty_json_string = std::string(R"({
     "a": 1,
