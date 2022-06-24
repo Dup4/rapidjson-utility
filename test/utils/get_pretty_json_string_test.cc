@@ -1,8 +1,7 @@
 #include "gtest/gtest.h"
 #include "snapshot/snapshot.h"
 
-#include "rapidjson_utils/utils/get_pretty_json_string.h"
-#include "rapidjson_utils/utils/get_pretty_parse_error_message.h"
+#include "rapidjson_utils/rapidjson_utils.h"
 
 namespace rapidjson::utils {
 
