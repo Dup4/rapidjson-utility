@@ -17,9 +17,9 @@ TEST_F(SchemaOptionsTest, schema_options_test) {
         SchemaOptions<int> o;
 
         SchemaOptionsBuilder.ApplySchemaOptions(
-                o, SchemaOptionsBuilder.WithKey("key"), SchemaOptionsBuilder.WithDefaultValue(1));
+                o, SchemaOptionsBuilder.WithKeyName("key"), SchemaOptionsBuilder.WithDefaultValue(1));
 
-        EXPECT_EQ(o.key, "key");
+        EXPECT_EQ(o.key_name, "key");
         EXPECT_TRUE(o.default_value.has_value());
         EXPECT_EQ(*o.default_value, 1);
     }

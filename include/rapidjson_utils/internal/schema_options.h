@@ -9,7 +9,7 @@ namespace rapidjson::utils {
 
 template <typename T>
 struct SchemaOptions {
-    std::string key{""};
+    std::string key_name{""};
     std::optional<T> default_value{std::nullopt};
 };
 
@@ -17,9 +17,9 @@ namespace internal {
 
 class SchemaOptionsBuilderClass {
 public:
-    auto WithKey(std::string_view key) const {
-        return [key](auto& options) {
-            options.key = key;
+    auto WithKeyName(std::string_view key_name) const {
+        return [key_name](auto& options) {
+            options.key_name = key_name;
         };
     }
 
