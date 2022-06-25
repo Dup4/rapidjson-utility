@@ -3,7 +3,8 @@
 
 #include "rapidjson_utils/rapidjson_utils.h"
 
-namespace rapidjson::utils {
+using namespace rapidjson;
+using namespace rapidjson::utils;
 
 class GetPrettyFormatJsonStringTest : public testing::Test {
 protected:
@@ -86,5 +87,3 @@ TEST_F(GetPrettyFormatJsonStringTest, get_pretty_format_json_string_test) {
         EXPECT_EQ(*res, expected_pretty_json_string);
     }
 }
-
-}  // namespace rapidjson::utils
