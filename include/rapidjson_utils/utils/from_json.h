@@ -66,16 +66,33 @@ public:
     }
 
 private:
-    template <typename T,
-            std::enable_if_t<std::is_same_v<float, T> || std::is_same_v<double, T> || std::is_same_v<bool, T>, bool> =
-                    true,
-            typename F>
+    template <typename T, std::enable_if_t<std::is_same_v<bool, T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
-        if (!value.Is<T>()) {
-            return ParseErrorResult(options.key_name + " type invalid");
+        if (!value.IsBool()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected bool");
         }
 
-        *target = value.Get<T>();
+        *target = value.GetBool();
+        return OKResult();
+    }
+
+    template <typename T, std::enable_if_t<std::is_same_v<float, T>, bool> = true, typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsFloat()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected float");
+        }
+
+        *target = value.GetFloat();
+        return OKResult();
+    }
+
+    template <typename T, std::enable_if_t<std::is_same_v<double, T>, bool> = true, typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsDouble()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected double");
+        }
+
+        *target = value.GetDouble();
         return OKResult();
     }
 
@@ -127,7 +144,7 @@ private:
     template <typename F>
     Result typeHandle(rapidjson::Value& value, std::string* target, const F& options) const {
         if (!value.IsString()) {
-            return ParseErrorResult(options.key_name + " type invalid");
+            return ParseErrorResult(options.key_name + " type invalid, expected: string");
         }
 
         *target = std::string(value.GetString());
@@ -137,7 +154,7 @@ private:
     template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsObject()) {
-            return ParseErrorResult(options.key_name + " type invalid");
+            return ParseErrorResult(options.key_name + " type invalid, expected: object");
         }
 
         return this->operator()(value, target);
@@ -147,7 +164,7 @@ private:
     Result typeHandle(
             rapidjson::Value& value, std::vector<T>* target, const SchemaOptions<std::vector<T>>& options) const {
         if (!value.IsArray()) {
-            return ParseErrorResult(options.key_name + " type invalid");
+            return ParseErrorResult(options.key_name + " type invalid, expected: array");
         }
 
         for (rapidjson::Value& item : value.GetArray()) {
