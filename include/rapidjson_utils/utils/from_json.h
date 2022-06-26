@@ -1,6 +1,7 @@
 #ifndef RAPIDJSON_UTILS_UTILS_FROM_JSON_H
 #define RAPIDJSON_UTILS_UTILS_FROM_JSON_H
 
+#include <sys/_types/_int64_t.h>
 #include <optional>
 #include <string_view>
 #include <vector>
@@ -65,7 +66,10 @@ public:
     }
 
 private:
-    template <typename T, std::enable_if_t<is_basic_type_v<T>, bool> = true, typename F>
+    template <typename T,
+            std::enable_if_t<std::is_same_v<float, T> || std::is_same_v<double, T> || std::is_same_v<bool, T>, bool> =
+                    true,
+            typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.Is<T>()) {
             return ParseErrorResult(options.key_name + " type invalid");
@@ -75,13 +79,48 @@ private:
         return OKResult();
     }
 
-    template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
+    template <typename T, std::enable_if_t<std::is_same_v<int, T> || std::is_same_v<int32_t, T>, bool> = true,
+            typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
-        if (!value.IsObject()) {
-            return ParseErrorResult(options.key_name + " type invalid");
+        if (!value.IsInt()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected: int32_t");
         }
 
-        *target = operator()(value, target);
+        *target = value.GetInt();
+        return OKResult();
+    }
+
+    template <typename T, std::enable_if_t<std::is_same_v<unsigned int, T> || std::is_same_v<uint32_t, T>, bool> = true,
+            typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsUint()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected: uint32_t");
+        }
+
+        *target = value.GetUint();
+        return OKResult();
+    }
+
+    template <typename T, std::enable_if_t<std::is_same_v<long long, T> || std::is_same_v<int64_t, T>, bool> = true,
+            typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsInt64()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected: int64_t");
+        }
+
+        *target = value.GetInt64();
+        return OKResult();
+    }
+
+    template <typename T,
+            std::enable_if_t<std::is_same_v<unsigned long long, T> || std::is_same_v<uint64_t, T>, bool> = true,
+            typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsUint64()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected: uint64_t");
+        }
+
+        *target = value.GetUint64();
         return OKResult();
     }
 
@@ -92,6 +131,16 @@ private:
         }
 
         *target = std::string(value.GetString());
+        return OKResult();
+    }
+
+    template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsObject()) {
+            return ParseErrorResult(options.key_name + " type invalid");
+        }
+
+        *target = operator()(value, target);
         return OKResult();
     }
 
