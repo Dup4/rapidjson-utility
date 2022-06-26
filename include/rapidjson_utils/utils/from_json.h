@@ -23,57 +23,6 @@ namespace internal {
 
 class FromJsonStringClass {
 public:
-    template <typename T, std::enable_if_t<is_basic_type_v<T>, bool> = true, typename F>
-    Result operator()(rapidjson::Value& value, T* target, const F& options) const {
-        if (!value.Is<T>()) {
-            return ParseErrorResult(options.key_name + " type invalid");
-        }
-
-        *target = value.Get<T>();
-        return OKResult();
-    }
-
-    template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
-    Result operator()(rapidjson::Value& value, T* target, const F& options) const {
-        if (!value.IsObject()) {
-            return ParseErrorResult(options.key_name + " type invalid");
-        }
-
-        *target = operator()(value, target);
-        return OKResult();
-    }
-
-    template <typename F>
-    Result operator()(rapidjson::Value& value, std::string* target, const F& options) const {
-        if (!value.IsString()) {
-            return ParseErrorResult(options.key_name + " type invalid");
-        }
-
-        *target = std::string(value.GetString());
-        return OKResult();
-    }
-
-    template <typename T>
-    Result operator()(
-            rapidjson::Value& value, std::vector<T>* target, const SchemaOptions<std::vector<T>>& options) const {
-        if (!value.IsArray()) {
-            return ParseErrorResult(options.key_name + " type invalid");
-        }
-
-        for (rapidjson::Value& item : value.GetArray()) {
-            T target_instance;
-
-            auto res = this->operator()(item, &target_instance, options);
-            if (!res.IsOK()) {
-                return res;
-            }
-
-            target->push_back(target_instance);
-        }
-
-        return OKResult();
-    }
-
     template <typename T>
     Result operator()(rapidjson::Value& value, T* t) const {
         auto res = entrance(t, [&value, this](auto&& t, auto&& options) {
@@ -116,6 +65,57 @@ public:
     }
 
 private:
+    template <typename T, std::enable_if_t<is_basic_type_v<T>, bool> = true, typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.Is<T>()) {
+            return ParseErrorResult(options.key_name + " type invalid");
+        }
+
+        *target = value.Get<T>();
+        return OKResult();
+    }
+
+    template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsObject()) {
+            return ParseErrorResult(options.key_name + " type invalid");
+        }
+
+        *target = operator()(value, target);
+        return OKResult();
+    }
+
+    template <typename F>
+    Result typeHandle(rapidjson::Value& value, std::string* target, const F& options) const {
+        if (!value.IsString()) {
+            return ParseErrorResult(options.key_name + " type invalid");
+        }
+
+        *target = std::string(value.GetString());
+        return OKResult();
+    }
+
+    template <typename T>
+    Result typeHandle(
+            rapidjson::Value& value, std::vector<T>* target, const SchemaOptions<std::vector<T>>& options) const {
+        if (!value.IsArray()) {
+            return ParseErrorResult(options.key_name + " type invalid");
+        }
+
+        for (rapidjson::Value& item : value.GetArray()) {
+            T target_instance;
+
+            auto res = this->typeHandle(item, &target_instance, options);
+            if (!res.IsOK()) {
+                return res;
+            }
+
+            target->push_back(target_instance);
+        }
+
+        return OKResult();
+    }
+
     template <typename T, typename F>
     Result objectHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.HasMember(options.key_name.c_str())) {
@@ -128,7 +128,7 @@ private:
         }
 
         rapidjson::Value& sub_value = value[options.key_name.c_str()];
-        return this->operator()(sub_value, target, options);
+        return this->typeHandle(sub_value, target, options);
     }
 
     template <typename T>
@@ -140,7 +140,7 @@ private:
         } else {
             rapidjson::Value& sub_value = value[options.key_name.c_str()];
             T target_instance;
-            auto res = this->operator()(sub_value, &target_instance, options);
+            auto res = this->typeHandle(sub_value, &target_instance, options);
             if (!res.IsOK()) {
                 return res;
             }
