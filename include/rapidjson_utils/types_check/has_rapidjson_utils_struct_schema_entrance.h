@@ -3,14 +3,26 @@
 
 #include <type_traits>
 
+#include "../internal/result.h"
+#include "../internal/schema_options.h"
+
 namespace rapidjson::utils {
+
+class FakeEntranceFunc {
+public:
+    template <typename T>
+    Result operator()([[maybe_unused]] T* t, [[maybe_unused]] const SchemaOptions<T>& options) const {
+        return OKResult();
+    }
+};
 
 template <typename T>
 class has_rapidjson_utils_struct_schema_entrance {
 private:
     template <typename U>
     static constexpr auto check(int)
-            -> decltype(U::__RapidJsonUtils_StructSchemaEntrance(std::declval<U*>(), nullptr), std::true_type());
+            -> decltype(U::__RapidJsonUtils_StructSchemaEntrance(std::declval<U*>(), std::declval<FakeEntranceFunc>()),
+                    std::true_type());
 
     template <typename>
     static constexpr std::false_type check(...);

@@ -1,3 +1,4 @@
+#include "./from_json.h"                       // IWYU pragma: export
 #include "./get_document.h"                    // IWYU pragma: export
 #include "./get_json_string.h"                 // IWYU pragma: export
 #include "./get_pretty_json_string.h"          // IWYU pragma: export

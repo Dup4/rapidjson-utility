@@ -3,14 +3,17 @@
 
 #include <type_traits>
 
+#include "./has_rapidjson_utils_struct_schema_entrance.h"
+
 namespace rapidjson::utils {
 
 template <typename T>
 class has_rapidjson_utils_external_struct_schema_entrance {
 private:
     template <typename U>
-    static constexpr auto check(int)
-            -> decltype(__RapidJsonUtilsExternal_StructSchemaEntrance(std::declval<U*>(), nullptr), std::true_type());
+    static constexpr auto check(int) -> decltype(__RapidJsonUtilsExternal_StructSchemaEntrance(
+                                                         std::declval<U*>(), std::declval<FakeEntranceFunc>()),
+            std::true_type());
 
     template <typename>
     static constexpr std::false_type check(...);

@@ -4,6 +4,8 @@
 #include <type_traits>
 
 #include "../types_check/index.h"
+#include "../utils/index.h"
+#include "./result.h"
 #include "./schema_options.h"
 
 #define RAPIDJSON_UTILS_STR(x) #x
@@ -12,39 +14,48 @@
 private:                                                                                                               \
     friend class ::rapidjson::utils::has_rapidjson_utils_struct_schema_entrance<Struct>;                               \
     friend class ::rapidjson::utils::has_rapidjson_utils_struct_schema_entrance<const Struct>;                         \
+    friend class ::rapidjson::utils::internal::FromJsonStringClass;                                                    \
                                                                                                                        \
     template <typename T, std::enable_if_t<std::is_same_v<Struct, T> || std::is_same_v<const Struct, T>, bool> = true, \
             typename Func>                                                                                             \
-    static void __RapidJsonUtils_StructSchemaEntrance(T* s, Func&& func) {                                             \
+    static auto __RapidJsonUtils_StructSchemaEntrance(T* s, Func&& func) {                                             \
         using _Struct = Struct;
 
 #define RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(field, ...)              \
     {                                                                        \
-        if constexpr (std::is_const_v(_Struct)) {                            \
+        if constexpr (std::is_const_v<_Struct>) {                            \
             using field_type = const std::decay_t<decltype(s->field)>;       \
                                                                              \
             auto options = ::rapidjson::utils::SchemaOptions<field_type>();  \
-            options.key = RAPIDJSON_UTILS_STR(field);                        \
+            options.key_name = RAPIDJSON_UTILS_STR(field);                   \
             SchemaOptionsBuilder.ApplySchemaOptions(options, ##__VA_ARGS__); \
                                                                              \
-            func(&(s->field), options);                                      \
+            auto res = func(&(s->field), options);                           \
+            if (!res.IsOK()) {                                               \
+                return res;                                                  \
+            }                                                                \
         } else {                                                             \
             using field_type = std::decay_t<decltype(s->field)>;             \
                                                                              \
             auto options = ::rapidjson::utils::SchemaOptions<field_type>();  \
-            options.key = RAPIDJSON_UTILS_STR(field);                        \
+            options.key_name = RAPIDJSON_UTILS_STR(field);                   \
             SchemaOptionsBuilder.ApplySchemaOptions(options, ##__VA_ARGS__); \
                                                                              \
-            func(&(s->field), options);                                      \
+            auto res = func(&(s->field), options);                           \
+            if (!res.IsOK()) {                                               \
+                return res;                                                  \
+            }                                                                \
         }                                                                    \
     }
 
-#define RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_END }
+#define RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_END \
+    return OKResult();                            \
+    }
 
 #define RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_BEGIN(Struct)                                                   \
     template <typename T, std::enable_if_t<std::is_same_v<Struct, T> || std::is_same_v<const Struct, T>, bool> = true, \
             typename Func>                                                                                             \
-    static void __RapidJsonUtilsExternal_StructSchemaEntrance(T* s, Func&& func) {                                     \
+    static auto __RapidJsonUtilsExternal_StructSchemaEntrance(T* s, Func&& func) {                                     \
         using _Struct = Struct;
 
 #define RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(field, ...) \

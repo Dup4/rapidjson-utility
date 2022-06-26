@@ -9,6 +9,7 @@ namespace rapidjson::utils {
 enum class ErrorCode {
     kOK = 0,
     kParseError,
+    kMemberNotFoundError,
     kValidateError,
     kOtherError,
 };
@@ -16,6 +17,7 @@ enum class ErrorCode {
 static std::map<ErrorCode, std::string> ErrorCodeToStr = {
         {ErrorCode::kOK, "OK"},
         {ErrorCode::kParseError, "ParseError"},
+        {ErrorCode::kMemberNotFoundError, "MemberNotFoundError"},
         {ErrorCode::kValidateError, "ValidateError"},
         {ErrorCode::kOtherError, "OtherError"},
 };
@@ -56,6 +58,10 @@ inline bool IsParseError(const Result& result) {
     return result.Code() == ErrorCode::kParseError;
 }
 
+inline bool IsMemberNotFoundError(const Result& result) {
+    return result.Code() == ErrorCode::kMemberNotFoundError;
+}
+
 inline bool IsValidateError(const Result& result) {
     return result.Code() == ErrorCode::kValidateError;
 }
@@ -70,6 +76,11 @@ inline Result OKResult(std::string_view error_message = ErrorCodeToStr.at(ErrorC
 
 inline Result ParseErrorResult(std::string_view error_message = ErrorCodeToStr.at(ErrorCode::kParseError)) {
     return Result(ErrorCode::kParseError, error_message);
+}
+
+inline Result MemberNotFoundErrorResult(
+        std::string_view error_message = ErrorCodeToStr.at(ErrorCode::kMemberNotFoundError)) {
+    return Result(ErrorCode::kMemberNotFoundError, error_message);
 }
 
 inline Result ValidateErrorResult(std::string_view error_message = ErrorCodeToStr.at(ErrorCode::kValidateError)) {
