@@ -44,6 +44,30 @@ public:
     }
 
     template <typename T>
+    Result operator()(rapidjson::Document& doc, std::vector<T>* target) const {
+        if (!doc.IsArray()) {
+            return ParseErrorResult("Document is not an array.");
+        }
+
+        for (rapidjson::Value& item : doc.GetArray()) {
+            if (!item.IsObject()) {
+                return ParseErrorResult("Array item is not an object.");
+            }
+
+            T target_instance;
+
+            auto res = this->operator()(item, &target_instance);
+            if (!res.IsOK()) {
+                return res;
+            }
+
+            target->push_back(target_instance);
+        }
+
+        return OKResult();
+    }
+
+    template <typename T>
     Result operator()(std::string_view json_string, T* t) const {
         auto doc_res = GetDocument(json_string);
         if (!doc_res.IsOK()) {
