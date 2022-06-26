@@ -43,6 +43,8 @@ private:                                                                        
 #define RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(field, ...) \
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(field, ##__VA_ARGS__)
 
-#define RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_END }
+#define RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_END \
+    return OKResult();                                     \
+    }
 
 #endif  // RAPIDJSON_UTILS_INTERNAL_MACROS_H
