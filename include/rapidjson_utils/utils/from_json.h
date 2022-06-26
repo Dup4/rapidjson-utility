@@ -53,7 +53,7 @@ public:
     }
 
     template <typename T>
-    ResultOr<T> operator()(std::string_view json_string) const {
+    ResultOr<T> New(std::string_view json_string) const {
         T t;
 
         auto res = operator()(json_string, &t);
