@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "rapidjson_utils/internal/schema_options.h"
 #include "rapidjson_utils/rapidjson_utils.h"
 
 namespace rapidjson::utils {

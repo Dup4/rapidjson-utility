@@ -1,7 +1,7 @@
 #ifndef RAPIDJSON_UTILS_UTILS_FROM_JSON_H
 #define RAPIDJSON_UTILS_UTILS_FROM_JSON_H
 
-#include <sys/_types/_int64_t.h>
+#include <cstdint>
 #include <optional>
 #include <string_view>
 #include <vector>
@@ -14,9 +14,9 @@
 #include "../internal/result_or.h"
 #include "../internal/schema_options.h"
 #include "../types_check/index.h"
+#include "../types_check/is_basic_type.h"
 #include "./get_document.h"
 #include "./get_pretty_parse_error_message.h"
-#include "rapidjson_utils/types_check/is_basic_type.h"
 
 namespace rapidjson::utils {
 
@@ -140,8 +140,7 @@ private:
             return ParseErrorResult(options.key_name + " type invalid");
         }
 
-        *target = operator()(value, target);
-        return OKResult();
+        return this->operator()(value, target);
     }
 
     template <typename T>
