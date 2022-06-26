@@ -3,6 +3,7 @@
 
 #include <optional>
 #include <string_view>
+#include <vector>
 
 #include "rapidjson/document.h"
 #include "rapidjson/error/error.h"
@@ -95,8 +96,7 @@ public:
     }
 
     template <typename T>
-    Result operator()(
-            rapidjson::Value& value, std::optional<T>* target, const SchemaOptions<std::optional<T>>& options) const {
+    Result operator()(rapidjson::Value& value, std::optional<T>* target, const SchemaOptions<T>& options) const {
         T target_instance;
 
         auto res = operator()(value, &target_instance, options);

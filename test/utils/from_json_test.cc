@@ -48,6 +48,19 @@ TEST_F(FromJsonTest, from_json_test) {
         EXPECT_EQ(a.double_, 100000000000000.5);
         EXPECT_EQ(a.bool_, true);
         EXPECT_EQ(a.string_, "string");
+
+        EXPECT_EQ(*a.optional_int_, std::numeric_limits<int>::min());
+        EXPECT_EQ(*a.optional_unsigned_int_, std::numeric_limits<unsigned int>::max());
+        EXPECT_EQ(*a.optional_int32_t_, std::numeric_limits<int32_t>::min());
+        EXPECT_EQ(*a.optional_uint32_t_, std::numeric_limits<uint32_t>::max());
+        EXPECT_EQ(*a.optional_long_long_, std::numeric_limits<long long>::min());
+        EXPECT_EQ(*a.optional_unsigned_long_long_, std::numeric_limits<unsigned long long>::max());
+        EXPECT_EQ(*a.optional_int64_t_, std::numeric_limits<int64_t>::min());
+        EXPECT_EQ(*a.optional_uint64_t_, std::numeric_limits<uint64_t>::max());
+        EXPECT_EQ(*a.optional_float_, 1.5);
+        EXPECT_EQ(*a.optional_double_, 100000000000000.5);
+        EXPECT_EQ(*a.optional_bool_, true);
+        EXPECT_EQ(*a.optional_string_, "string");
     }
 }
 

@@ -3,6 +3,7 @@
 #include <optional>
 #include <string>
 
+#include "rapidjson_utils/internal/schema_options.h"
 #include "rapidjson_utils/rapidjson_utils.h"
 
 namespace rapidjson::utils {
@@ -21,6 +22,19 @@ struct A {
     double double_;
     std::string string_;
 
+    std::optional<int> optional_int_;
+    std::optional<unsigned int> optional_unsigned_int_;
+    std::optional<int32_t> optional_int32_t_;
+    std::optional<uint32_t> optional_uint32_t_;
+    std::optional<long long> optional_long_long_;
+    std::optional<unsigned long long> optional_unsigned_long_long_;
+    std::optional<int64_t> optional_int64_t_;
+    std::optional<uint64_t> optional_uint64_t_;
+    std::optional<bool> optional_bool_;
+    std::optional<float> optional_float_;
+    std::optional<double> optional_double_;
+    std::optional<std::string> optional_string_;
+
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_BEGIN(A)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(int_)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(unsigned_int_)
@@ -34,6 +48,28 @@ struct A {
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(float_)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(double_)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(string_)
+
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_int_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int>::min()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_unsigned_int_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<unsigned int>::max()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_int32_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int32_t>::min()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_uint32_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<uint32_t>::max()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_long_long_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<long long>::min()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_unsigned_long_long_,
+            SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<unsigned long long>::max()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_int64_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int64_t>::min()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_uint64_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<uint64_t>::max()))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_bool_, SchemaOptionsBuilder.WithDefaultValue(true))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_float_, SchemaOptionsBuilder.WithDefaultValue(1.5))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_double_, SchemaOptionsBuilder.WithDefaultValue(100000000000000.5))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_string_, SchemaOptionsBuilder.WithDefaultValue("string"))
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_END
 };
 
