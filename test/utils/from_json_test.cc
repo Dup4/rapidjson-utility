@@ -29,7 +29,55 @@ TEST_F(FromJsonTest, from_json_test) {
     "bool_": true,
     "float_": 1.5,
     "double_": 100000000000000.5,
-    "string_": "string"
+    "string_": "string",
+    "vector_int_": [
+        -2147483648,
+        -2147483648
+    ],
+    "vector_unsigned_int_": [
+        4294967295,
+        4294967295
+    ],
+    "vector_int32_t_": [
+        -2147483648,
+        -2147483648
+    ],
+    "vector_uint32_t_": [
+        4294967295,
+        4294967295
+    ],
+    "vector_long_long_": [
+        -9223372036854775808,
+        -9223372036854775808
+    ],
+    "vector_unsigned_long_long_": [
+        18446744073709551615,
+        18446744073709551615
+    ],
+    "vector_int64_t_": [
+        -9223372036854775808,
+        -9223372036854775808
+    ],
+    "vector_uint64_t_": [
+        18446744073709551615,
+        18446744073709551615
+    ],
+    "vector_bool_": [
+        true,
+        true
+    ],
+    "vector_float_": [
+        1.5,
+        1.5
+    ],
+    "vector_double_": [
+        100000000000000.5,
+        100000000000000.5
+    ],
+    "vector_string_": [
+        "string",
+        "string"
+    ]
 }
         )";
 
@@ -61,6 +109,27 @@ TEST_F(FromJsonTest, from_json_test) {
         EXPECT_EQ(*a.optional_double_, 100000000000000.5);
         EXPECT_EQ(*a.optional_bool_, true);
         EXPECT_EQ(*a.optional_string_, "string");
+
+        EXPECT_EQ(a.vector_int_, std::vector<int>({std::numeric_limits<int>::min(), std::numeric_limits<int>::min()}));
+        EXPECT_EQ(a.vector_unsigned_int_, std::vector<unsigned int>({std::numeric_limits<unsigned int>::max(),
+                                                  std::numeric_limits<unsigned int>::max()}));
+        EXPECT_EQ(a.vector_int32_t_,
+                std::vector<int32_t>({std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::min()}));
+        EXPECT_EQ(a.vector_uint32_t_,
+                std::vector<uint32_t>({std::numeric_limits<uint32_t>::max(), std::numeric_limits<uint32_t>::max()}));
+        EXPECT_EQ(a.vector_long_long_,
+                std::vector<long long>({std::numeric_limits<long long>::min(), std::numeric_limits<long long>::min()}));
+        EXPECT_EQ(a.vector_unsigned_long_long_,
+                std::vector<unsigned long long>({std::numeric_limits<unsigned long long>::max(),
+                        std::numeric_limits<unsigned long long>::max()}));
+        EXPECT_EQ(a.vector_int64_t_,
+                std::vector<int64_t>({std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::min()}));
+        EXPECT_EQ(a.vector_uint64_t_,
+                std::vector<uint64_t>({std::numeric_limits<uint64_t>::max(), std::numeric_limits<uint64_t>::max()}));
+        EXPECT_EQ(a.vector_bool_, std::vector<bool>({true, true}));
+        EXPECT_EQ(a.vector_float_, std::vector<float>({1.5, 1.5}));
+        EXPECT_EQ(a.vector_double_, std::vector<double>({100000000000000.5, 100000000000000.5}));
+        EXPECT_EQ(a.vector_string_, std::vector<std::string>({"string", "string"}));
     }
 }
 

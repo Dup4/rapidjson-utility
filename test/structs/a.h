@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <string>
+#include <vector>
 
 #include "rapidjson_utils/internal/schema_options.h"
 #include "rapidjson_utils/rapidjson_utils.h"
@@ -34,6 +35,19 @@ struct A {
     std::optional<float> optional_float_;
     std::optional<double> optional_double_;
     std::optional<std::string> optional_string_;
+
+    std::vector<int> vector_int_;
+    std::vector<unsigned int> vector_unsigned_int_;
+    std::vector<int32_t> vector_int32_t_;
+    std::vector<uint32_t> vector_uint32_t_;
+    std::vector<long long> vector_long_long_;
+    std::vector<unsigned long long> vector_unsigned_long_long_;
+    std::vector<int64_t> vector_int64_t_;
+    std::vector<uint64_t> vector_uint64_t_;
+    std::vector<bool> vector_bool_;
+    std::vector<float> vector_float_;
+    std::vector<double> vector_double_;
+    std::vector<std::string> vector_string_;
 
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_BEGIN(A)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(int_)
@@ -70,6 +84,19 @@ struct A {
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
             optional_double_, SchemaOptionsBuilder.WithDefaultValue(100000000000000.5))
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_string_, SchemaOptionsBuilder.WithDefaultValue("string"))
+
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_int_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_unsigned_int_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_int32_t_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_uint32_t_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_long_long_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_unsigned_long_long_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_int64_t_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_uint64_t_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_bool_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_float_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_double_)
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_string_)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_END
 };
 

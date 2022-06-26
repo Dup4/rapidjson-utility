@@ -23,68 +23,47 @@ namespace internal {
 
 class FromJsonStringClass {
 public:
-    template <typename T, std::enable_if_t<is_basic_type_v<T>, bool> = true>
-    Result operator()(rapidjson::Value& value, T* target, const SchemaOptions<T>& options) const {
-        if (!value.HasMember(options.key_name.c_str())) {
-            return MemberNotFoundErrorResult(options.key_name + " not found");
-        }
-
-        rapidjson::Value& sub_value = value[options.key_name.c_str()];
-        if (!sub_value.Is<T>()) {
+    template <typename T, std::enable_if_t<is_basic_type_v<T>, bool> = true, typename F>
+    Result operator()(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.Is<T>()) {
             return ParseErrorResult(options.key_name + " type invalid");
         }
 
-        *target = sub_value.Get<T>();
-
+        *target = value.Get<T>();
         return OKResult();
     }
 
-    template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true>
-    Result operator()(rapidjson::Value& value, T* target, const SchemaOptions<T>& options) const {
-        if (!value.HasMember(options.key_name.c_str())) {
-            return MemberNotFoundErrorResult(options.key_name + " not found");
-        }
-
-        rapidjson::Value& sub_value = value[options.key_name.c_str()];
-        if (!sub_value.IsObject()) {
+    template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
+    Result operator()(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsObject()) {
             return ParseErrorResult(options.key_name + " type invalid");
         }
 
-        *target = operator()(sub_value, target);
-
+        *target = operator()(value, target);
         return OKResult();
     }
 
-    Result operator()(rapidjson::Value& value, std::string* target, const SchemaOptions<std::string>& options) const {
-        if (!value.HasMember(options.key_name.c_str())) {
-            return MemberNotFoundErrorResult(options.key_name + " not found");
-        }
-
-        rapidjson::Value& sub_value = value[options.key_name.c_str()];
-        if (!sub_value.IsString()) {
+    template <typename F>
+    Result operator()(rapidjson::Value& value, std::string* target, const F& options) const {
+        if (!value.IsString()) {
             return ParseErrorResult(options.key_name + " type invalid");
         }
 
-        *target = std::string(sub_value.GetString());
-
+        *target = std::string(value.GetString());
         return OKResult();
     }
 
     template <typename T>
-    Result operator()(rapidjson::Value& value, std::vector<T>* target, const SchemaOptions<T>& options) const {
-        if (!value.HasMember(options.key_name.c_str())) {
-            return MemberNotFoundErrorResult(options.key_name + " not found");
-        }
-
-        rapidjson::Value& sub_value = value[options.key_name.c_str()];
-        if (!sub_value.IsArray()) {
+    Result operator()(
+            rapidjson::Value& value, std::vector<T>* target, const SchemaOptions<std::vector<T>>& options) const {
+        if (!value.IsArray()) {
             return ParseErrorResult(options.key_name + " type invalid");
         }
 
-        for (auto& item : sub_value.GetArray()) {
+        for (rapidjson::Value& item : value.GetArray()) {
             T target_instance;
 
-            auto res = operator()(item, &target_instance, options);
+            auto res = this->operator()(item, &target_instance, options);
             if (!res.IsOK()) {
                 return res;
             }
@@ -96,25 +75,9 @@ public:
     }
 
     template <typename T>
-    Result operator()(rapidjson::Value& value, std::optional<T>* target, const SchemaOptions<T>& options) const {
-        T target_instance;
-
-        auto res = operator()(value, &target_instance, options);
-        if (IsMemberNotFoundError(res)) {
-            if (!options.default_value.has_value()) {
-                return res;
-            }
-
-            *target = options.default_value;
-        }
-
-        return OKResult();
-    }
-
-    template <typename T>
     Result operator()(rapidjson::Value& value, T* t) const {
         auto res = entrance(t, [&value, this](auto&& t, auto&& options) {
-            return this->operator()(value, t, options);
+            return this->objectHandle(value, t, options);
         });
 
         return res;
@@ -153,6 +116,41 @@ public:
     }
 
 private:
+    template <typename T, typename F>
+    Result objectHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.HasMember(options.key_name.c_str())) {
+            if (options.default_value.has_value()) {
+                *target = options.default_value.value();
+                return OKResult();
+            } else {
+                return MemberNotFoundErrorResult(options.key_name + " not found");
+            }
+        }
+
+        rapidjson::Value& sub_value = value[options.key_name.c_str()];
+        return this->operator()(sub_value, target, options);
+    }
+
+    template <typename T>
+    Result objectHandle(rapidjson::Value& value, std::optional<T>* target, const SchemaOptions<T>& options) const {
+        if (!value.HasMember(options.key_name.c_str())) {
+            if (options.default_value.has_value()) {
+                *target = options.default_value.value();
+            }
+        } else {
+            rapidjson::Value& sub_value = value[options.key_name.c_str()];
+            T target_instance;
+            auto res = this->operator()(sub_value, &target_instance, options);
+            if (!res.IsOK()) {
+                return res;
+            }
+
+            *target = options.default_value;
+        }
+
+        return OKResult();
+    }
+
     template <typename T, typename Func>
     Result entrance(T* t, Func&& func) const {
         if constexpr (has_rapidjson_utils_struct_schema_entrance_v<T>) {
