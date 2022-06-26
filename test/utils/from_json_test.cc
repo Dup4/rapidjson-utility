@@ -4,7 +4,6 @@
 #include <limits>
 
 #include "rapidjson_utils/rapidjson_utils.h"
-#include "rapidjson_utils/utils/from_json.h"
 
 #include "../structs/a.h"
 #include "../structs/b.h"
