@@ -24,7 +24,7 @@ private:                                                                        
 #define RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(field, ...)                   \
     {                                                                             \
         auto options = ::rapidjson::utils::internal::CreateEntranceSchemaOptions( \
-                &(s->field), RAPIDJSON_UTILS_STR(field), ##__VA_ARGS__);          \
+                s, &(s->field), RAPIDJSON_UTILS_STR(field), ##__VA_ARGS__);       \
         auto res = func(&(s->field), options);                                    \
         if (!res.IsOK()) {                                                        \
             return res;                                                           \

@@ -15,7 +15,7 @@ class CreateEntranceSchemaOptionsClass {
 public:
     template <typename T, typename... Opt>
     auto operator()([[maybe_unused]] T* t, std::string_view field_name, Opt&&... opts) const {
-        auto options = rapidjson::utils::SchemaOptions<T>{};
+        auto options = rapidjson::utils::SchemaOptions<std::remove_const_t<T>>{};
         options.key_name = field_name;
         SchemaOptionsBuilder.ApplySchemaOptions(options, std::forward<Opt>(opts)...);
         return options;
@@ -23,7 +23,7 @@ public:
 
     template <typename T, typename... Opt>
     auto operator()([[maybe_unused]] std::optional<T>* t, std::string_view field_name, Opt&&... opts) const {
-        auto options = rapidjson::utils::SchemaOptions<T>{};
+        auto options = rapidjson::utils::SchemaOptions<std::remove_const_t<T>>{};
         options.key_name = field_name;
         SchemaOptionsBuilder.ApplySchemaOptions(options, std::forward<Opt>(opts)...);
         return options;
@@ -36,7 +36,7 @@ public:
 
     template <typename Struct, std::enable_if_t<!std::is_const_v<Struct>, bool> = true, typename T, typename... Opt>
     auto operator()([[maybe_unused]] Struct* s, T* t, std::string_view field_name, Opt&&... opts) const {
-        return operator()(s, t, field_name, std::forward<Opt>(opts)...);
+        return operator()(t, field_name, std::forward<Opt>(opts)...);
     }
 };
 
