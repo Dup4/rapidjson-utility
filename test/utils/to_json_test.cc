@@ -49,6 +49,36 @@ TEST_F(ToJsonTest, to_json_a_and_c_test) {
     }
 
     {
+        auto tc = TestCase_A_1();
+        auto a_list = tc.Instance();
+
+        auto json_string_res = ToJson(&a_list);
+        EXPECT_TRUE(json_string_res.IsOK());
+        auto json_string = json_string_res.Value();
+        EXPECT_EQ(json_string, tc.ToJsonStringRes());
+
+        auto pretty_json_string_res = ToJson.GetPrettyJsonString(&a_list);
+        EXPECT_TRUE(pretty_json_string_res.IsOK());
+        auto pretty_json_string = pretty_json_string_res.Value();
+        EXPECT_EQ(pretty_json_string, tc.ToPrettyJsonStringRes());
+    }
+
+    {
+        auto tc = TestCase_A_1();
+        const auto a_list = tc.Instance();
+
+        auto json_string_res = ToJson(&a_list);
+        EXPECT_TRUE(json_string_res.IsOK());
+        auto json_string = json_string_res.Value();
+        EXPECT_EQ(json_string, tc.ToJsonStringRes());
+
+        auto pretty_json_string_res = ToJson.GetPrettyJsonString(&a_list);
+        EXPECT_TRUE(pretty_json_string_res.IsOK());
+        auto pretty_json_string = pretty_json_string_res.Value();
+        EXPECT_EQ(pretty_json_string, tc.ToPrettyJsonStringRes());
+    }
+
+    {
         auto tc = TestCase_B_0();
         auto b = tc.Instance();
 

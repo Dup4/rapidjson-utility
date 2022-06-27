@@ -59,6 +59,11 @@ public:
     }
 
     template <typename T>
+    ResultOr<Document> GetDocument(std::vector<T> *t) const {
+        return GetDocument(static_cast<const std::vector<T> *>(t));
+    }
+
+    template <typename T>
     ResultOr<std::string> GetPrettyJsonString(T *t) const {
         auto res = GetDocument(t);
         if (!res.IsOK()) {
