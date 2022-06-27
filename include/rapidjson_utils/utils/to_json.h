@@ -42,7 +42,7 @@ public:
     }
 
     template <typename T>
-    ResultOr<Document> GetDocument(std::vector<T> *t) const {
+    ResultOr<Document> GetDocument(const std::vector<T> *t) const {
         Document doc;
         doc.SetArray();
 

@@ -222,9 +222,8 @@ public:
         EXPECT_EQ(a.vector_string_, std::vector<std::string>({"string", "string"}));
     }
 
-    A Instance() const {
-        static A a;
-
+    template <typename T>
+    void SetInstance(T&& a) const {
         a.int_ = std::numeric_limits<int>::min();
         a.unsigned_int_ = std::numeric_limits<unsigned int>::max();
         a.int32_t_ = std::numeric_limits<int32_t>::min();
@@ -257,7 +256,11 @@ public:
         a.vector_float_ = std::vector<float>({1.5, 1.5});
         a.vector_double_ = std::vector<double>({100000000000000.5, 100000000000000.5});
         a.vector_string_ = std::vector<std::string>({"string", "string"});
+    }
 
+    A Instance() const {
+        A a;
+        SetInstance(a);
         return a;
     }
 

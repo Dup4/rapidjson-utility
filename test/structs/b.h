@@ -139,9 +139,14 @@ public:
         EXPECT_EQ(a.vector_string_, std::vector<std::string>({"string", "string"}));
     }
 
+    template <typename T>
+    void SetInstance(T&& b) const {
+        TestCase_A_0().SetInstance(b.a);
+    }
+
     B Instance() const {
-        static B b;
-        b.a = TestCase_A_0().Instance();
+        B b;
+        SetInstance((b));
 
         return b;
     }
