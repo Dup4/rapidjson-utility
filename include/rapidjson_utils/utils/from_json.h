@@ -13,6 +13,7 @@
 #include "../internal/result.h"
 #include "../internal/result_or.h"
 #include "../internal/schema_options.h"
+#include "../internal/struct_inject_entrance.h"
 #include "../types_check/index.h"
 #include "../types_check/is_basic_type.h"
 #include "./get_document.h"
@@ -26,7 +27,7 @@ class FromJsonStringClass {
 public:
     template <typename T>
     Result operator()(rapidjson::Value& value, T* t) const {
-        auto res = entrance(t, [&value, this](auto&& t, auto&& options) {
+        auto res = StructInjectEntrance(t, [&value, this](auto&& t, auto&& options) {
             return this->objectHandle(value, t, options);
         });
 
@@ -238,18 +239,6 @@ private:
         }
 
         return OKResult();
-    }
-
-    template <typename T, typename Func>
-    Result entrance(T* t, Func&& func) const {
-        if constexpr (has_rapidjson_utils_struct_schema_entrance_v<T>) {
-            return T::__RapidJsonUtils_StructSchemaEntrance(t, func);
-        } else if constexpr (has_rapidjson_utils_external_struct_schema_entrance_v<T>) {
-            return __RapidJsonUtilsExternal_StructSchemaEntrance(t, func);
-        } else {
-            static_assert(false_v<T>,
-                    "T does not have T::__RapidJsonUtils_StructSchemaEntrance() member function or __RapidJsonUtilsExternal_StructSchemaEntrance() external function");
-        }
     }
 };
 

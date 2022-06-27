@@ -15,7 +15,7 @@
 private:                                                                                                               \
     friend class ::rapidjson::utils::has_rapidjson_utils_struct_schema_entrance<Struct>;                               \
     friend class ::rapidjson::utils::has_rapidjson_utils_struct_schema_entrance<const Struct>;                         \
-    friend class ::rapidjson::utils::internal::FromJsonStringClass;                                                    \
+    friend class ::rapidjson::utils::internal::StructInjectEntranceClass;                                              \
                                                                                                                        \
     template <typename T, std::enable_if_t<std::is_same_v<Struct, T> || std::is_same_v<const Struct, T>, bool> = true, \
             typename Func>                                                                                             \

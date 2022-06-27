@@ -7,6 +7,7 @@
 #include "./get_pretty_json_string.h"          // IWYU pragma: export
 #include "./get_pretty_parse_error_message.h"  // IWYU pragma: export
 #include "./merge_objects.h"                   // IWYU pragma: export
+#include "./to_json.h"                         // IWYU pragma: export
 
 namespace rapidjson::utils::internal {
 
@@ -18,6 +19,7 @@ public:
     const GetPrettyJsonStringClass GetPrettyJsonString{GetPrettyJsonStringClass()};
     const GetPrettyParseErrorMessageClass GetPrettyParseErrorMessage{GetPrettyParseErrorMessageClass()};
     const MergeObjectsClass MergeObjects{MergeObjectsClass()};
+    const ToJsonStringClass ToJson{ToJsonStringClass()};
 };
 
 }  // namespace rapidjson::utils::internal

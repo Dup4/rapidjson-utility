@@ -17,12 +17,12 @@ public:
     template <typename F>
     ResultOr(const ResultOr<F>& other) : Result(other) {}
 
-    ResultOr(const ResultOr<T>& other) : Result(other), value_(other.value) {}
+    ResultOr(const ResultOr<T>& other) : Result(other), value_(other.value_) {}
 
     template <typename F>
     ResultOr(ResultOr<F>&& other) : Result(other) {}
 
-    ResultOr(ResultOr<T>&& other) : Result(other), value_(std::move(other.value)) {}
+    ResultOr(ResultOr<T>&& other) : Result(other), value_(std::move(other.value_)) {}
 
     template <typename F>
     ResultOr<T>& operator=(const ResultOr<F>& other) {

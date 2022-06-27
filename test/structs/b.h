@@ -138,6 +138,97 @@ public:
         EXPECT_EQ(a.vector_double_, std::vector<double>({100000000000000.5, 100000000000000.5}));
         EXPECT_EQ(a.vector_string_, std::vector<std::string>({"string", "string"}));
     }
+
+    B Instance() const {
+        static B b;
+        b.a = TestCase_A_0().Instance();
+
+        return b;
+    }
+
+    std::string ToJsonStringRes() const {
+        return std::string(
+                R"({"a":{"int_":-2147483648,"unsigned_int_":4294967295,"int32_t_":-2147483648,"uint32_t_":4294967295,"long_long_":-9223372036854775808,"unsigned_long_long_":18446744073709551615,"int64_t_":-9223372036854775808,"uint64_t_":18446744073709551615,"bool_":true,"float_":1.5,"double_":100000000000000.5,"string_":"string","optional_int_":-2147483648,"optional_unsigned_int_":4294967295,"optional_int32_t_":-2147483648,"optional_uint32_t_":4294967295,"optional_long_long_":-9223372036854775808,"optional_unsigned_long_long_":18446744073709551615,"optional_int64_t_":-9223372036854775808,"optional_uint64_t_":18446744073709551615,"optional_bool_":true,"optional_float_":1.5,"optional_double_":100000000000000.5,"optional_string_":"string","vector_int_":[-2147483648,-2147483648],"vector_unsigned_int_":[4294967295,4294967295],"vector_int32_t_":[-2147483648,-2147483648],"vector_uint32_t_":[4294967295,4294967295],"vector_long_long_":[-9223372036854775808,-9223372036854775808],"vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"vector_int64_t_":[-9223372036854775808,-9223372036854775808],"vector_uint64_t_":[18446744073709551615,18446744073709551615],"vector_bool_":[true,true],"vector_float_":[1.5,1.5],"vector_double_":[100000000000000.5,100000000000000.5],"vector_string_":["string","string"]}})");
+    };
+
+    std::string ToPrettyJsonStringRes() const {
+        return std::string(R"({
+    "a": {
+        "int_": -2147483648,
+        "unsigned_int_": 4294967295,
+        "int32_t_": -2147483648,
+        "uint32_t_": 4294967295,
+        "long_long_": -9223372036854775808,
+        "unsigned_long_long_": 18446744073709551615,
+        "int64_t_": -9223372036854775808,
+        "uint64_t_": 18446744073709551615,
+        "bool_": true,
+        "float_": 1.5,
+        "double_": 100000000000000.5,
+        "string_": "string",
+        "optional_int_": -2147483648,
+        "optional_unsigned_int_": 4294967295,
+        "optional_int32_t_": -2147483648,
+        "optional_uint32_t_": 4294967295,
+        "optional_long_long_": -9223372036854775808,
+        "optional_unsigned_long_long_": 18446744073709551615,
+        "optional_int64_t_": -9223372036854775808,
+        "optional_uint64_t_": 18446744073709551615,
+        "optional_bool_": true,
+        "optional_float_": 1.5,
+        "optional_double_": 100000000000000.5,
+        "optional_string_": "string",
+        "vector_int_": [
+            -2147483648,
+            -2147483648
+        ],
+        "vector_unsigned_int_": [
+            4294967295,
+            4294967295
+        ],
+        "vector_int32_t_": [
+            -2147483648,
+            -2147483648
+        ],
+        "vector_uint32_t_": [
+            4294967295,
+            4294967295
+        ],
+        "vector_long_long_": [
+            -9223372036854775808,
+            -9223372036854775808
+        ],
+        "vector_unsigned_long_long_": [
+            18446744073709551615,
+            18446744073709551615
+        ],
+        "vector_int64_t_": [
+            -9223372036854775808,
+            -9223372036854775808
+        ],
+        "vector_uint64_t_": [
+            18446744073709551615,
+            18446744073709551615
+        ],
+        "vector_bool_": [
+            true,
+            true
+        ],
+        "vector_float_": [
+            1.5,
+            1.5
+        ],
+        "vector_double_": [
+            100000000000000.5,
+            100000000000000.5
+        ],
+        "vector_string_": [
+            "string",
+            "string"
+        ]
+    }
+})");
+    }
 };
 
 }  // namespace rapidjson::utils
