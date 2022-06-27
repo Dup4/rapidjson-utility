@@ -50,6 +50,19 @@ struct A {
     std::vector<double> vector_double_;
     std::vector<std::string> vector_string_;
 
+    std::optional<std::vector<int>> optional_vector_int_;
+    std::optional<std::vector<unsigned int>> optional_vector_unsigned_int_;
+    std::optional<std::vector<int32_t>> optional_vector_int32_t_;
+    std::optional<std::vector<uint32_t>> optional_vector_uint32_t_;
+    std::optional<std::vector<long long>> optional_vector_long_long_;
+    std::optional<std::vector<unsigned long long>> optional_vector_unsigned_long_long_;
+    std::optional<std::vector<int64_t>> optional_vector_int64_t_;
+    std::optional<std::vector<uint64_t>> optional_vector_uint64_t_;
+    std::optional<std::vector<bool>> optional_vector_bool_;
+    std::optional<std::vector<float>> optional_vector_float_;
+    std::optional<std::vector<double>> optional_vector_double_;
+    std::optional<std::vector<std::string>> optional_vector_string_;
+
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_BEGIN(A)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(int_)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(unsigned_int_)
@@ -98,6 +111,39 @@ struct A {
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_float_)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_double_)
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(vector_string_)
+
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int_,
+            SchemaOptionsBuilder.WithDefaultValue(
+                    std::vector<int>{std::numeric_limits<int>::min(), std::numeric_limits<int>::min()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_int_,
+            SchemaOptionsBuilder.WithDefaultValue(std::vector<unsigned int>{
+                    std::numeric_limits<unsigned int>::max(), std::numeric_limits<unsigned int>::max()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int32_t_,
+            SchemaOptionsBuilder.WithDefaultValue(
+                    std::vector<int32_t>{std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::min()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint32_t_,
+            SchemaOptionsBuilder.WithDefaultValue(
+                    std::vector<uint32_t>{std::numeric_limits<uint32_t>::max(), std::numeric_limits<uint32_t>::max()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_long_long_,
+            SchemaOptionsBuilder.WithDefaultValue(std::vector<long long>{
+                    std::numeric_limits<long long>::min(), std::numeric_limits<long long>::min()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_long_long_,
+            SchemaOptionsBuilder.WithDefaultValue(std::vector<unsigned long long>{
+                    std::numeric_limits<unsigned long long>::max(), std::numeric_limits<unsigned long long>::max()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int64_t_,
+            SchemaOptionsBuilder.WithDefaultValue(
+                    std::vector<int64_t>{std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::min()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint64_t_,
+            SchemaOptionsBuilder.WithDefaultValue(
+                    std::vector<uint64_t>{std::numeric_limits<uint64_t>::max(), std::numeric_limits<uint64_t>::max()}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_vector_bool_, SchemaOptionsBuilder.WithDefaultValue(std::vector<bool>{true, true}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_vector_float_, SchemaOptionsBuilder.WithDefaultValue(std::vector<float>{1.5, 1.5}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_double_,
+            SchemaOptionsBuilder.WithDefaultValue(std::vector<double>{100000000000000.5, 100000000000000.5}))
+    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_string_,
+            SchemaOptionsBuilder.WithDefaultValue(std::vector<std::string>{"string", "string"}))
     RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_END
 };
 
@@ -220,6 +266,28 @@ public:
         EXPECT_EQ(a.vector_float_, std::vector<float>({1.5, 1.5}));
         EXPECT_EQ(a.vector_double_, std::vector<double>({100000000000000.5, 100000000000000.5}));
         EXPECT_EQ(a.vector_string_, std::vector<std::string>({"string", "string"}));
+
+        EXPECT_EQ(*a.optional_vector_int_,
+                std::vector<int>({std::numeric_limits<int>::min(), std::numeric_limits<int>::min()}));
+        EXPECT_EQ(*a.optional_vector_unsigned_int_, std::vector<unsigned int>({std::numeric_limits<unsigned int>::max(),
+                                                            std::numeric_limits<unsigned int>::max()}));
+        EXPECT_EQ(*a.optional_vector_int32_t_,
+                std::vector<int32_t>({std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::min()}));
+        EXPECT_EQ(*a.optional_vector_uint32_t_,
+                std::vector<uint32_t>({std::numeric_limits<uint32_t>::max(), std::numeric_limits<uint32_t>::max()}));
+        EXPECT_EQ(*a.optional_vector_long_long_,
+                std::vector<long long>({std::numeric_limits<long long>::min(), std::numeric_limits<long long>::min()}));
+        EXPECT_EQ(*a.optional_vector_unsigned_long_long_,
+                std::vector<unsigned long long>({std::numeric_limits<unsigned long long>::max(),
+                        std::numeric_limits<unsigned long long>::max()}));
+        EXPECT_EQ(*a.optional_vector_int64_t_,
+                std::vector<int64_t>({std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::min()}));
+        EXPECT_EQ(*a.optional_vector_uint64_t_,
+                std::vector<uint64_t>({std::numeric_limits<uint64_t>::max(), std::numeric_limits<uint64_t>::max()}));
+        EXPECT_EQ(*a.optional_vector_bool_, std::vector<bool>({true, true}));
+        EXPECT_EQ(*a.optional_vector_float_, std::vector<float>({1.5, 1.5}));
+        EXPECT_EQ(*a.optional_vector_double_, std::vector<double>({100000000000000.5, 100000000000000.5}));
+        EXPECT_EQ(*a.optional_vector_string_, std::vector<std::string>({"string", "string"}));
     }
 
     template <typename T>
@@ -266,7 +334,7 @@ public:
 
     std::string ToJsonStringRes() const {
         return std::string(
-                R"({"int_":-2147483648,"unsigned_int_":4294967295,"int32_t_":-2147483648,"uint32_t_":4294967295,"long_long_":-9223372036854775808,"unsigned_long_long_":18446744073709551615,"int64_t_":-9223372036854775808,"uint64_t_":18446744073709551615,"bool_":true,"float_":1.5,"double_":100000000000000.5,"string_":"string","optional_int_":-2147483648,"optional_unsigned_int_":4294967295,"optional_int32_t_":-2147483648,"optional_uint32_t_":4294967295,"optional_long_long_":-9223372036854775808,"optional_unsigned_long_long_":18446744073709551615,"optional_int64_t_":-9223372036854775808,"optional_uint64_t_":18446744073709551615,"optional_bool_":true,"optional_float_":1.5,"optional_double_":100000000000000.5,"optional_string_":"string","vector_int_":[-2147483648,-2147483648],"vector_unsigned_int_":[4294967295,4294967295],"vector_int32_t_":[-2147483648,-2147483648],"vector_uint32_t_":[4294967295,4294967295],"vector_long_long_":[-9223372036854775808,-9223372036854775808],"vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"vector_int64_t_":[-9223372036854775808,-9223372036854775808],"vector_uint64_t_":[18446744073709551615,18446744073709551615],"vector_bool_":[true,true],"vector_float_":[1.5,1.5],"vector_double_":[100000000000000.5,100000000000000.5],"vector_string_":["string","string"]})");
+                R"({"int_":-2147483648,"unsigned_int_":4294967295,"int32_t_":-2147483648,"uint32_t_":4294967295,"long_long_":-9223372036854775808,"unsigned_long_long_":18446744073709551615,"int64_t_":-9223372036854775808,"uint64_t_":18446744073709551615,"bool_":true,"float_":1.5,"double_":100000000000000.5,"string_":"string","optional_int_":-2147483648,"optional_unsigned_int_":4294967295,"optional_int32_t_":-2147483648,"optional_uint32_t_":4294967295,"optional_long_long_":-9223372036854775808,"optional_unsigned_long_long_":18446744073709551615,"optional_int64_t_":-9223372036854775808,"optional_uint64_t_":18446744073709551615,"optional_bool_":true,"optional_float_":1.5,"optional_double_":100000000000000.5,"optional_string_":"string","vector_int_":[-2147483648,-2147483648],"vector_unsigned_int_":[4294967295,4294967295],"vector_int32_t_":[-2147483648,-2147483648],"vector_uint32_t_":[4294967295,4294967295],"vector_long_long_":[-9223372036854775808,-9223372036854775808],"vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"vector_int64_t_":[-9223372036854775808,-9223372036854775808],"vector_uint64_t_":[18446744073709551615,18446744073709551615],"vector_bool_":[true,true],"vector_float_":[1.5,1.5],"vector_double_":[100000000000000.5,100000000000000.5],"vector_string_":["string","string"],"optional_vector_int_":[-2147483648,-2147483648],"optional_vector_unsigned_int_":[4294967295,4294967295],"optional_vector_int32_t_":[-2147483648,-2147483648],"optional_vector_uint32_t_":[4294967295,4294967295],"optional_vector_long_long_":[-9223372036854775808,-9223372036854775808],"optional_vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"optional_vector_int64_t_":[-9223372036854775808,-9223372036854775808],"optional_vector_uint64_t_":[18446744073709551615,18446744073709551615],"optional_vector_bool_":[true,true],"optional_vector_float_":[1.5,1.5],"optional_vector_double_":[100000000000000.5,100000000000000.5],"optional_vector_string_":["string","string"]})");
     }
 
     std::string ToPrettyJsonStringRes() const {
@@ -340,6 +408,54 @@ public:
         100000000000000.5
     ],
     "vector_string_": [
+        "string",
+        "string"
+    ],
+    "optional_vector_int_": [
+        -2147483648,
+        -2147483648
+    ],
+    "optional_vector_unsigned_int_": [
+        4294967295,
+        4294967295
+    ],
+    "optional_vector_int32_t_": [
+        -2147483648,
+        -2147483648
+    ],
+    "optional_vector_uint32_t_": [
+        4294967295,
+        4294967295
+    ],
+    "optional_vector_long_long_": [
+        -9223372036854775808,
+        -9223372036854775808
+    ],
+    "optional_vector_unsigned_long_long_": [
+        18446744073709551615,
+        18446744073709551615
+    ],
+    "optional_vector_int64_t_": [
+        -9223372036854775808,
+        -9223372036854775808
+    ],
+    "optional_vector_uint64_t_": [
+        18446744073709551615,
+        18446744073709551615
+    ],
+    "optional_vector_bool_": [
+        true,
+        true
+    ],
+    "optional_vector_float_": [
+        1.5,
+        1.5
+    ],
+    "optional_vector_double_": [
+        100000000000000.5,
+        100000000000000.5
+    ],
+    "optional_vector_string_": [
         "string",
         "string"
     ]
@@ -554,7 +670,7 @@ public:
 
     std::string ToJsonStringRes() const {
         return std::string(
-                R"([{"int_":-2147483648,"unsigned_int_":4294967295,"int32_t_":-2147483648,"uint32_t_":4294967295,"long_long_":-9223372036854775808,"unsigned_long_long_":18446744073709551615,"int64_t_":-9223372036854775808,"uint64_t_":18446744073709551615,"bool_":true,"float_":1.5,"double_":100000000000000.5,"string_":"string","optional_int_":-2147483648,"optional_unsigned_int_":4294967295,"optional_int32_t_":-2147483648,"optional_uint32_t_":4294967295,"optional_long_long_":-9223372036854775808,"optional_unsigned_long_long_":18446744073709551615,"optional_int64_t_":-9223372036854775808,"optional_uint64_t_":18446744073709551615,"optional_bool_":true,"optional_float_":1.5,"optional_double_":100000000000000.5,"optional_string_":"string","vector_int_":[-2147483648,-2147483648],"vector_unsigned_int_":[4294967295,4294967295],"vector_int32_t_":[-2147483648,-2147483648],"vector_uint32_t_":[4294967295,4294967295],"vector_long_long_":[-9223372036854775808,-9223372036854775808],"vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"vector_int64_t_":[-9223372036854775808,-9223372036854775808],"vector_uint64_t_":[18446744073709551615,18446744073709551615],"vector_bool_":[true,true],"vector_float_":[1.5,1.5],"vector_double_":[100000000000000.5,100000000000000.5],"vector_string_":["string","string"]},{"int_":-2147483648,"unsigned_int_":4294967295,"int32_t_":-2147483648,"uint32_t_":4294967295,"long_long_":-9223372036854775808,"unsigned_long_long_":18446744073709551615,"int64_t_":-9223372036854775808,"uint64_t_":18446744073709551615,"bool_":true,"float_":1.5,"double_":100000000000000.5,"string_":"string","optional_int_":-2147483648,"optional_unsigned_int_":4294967295,"optional_int32_t_":-2147483648,"optional_uint32_t_":4294967295,"optional_long_long_":-9223372036854775808,"optional_unsigned_long_long_":18446744073709551615,"optional_int64_t_":-9223372036854775808,"optional_uint64_t_":18446744073709551615,"optional_bool_":true,"optional_float_":1.5,"optional_double_":100000000000000.5,"optional_string_":"string","vector_int_":[-2147483648,-2147483648],"vector_unsigned_int_":[4294967295,4294967295],"vector_int32_t_":[-2147483648,-2147483648],"vector_uint32_t_":[4294967295,4294967295],"vector_long_long_":[-9223372036854775808,-9223372036854775808],"vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"vector_int64_t_":[-9223372036854775808,-9223372036854775808],"vector_uint64_t_":[18446744073709551615,18446744073709551615],"vector_bool_":[true,true],"vector_float_":[1.5,1.5],"vector_double_":[100000000000000.5,100000000000000.5],"vector_string_":["string","string"]}])");
+                R"([{"int_":-2147483648,"unsigned_int_":4294967295,"int32_t_":-2147483648,"uint32_t_":4294967295,"long_long_":-9223372036854775808,"unsigned_long_long_":18446744073709551615,"int64_t_":-9223372036854775808,"uint64_t_":18446744073709551615,"bool_":true,"float_":1.5,"double_":100000000000000.5,"string_":"string","optional_int_":-2147483648,"optional_unsigned_int_":4294967295,"optional_int32_t_":-2147483648,"optional_uint32_t_":4294967295,"optional_long_long_":-9223372036854775808,"optional_unsigned_long_long_":18446744073709551615,"optional_int64_t_":-9223372036854775808,"optional_uint64_t_":18446744073709551615,"optional_bool_":true,"optional_float_":1.5,"optional_double_":100000000000000.5,"optional_string_":"string","vector_int_":[-2147483648,-2147483648],"vector_unsigned_int_":[4294967295,4294967295],"vector_int32_t_":[-2147483648,-2147483648],"vector_uint32_t_":[4294967295,4294967295],"vector_long_long_":[-9223372036854775808,-9223372036854775808],"vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"vector_int64_t_":[-9223372036854775808,-9223372036854775808],"vector_uint64_t_":[18446744073709551615,18446744073709551615],"vector_bool_":[true,true],"vector_float_":[1.5,1.5],"vector_double_":[100000000000000.5,100000000000000.5],"vector_string_":["string","string"],"optional_vector_int_":[-2147483648,-2147483648],"optional_vector_unsigned_int_":[4294967295,4294967295],"optional_vector_int32_t_":[-2147483648,-2147483648],"optional_vector_uint32_t_":[4294967295,4294967295],"optional_vector_long_long_":[-9223372036854775808,-9223372036854775808],"optional_vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"optional_vector_int64_t_":[-9223372036854775808,-9223372036854775808],"optional_vector_uint64_t_":[18446744073709551615,18446744073709551615],"optional_vector_bool_":[true,true],"optional_vector_float_":[1.5,1.5],"optional_vector_double_":[100000000000000.5,100000000000000.5],"optional_vector_string_":["string","string"]},{"int_":-2147483648,"unsigned_int_":4294967295,"int32_t_":-2147483648,"uint32_t_":4294967295,"long_long_":-9223372036854775808,"unsigned_long_long_":18446744073709551615,"int64_t_":-9223372036854775808,"uint64_t_":18446744073709551615,"bool_":true,"float_":1.5,"double_":100000000000000.5,"string_":"string","optional_int_":-2147483648,"optional_unsigned_int_":4294967295,"optional_int32_t_":-2147483648,"optional_uint32_t_":4294967295,"optional_long_long_":-9223372036854775808,"optional_unsigned_long_long_":18446744073709551615,"optional_int64_t_":-9223372036854775808,"optional_uint64_t_":18446744073709551615,"optional_bool_":true,"optional_float_":1.5,"optional_double_":100000000000000.5,"optional_string_":"string","vector_int_":[-2147483648,-2147483648],"vector_unsigned_int_":[4294967295,4294967295],"vector_int32_t_":[-2147483648,-2147483648],"vector_uint32_t_":[4294967295,4294967295],"vector_long_long_":[-9223372036854775808,-9223372036854775808],"vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"vector_int64_t_":[-9223372036854775808,-9223372036854775808],"vector_uint64_t_":[18446744073709551615,18446744073709551615],"vector_bool_":[true,true],"vector_float_":[1.5,1.5],"vector_double_":[100000000000000.5,100000000000000.5],"vector_string_":["string","string"],"optional_vector_int_":[-2147483648,-2147483648],"optional_vector_unsigned_int_":[4294967295,4294967295],"optional_vector_int32_t_":[-2147483648,-2147483648],"optional_vector_uint32_t_":[4294967295,4294967295],"optional_vector_long_long_":[-9223372036854775808,-9223372036854775808],"optional_vector_unsigned_long_long_":[18446744073709551615,18446744073709551615],"optional_vector_int64_t_":[-9223372036854775808,-9223372036854775808],"optional_vector_uint64_t_":[18446744073709551615,18446744073709551615],"optional_vector_bool_":[true,true],"optional_vector_float_":[1.5,1.5],"optional_vector_double_":[100000000000000.5,100000000000000.5],"optional_vector_string_":["string","string"]}])");
     }
 
     std::string ToPrettyJsonStringRes() const {
@@ -631,6 +747,54 @@ public:
         "vector_string_": [
             "string",
             "string"
+        ],
+        "optional_vector_int_": [
+            -2147483648,
+            -2147483648
+        ],
+        "optional_vector_unsigned_int_": [
+            4294967295,
+            4294967295
+        ],
+        "optional_vector_int32_t_": [
+            -2147483648,
+            -2147483648
+        ],
+        "optional_vector_uint32_t_": [
+            4294967295,
+            4294967295
+        ],
+        "optional_vector_long_long_": [
+            -9223372036854775808,
+            -9223372036854775808
+        ],
+        "optional_vector_unsigned_long_long_": [
+            18446744073709551615,
+            18446744073709551615
+        ],
+        "optional_vector_int64_t_": [
+            -9223372036854775808,
+            -9223372036854775808
+        ],
+        "optional_vector_uint64_t_": [
+            18446744073709551615,
+            18446744073709551615
+        ],
+        "optional_vector_bool_": [
+            true,
+            true
+        ],
+        "optional_vector_float_": [
+            1.5,
+            1.5
+        ],
+        "optional_vector_double_": [
+            100000000000000.5,
+            100000000000000.5
+        ],
+        "optional_vector_string_": [
+            "string",
+            "string"
         ]
     },
     {
@@ -703,6 +867,54 @@ public:
             100000000000000.5
         ],
         "vector_string_": [
+            "string",
+            "string"
+        ],
+        "optional_vector_int_": [
+            -2147483648,
+            -2147483648
+        ],
+        "optional_vector_unsigned_int_": [
+            4294967295,
+            4294967295
+        ],
+        "optional_vector_int32_t_": [
+            -2147483648,
+            -2147483648
+        ],
+        "optional_vector_uint32_t_": [
+            4294967295,
+            4294967295
+        ],
+        "optional_vector_long_long_": [
+            -9223372036854775808,
+            -9223372036854775808
+        ],
+        "optional_vector_unsigned_long_long_": [
+            18446744073709551615,
+            18446744073709551615
+        ],
+        "optional_vector_int64_t_": [
+            -9223372036854775808,
+            -9223372036854775808
+        ],
+        "optional_vector_uint64_t_": [
+            18446744073709551615,
+            18446744073709551615
+        ],
+        "optional_vector_bool_": [
+            true,
+            true
+        ],
+        "optional_vector_float_": [
+            1.5,
+            1.5
+        ],
+        "optional_vector_double_": [
+            100000000000000.5,
+            100000000000000.5
+        ],
+        "optional_vector_string_": [
             "string",
             "string"
         ]
