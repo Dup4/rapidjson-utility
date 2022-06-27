@@ -57,6 +57,17 @@ TEST_F(RapidJsonTest, document_test) {
 
     {
         rapidjson::Document doc;
+        doc.SetObject();
+        rapidjson::Value value;
+        value.SetObject();
+        value.AddMember("test", "dd", doc.GetAllocator());
+        doc.AddMember("test", value, doc.GetAllocator());
+        auto json_string = rapidjson::utils::GetJsonString(doc);
+        EXPECT_EQ(json_string, R"({"test":{"test":"dd"}})");
+    }
+
+    {
+        rapidjson::Document doc;
         doc.SetArray();
         doc.PushBack("1", doc.GetAllocator());
         doc.PushBack("2", doc.GetAllocator());
