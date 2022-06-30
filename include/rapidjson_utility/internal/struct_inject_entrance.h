@@ -13,12 +13,12 @@ public:
     template <typename T, typename Func>
     Result operator()(T* t, Func&& func) const {
         if constexpr (has_rapidjson_utility_struct_schema_entrance_v<T>) {
-            return T::__RapidJsonUtils_StructSchemaEntrance(t, func);
+            return T::__RapidJsonUtility_StructSchemaEntrance(t, func);
         } else if constexpr (has_rapidjson_utility_external_struct_schema_entrance_v<T>) {
-            return __RapidJsonUtilsExternal_StructSchemaEntrance(t, func);
+            return __RapidJsonUtilityExternal_StructSchemaEntrance(t, func);
         } else {
             static_assert(false_v<T>,
-                    "T does not have T::__RapidJsonUtils_StructSchemaEntrance() member function or __RapidJsonUtilsExternal_StructSchemaEntrance() external function");
+                    "T does not have T::__RapidJsonUtility_StructSchemaEntrance() member function or __RapidJsonUtilityExternal_StructSchemaEntrance() external function");
         }
     }
 };

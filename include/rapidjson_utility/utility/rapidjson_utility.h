@@ -11,7 +11,7 @@
 
 namespace rapidjson::utility::internal {
 
-class RapidJsonUtilsClass {
+class RapidJsonUtilityClass {
 public:
     const FromJsonStringClass FromJson{FromJsonStringClass()};
     const GetDocumentClass GetDocument{GetDocumentClass()};
@@ -24,6 +24,6 @@ public:
 
 }  // namespace rapidjson::utility::internal
 
-static const auto RapidJsonUtils = rapidjson::utility::internal::RapidJsonUtilsClass();
+static const auto RapidJsonUtility = rapidjson::utility::internal::RapidJsonUtilityClass();
 
 #endif  // RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H

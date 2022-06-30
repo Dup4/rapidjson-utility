@@ -19,7 +19,7 @@ private:                                                                        
                                                                                                                        \
     template <typename T, std::enable_if_t<std::is_same_v<Struct, T> || std::is_same_v<const Struct, T>, bool> = true, \
             typename Func>                                                                                             \
-    static auto __RapidJsonUtils_StructSchemaEntrance(T* s, Func&& func) {
+    static auto __RapidJsonUtility_StructSchemaEntrance(T* s, Func&& func) {
 //
 #define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(field, ...)                   \
     {                                                                               \
@@ -38,7 +38,7 @@ private:                                                                        
 #define RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_BEGIN(Struct)                                                 \
     template <typename T, std::enable_if_t<std::is_same_v<Struct, T> || std::is_same_v<const Struct, T>, bool> = true, \
             typename Func>                                                                                             \
-    static auto __RapidJsonUtilsExternal_StructSchemaEntrance(T* s, Func&& func) {
+    static auto __RapidJsonUtilityExternal_StructSchemaEntrance(T* s, Func&& func) {
 //
 #define RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(field, ...) \
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(field, ##__VA_ARGS__)

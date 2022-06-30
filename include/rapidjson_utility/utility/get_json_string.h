@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILITY_UTILS_GET_JSON_STRING_H
-#define RAPIDJSON_UTILITY_UTILS_GET_JSON_STRING_H
+#ifndef RAPIDJSON_UTILITY_UTILITY_GET_JSON_STRING_H
+#define RAPIDJSON_UTILITY_UTILITY_GET_JSON_STRING_H
 
 #include <string>
 
@@ -29,4 +29,4 @@ static const auto GetJsonString = internal::GetJsonStringClass();
 
 }  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILITY_UTILS_GET_JSON_STRING_H
+#endif  // RAPIDJSON_UTILITY_UTILITY_GET_JSON_STRING_H

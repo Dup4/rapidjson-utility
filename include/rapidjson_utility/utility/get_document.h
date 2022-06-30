@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILITY_UTILS_GET_DOCUMENT_H
-#define RAPIDJSON_UTILITY_UTILS_GET_DOCUMENT_H
+#ifndef RAPIDJSON_UTILITY_UTILITY_GET_DOCUMENT_H
+#define RAPIDJSON_UTILITY_UTILITY_GET_DOCUMENT_H
 
 #include <string_view>
 
@@ -34,4 +34,4 @@ static const auto GetDocument = internal::GetDocumentClass();
 
 }  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILITY_UTILS_GET_DOCUMENT_H
+#endif  // RAPIDJSON_UTILITY_UTILITY_GET_DOCUMENT_H

@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILITY_UTILS_TO_JSON_H
-#define RAPIDJSON_UTILITY_UTILS_TO_JSON_H
+#ifndef RAPIDJSON_UTILITY_UTILITY_TO_JSON_H
+#define RAPIDJSON_UTILITY_UTILITY_TO_JSON_H
 
 #include <string>
 #include <type_traits>
@@ -238,4 +238,4 @@ static const auto ToJson = internal::ToJsonStringClass();
 
 }  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILITY_UTILS_TO_JSON_H
+#endif  // RAPIDJSON_UTILITY_UTILITY_TO_JSON_H

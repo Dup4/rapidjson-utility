@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILITY_UTILS_FROM_JSON_H
-#define RAPIDJSON_UTILITY_UTILS_FROM_JSON_H
+#ifndef RAPIDJSON_UTILITY_UTILITY_FROM_JSON_H
+#define RAPIDJSON_UTILITY_UTILITY_FROM_JSON_H
 
 #include <cstdint>
 #include <optional>
@@ -248,4 +248,4 @@ static const auto FromJson = internal::FromJsonStringClass();
 
 }  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILITY_UTILS_FROM_JSON_H
+#endif  // RAPIDJSON_UTILITY_UTILITY_FROM_JSON_H

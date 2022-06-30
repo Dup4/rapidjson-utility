@@ -11,7 +11,7 @@ template <typename T>
 class has_rapidjson_utility_external_struct_schema_entrance {
 private:
     template <typename U>
-    static constexpr auto check(int) -> decltype(__RapidJsonUtilsExternal_StructSchemaEntrance(std::declval<U*>(),
+    static constexpr auto check(int) -> decltype(__RapidJsonUtilityExternal_StructSchemaEntrance(std::declval<U*>(),
                                                          std::declval<internal::FakeEntranceFunc>()),
             std::true_type());
 
