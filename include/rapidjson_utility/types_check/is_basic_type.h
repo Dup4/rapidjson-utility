@@ -1,10 +1,10 @@
-#ifndef RAPIDJSON_UTILS_TYPES_CHECK_IS_BASIC_TYPE_H
-#define RAPIDJSON_UTILS_TYPES_CHECK_IS_BASIC_TYPE_H
+#ifndef RAPIDJSON_UTILITY_TYPES_CHECK_IS_BASIC_TYPE_H
+#define RAPIDJSON_UTILITY_TYPES_CHECK_IS_BASIC_TYPE_H
 
 #include <string>
 #include <type_traits>
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 template <typename T>
 inline constexpr bool is_basic_type_v =
@@ -15,4 +15,4 @@ inline constexpr bool is_basic_type_v =
 
 }
 
-#endif  // RAPIDJSON_UTILS_TYPES_CHECK_IS_BASIC_TYPE_H
+#endif  // RAPIDJSON_UTILITY_TYPES_CHECK_IS_BASIC_TYPE_H

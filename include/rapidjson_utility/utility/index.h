@@ -4,5 +4,5 @@
 #include "./get_pretty_json_string.h"          // IWYU pragma: export
 #include "./get_pretty_parse_error_message.h"  // IWYU pragma: export
 #include "./merge_objects.h"                   // IWYU pragma: export
-#include "./rapidjson_utils.h"                 // IWYU pragma: export
+#include "./rapidjson_utility.h"               // IWYU pragma: export
 #include "./to_json.h"                         // IWYU pragma: export

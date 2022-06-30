@@ -1,9 +1,9 @@
-#ifndef RAPIDJSON_UTILS_INTERNAL_RESULT_OR_H
-#define RAPIDJSON_UTILS_INTERNAL_RESULT_OR_H
+#ifndef RAPIDJSON_UTILITY_INTERNAL_RESULT_OR_H
+#define RAPIDJSON_UTILITY_INTERNAL_RESULT_OR_H
 
 #include "./result.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 template <typename T>
 class ResultOr : public Result {
@@ -102,6 +102,6 @@ private:
     std::optional<T> value_{std::nullopt};
 };
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_INTERNAL_RESULT_OR_H
+#endif  // RAPIDJSON_UTILITY_INTERNAL_RESULT_OR_H

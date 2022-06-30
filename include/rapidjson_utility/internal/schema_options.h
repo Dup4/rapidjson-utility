@@ -1,11 +1,11 @@
-#ifndef RAPIDJSON_UTILS_INTERNAL_SCHEMA_PROPS_H
-#define RAPIDJSON_UTILS_INTERNAL_SCHEMA_PROPS_H
+#ifndef RAPIDJSON_UTILITY_INTERNAL_SCHEMA_PROPS_H
+#define RAPIDJSON_UTILITY_INTERNAL_SCHEMA_PROPS_H
 
 #include <optional>
 #include <string>
 #include <string_view>
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 template <typename T>
 struct SchemaOptions {
@@ -47,6 +47,6 @@ public:
 
 static const auto SchemaOptionsBuilder = internal::SchemaOptionsBuilderClass();
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  //  RAPIDJSON_UTILS_INTERNAL_SCHEMA_PROPS_H
+#endif  //  RAPIDJSON_UTILITY_INTERNAL_SCHEMA_PROPS_H

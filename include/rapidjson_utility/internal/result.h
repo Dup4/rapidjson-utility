@@ -1,10 +1,10 @@
-#ifndef RAPIDJSON_UTILS_INTERNAL_RESULT_H
-#define RAPIDJSON_UTILS_INTERNAL_RESULT_H
+#ifndef RAPIDJSON_UTILITY_INTERNAL_RESULT_H
+#define RAPIDJSON_UTILITY_INTERNAL_RESULT_H
 
 #include <map>
 #include <string>
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 enum class ErrorCode {
     kOK = 0,
@@ -91,6 +91,6 @@ inline Result OtherErrorResult(std::string_view error_message = ErrorCodeToStr.a
     return Result(ErrorCode::kOtherError, error_message);
 }
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_INTERNAL_RESULT_H
+#endif  // RAPIDJSON_UTILITY_INTERNAL_RESULT_H

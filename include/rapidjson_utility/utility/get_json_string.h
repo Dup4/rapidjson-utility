@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_UTILS_GET_JSON_STRING_H
-#define RAPIDJSON_UTILS_UTILS_GET_JSON_STRING_H
+#ifndef RAPIDJSON_UTILITY_UTILS_GET_JSON_STRING_H
+#define RAPIDJSON_UTILITY_UTILS_GET_JSON_STRING_H
 
 #include <string>
 
@@ -8,7 +8,7 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -27,6 +27,6 @@ public:
 
 static const auto GetJsonString = internal::GetJsonStringClass();
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_UTILS_GET_JSON_STRING_H
+#endif  // RAPIDJSON_UTILITY_UTILS_GET_JSON_STRING_H

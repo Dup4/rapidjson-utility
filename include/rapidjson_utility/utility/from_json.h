@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_UTILS_FROM_JSON_H
-#define RAPIDJSON_UTILS_UTILS_FROM_JSON_H
+#ifndef RAPIDJSON_UTILITY_UTILS_FROM_JSON_H
+#define RAPIDJSON_UTILITY_UTILS_FROM_JSON_H
 
 #include <cstdint>
 #include <optional>
@@ -19,7 +19,7 @@
 #include "./get_document.h"
 #include "./get_pretty_parse_error_message.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -246,6 +246,6 @@ private:
 
 static const auto FromJson = internal::FromJsonStringClass();
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_UTILS_FROM_JSON_H
+#endif  // RAPIDJSON_UTILITY_UTILS_FROM_JSON_H

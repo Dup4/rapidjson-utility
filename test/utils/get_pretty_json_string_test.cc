@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
 #include "snapshot/snapshot.h"
 
-#include "rapidjson_utils/rapidjson_utils.h"
+#include "rapidjson_utility/rapidjson_utility.h"
 
 using namespace rapidjson;
-using namespace rapidjson::utils;
+using namespace rapidjson::utility;
 
 class GetPrettyFormatJsonStringTest : public testing::Test {
 protected:

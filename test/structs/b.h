@@ -4,16 +4,16 @@
 
 #include "./a.h"
 
-#include "rapidjson_utils/rapidjson_utils.h"
+#include "rapidjson_utility/rapidjson_utility.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 struct B {
     A a;
 
-    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_BEGIN(B)
-    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_FIELD(a)
-    RAPIDJSON_UTILS_STRUCT_SCHEMA_DECLARE_END
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_BEGIN(B)
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(a)
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_END
 };
 
 class TestCase_B_0 : public TestCase_A_0 {
@@ -239,4 +239,4 @@ public:
     }
 };
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility

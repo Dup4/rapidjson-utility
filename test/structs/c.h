@@ -4,11 +4,11 @@
 #include <string>
 #include <vector>
 
-#include "rapidjson_utils/rapidjson_utils.h"
+#include "rapidjson_utility/rapidjson_utility.h"
 
 #include "./a.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 struct C {
     int int_;
@@ -64,87 +64,88 @@ struct C {
     std::optional<std::vector<std::string>> optional_vector_string_;
 };
 
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_BEGIN(C)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(int_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(unsigned_int_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(int32_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(uint32_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(long_long_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(unsigned_long_long_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(int64_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(uint64_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(bool_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(float_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(double_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(string_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_BEGIN(C)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(int_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(unsigned_int_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(int32_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(uint32_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(long_long_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(unsigned_long_long_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(int64_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(uint64_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(bool_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(float_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(double_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(string_)
 
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_int_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int>::min()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_unsigned_int_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<unsigned int>::max()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_int32_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int32_t>::min()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_uint32_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<uint32_t>::max()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_long_long_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<long long>::min()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_unsigned_long_long_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_unsigned_long_long_,
         SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<unsigned long long>::max()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_int64_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int64_t>::min()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_uint64_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<uint64_t>::max()))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_bool_, SchemaOptionsBuilder.WithDefaultValue(true))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_float_, SchemaOptionsBuilder.WithDefaultValue(1.5))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_bool_, SchemaOptionsBuilder.WithDefaultValue(true))
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_float_, SchemaOptionsBuilder.WithDefaultValue(1.5))
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_double_, SchemaOptionsBuilder.WithDefaultValue(100000000000000.5))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_string_, SchemaOptionsBuilder.WithDefaultValue("string"))
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+        optional_string_, SchemaOptionsBuilder.WithDefaultValue("string"))
 
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_int_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_unsigned_int_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_int32_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_uint32_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_long_long_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_unsigned_long_long_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_int64_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_uint64_t_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_bool_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_float_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_double_)
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_string_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_int_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_unsigned_int_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_int32_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_uint32_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_long_long_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_unsigned_long_long_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_int64_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_uint64_t_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_bool_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_float_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_double_)
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(vector_string_)
 
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int_,
         SchemaOptionsBuilder.WithDefaultValue(
                 std::vector<int>{std::numeric_limits<int>::min(), std::numeric_limits<int>::min()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_int_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_int_,
         SchemaOptionsBuilder.WithDefaultValue(std::vector<unsigned int>{
                 std::numeric_limits<unsigned int>::max(), std::numeric_limits<unsigned int>::max()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int32_t_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int32_t_,
         SchemaOptionsBuilder.WithDefaultValue(
                 std::vector<int32_t>{std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::min()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint32_t_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint32_t_,
         SchemaOptionsBuilder.WithDefaultValue(
                 std::vector<uint32_t>{std::numeric_limits<uint32_t>::max(), std::numeric_limits<uint32_t>::max()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_long_long_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_long_long_,
         SchemaOptionsBuilder.WithDefaultValue(
                 std::vector<long long>{std::numeric_limits<long long>::min(), std::numeric_limits<long long>::min()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_long_long_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_long_long_,
         SchemaOptionsBuilder.WithDefaultValue(std::vector<unsigned long long>{
                 std::numeric_limits<unsigned long long>::max(), std::numeric_limits<unsigned long long>::max()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int64_t_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int64_t_,
         SchemaOptionsBuilder.WithDefaultValue(
                 std::vector<int64_t>{std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::min()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint64_t_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint64_t_,
         SchemaOptionsBuilder.WithDefaultValue(
                 std::vector<uint64_t>{std::numeric_limits<uint64_t>::max(), std::numeric_limits<uint64_t>::max()}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_vector_bool_, SchemaOptionsBuilder.WithDefaultValue(std::vector<bool>{true, true}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_vector_float_, SchemaOptionsBuilder.WithDefaultValue(std::vector<float>{1.5, 1.5}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_double_,
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_double_,
         SchemaOptionsBuilder.WithDefaultValue(std::vector<double>{100000000000000.5, 100000000000000.5}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_vector_string_, SchemaOptionsBuilder.WithDefaultValue(std::vector<std::string>{"string", "string"}))
-RAPIDJSON_UTILS_EXTERNAL_STRUCT_SCHEMA_DECLARE_END
+RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_END
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility

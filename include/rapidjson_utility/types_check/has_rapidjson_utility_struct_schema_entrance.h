@@ -1,12 +1,12 @@
-#ifndef RAPIDJSON_UTILS_TYPES_CHECK_HAS_RAPIDJSON_UTILS_STRUCT_SCHEMA_ENTRANCE_H
-#define RAPIDJSON_UTILS_TYPES_CHECK_HAS_RAPIDJSON_UTILS_STRUCT_SCHEMA_ENTRANCE_H
+#ifndef RAPIDJSON_UTILITY_TYPES_CHECK_HAS_RAPIDJSON_UTILITY_STRUCT_SCHEMA_ENTRANCE_H
+#define RAPIDJSON_UTILITY_TYPES_CHECK_HAS_RAPIDJSON_UTILITY_STRUCT_SCHEMA_ENTRANCE_H
 
 #include <type_traits>
 
 #include "../internal/result.h"
 #include "../internal/schema_options.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -21,7 +21,7 @@ public:
 }  // namespace internal
 
 template <typename T>
-class has_rapidjson_utils_struct_schema_entrance {
+class has_rapidjson_utility_struct_schema_entrance {
 private:
     template <typename U>
     static constexpr auto check(int) -> decltype(U::__RapidJsonUtils_StructSchemaEntrance(std::declval<U*>(),
@@ -38,9 +38,9 @@ public:
 };
 
 template <typename T>
-inline constexpr bool has_rapidjson_utils_struct_schema_entrance_v =
-        has_rapidjson_utils_struct_schema_entrance<T>::value;
+inline constexpr bool has_rapidjson_utility_struct_schema_entrance_v =
+        has_rapidjson_utility_struct_schema_entrance<T>::value;
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_TYPES_CHECK_HAS_RAPIDJSON_UTILS_STRUCT_SCHEMA_ENTRANCE_H
+#endif  // RAPIDJSON_UTILITY_TYPES_CHECK_HAS_RAPIDJSON_UTILITY_STRUCT_SCHEMA_ENTRANCE_H

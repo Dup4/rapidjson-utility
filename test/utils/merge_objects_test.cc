@@ -1,9 +1,9 @@
 #include "gtest/gtest.h"
 #include "snapshot/snapshot.h"
 
-#include "rapidjson_utils/utils/merge_objects.h"
+#include "rapidjson_utility/utility/merge_objects.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 class MergeObjectsTest : public testing::Test {
 protected:
@@ -34,4 +34,4 @@ TEST_F(MergeObjectsTest, merge_objects_test) {
     }
 }
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility

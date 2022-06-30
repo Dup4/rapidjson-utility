@@ -3,14 +3,14 @@
 
 #include <limits>
 
-#include "rapidjson_utils/rapidjson_utils.h"
+#include "rapidjson_utility/rapidjson_utility.h"
 
 #include "../structs/a.h"
 #include "../structs/b.h"
 #include "../structs/c.h"
 #include "../structs/d.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 class ToJsonTest : public testing::Test {
 protected:
@@ -187,4 +187,4 @@ TEST_F(ToJsonTest, to_json_a_and_c_test) {
     }
 }
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility

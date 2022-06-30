@@ -1,7 +1,7 @@
-#ifndef RAPIDJSON_UTILS_INTERNAL_OVERLOAD_H
-#define RAPIDJSON_UTILS_INTERNAL_OVERLOAD_H
+#ifndef RAPIDJSON_UTILITY_INTERNAL_OVERLOAD_H
+#define RAPIDJSON_UTILITY_INTERNAL_OVERLOAD_H
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -31,6 +31,6 @@ typename internal::overload_set<Fs...>::type Overload(Fs... x) {
     return internal::overload_set<Fs...>(x...);
 }
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_INTERNAL_OVERLOAD_H
+#endif  // RAPIDJSON_UTILITY_INTERNAL_OVERLOAD_H

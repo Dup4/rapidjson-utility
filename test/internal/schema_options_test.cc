@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "rapidjson_utils/internal/schema_options.h"
+#include "rapidjson_utility/internal/schema_options.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 class SchemaOptionsTest : public testing::Test {
 protected:
@@ -33,4 +33,4 @@ TEST_F(SchemaOptionsTest, schema_options_test) {
     }
 }
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility

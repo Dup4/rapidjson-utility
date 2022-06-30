@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_UTILS_GET_DOCUMENT_H
-#define RAPIDJSON_UTILS_UTILS_GET_DOCUMENT_H
+#ifndef RAPIDJSON_UTILITY_UTILS_GET_DOCUMENT_H
+#define RAPIDJSON_UTILITY_UTILS_GET_DOCUMENT_H
 
 #include <string_view>
 
@@ -9,7 +9,7 @@
 #include "../internal/result_or.h"
 #include "./get_pretty_parse_error_message.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -32,6 +32,6 @@ public:
 
 static const auto GetDocument = internal::GetDocumentClass();
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_UTILS_GET_DOCUMENT_H
+#endif  // RAPIDJSON_UTILITY_UTILS_GET_DOCUMENT_H

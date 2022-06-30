@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_UTILS_TO_JSON_H
-#define RAPIDJSON_UTILS_UTILS_TO_JSON_H
+#ifndef RAPIDJSON_UTILITY_UTILS_TO_JSON_H
+#define RAPIDJSON_UTILITY_UTILS_TO_JSON_H
 
 #include <string>
 #include <type_traits>
@@ -13,7 +13,7 @@
 #include "./get_json_string.h"
 #include "./get_pretty_json_string.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -70,7 +70,7 @@ public:
             return res;
         }
 
-        return ::rapidjson::utils::GetPrettyJsonString(res.Value());
+        return ::rapidjson::utility::GetPrettyJsonString(res.Value());
     }
 
     template <typename T>
@@ -80,7 +80,7 @@ public:
             return res;
         }
 
-        return ::rapidjson::utils::GetJsonString(res.Value());
+        return ::rapidjson::utility::GetJsonString(res.Value());
     }
 
     template <typename T>
@@ -236,6 +236,6 @@ private:
 
 static const auto ToJson = internal::ToJsonStringClass();
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_UTILS_TO_JSON_H
+#endif  // RAPIDJSON_UTILITY_UTILS_TO_JSON_H

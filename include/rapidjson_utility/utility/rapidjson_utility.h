@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_RAPIDJSON_UTILS_H
-#define RAPIDJSON_UTILS_RAPIDJSON_UTILS_H
+#ifndef RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H
+#define RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H
 
 #include "./from_json.h"                       // IWYU pragma: export
 #include "./get_document.h"                    // IWYU pragma: export
@@ -9,7 +9,7 @@
 #include "./merge_objects.h"                   // IWYU pragma: export
 #include "./to_json.h"                         // IWYU pragma: export
 
-namespace rapidjson::utils::internal {
+namespace rapidjson::utility::internal {
 
 class RapidJsonUtilsClass {
 public:
@@ -22,8 +22,8 @@ public:
     const ToJsonStringClass ToJson{ToJsonStringClass()};
 };
 
-}  // namespace rapidjson::utils::internal
+}  // namespace rapidjson::utility::internal
 
-static const auto RapidJsonUtils = rapidjson::utils::internal::RapidJsonUtilsClass();
+static const auto RapidJsonUtils = rapidjson::utility::internal::RapidJsonUtilsClass();
 
-#endif  // RAPIDJSON_UTILS_RAPIDJSON_UTILS_H
+#endif  // RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H

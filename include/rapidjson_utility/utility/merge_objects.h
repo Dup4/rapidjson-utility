@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILS_UTILS_MERGE_OBJECTS_H
-#define RAPIDJSON_UTILS_UTILS_MERGE_OBJECTS_H
+#ifndef RAPIDJSON_UTILITY_UTILS_MERGE_OBJECTS_H
+#define RAPIDJSON_UTILITY_UTILS_MERGE_OBJECTS_H
 
 #include <string>
 
@@ -10,7 +10,7 @@
 #include "./get_document.h"
 #include "./get_json_string.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -84,6 +84,6 @@ public:
 
 static const auto MergeObjects = internal::MergeObjectsClass();
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_UTILS_MERGE_OBJECTS_H
+#endif  // RAPIDJSON_UTILITY_UTILS_MERGE_OBJECTS_H

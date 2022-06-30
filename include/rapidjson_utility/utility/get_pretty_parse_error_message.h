@@ -1,12 +1,12 @@
-#ifndef RAPIDJSON_UTILS_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H
-#define RAPIDJSON_UTILS_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H
+#ifndef RAPIDJSON_UTILITY_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H
+#define RAPIDJSON_UTILITY_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H
 
 #include <string>
 
 #include "rapidjson/error/en.h"
 #include "rapidjson/error/error.h"
 
-namespace rapidjson::utils {
+namespace rapidjson::utility {
 
 namespace internal {
 
@@ -26,6 +26,6 @@ public:
 
 static const auto GetPrettyParseErrorMessage = internal::GetPrettyParseErrorMessageClass();
 
-}  // namespace rapidjson::utils
+}  // namespace rapidjson::utility
 
-#endif  // RAPIDJSON_UTILS_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H
+#endif  // RAPIDJSON_UTILITY_UTILS_GET_PRETTY_PARSE_ERROR_MESSAGE_H

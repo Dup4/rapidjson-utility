@@ -2,10 +2,10 @@
 
 #include <string>
 
-#include "rapidjson_utils/rapidjson_utils.h"
+#include "rapidjson_utility/rapidjson_utility.h"
 
 using namespace rapidjson;
-using namespace rapidjson::utils;
+using namespace rapidjson::utility;
 
 static void BenchmarkGetPrettyJsonString(benchmark::State& state) {
     std::string json_string = "[";

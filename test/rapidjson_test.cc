@@ -3,7 +3,7 @@
 
 #include "rapidjson/document.h"
 
-#include "rapidjson_utils/rapidjson_utils.h"
+#include "rapidjson_utility/rapidjson_utility.h"
 
 class RapidJsonTest : public testing::Test {
 protected:
@@ -51,7 +51,7 @@ TEST_F(RapidJsonTest, document_test) {
         rapidjson::Document doc;
         doc.SetObject();
         doc.AddMember("test", "dd", doc.GetAllocator());
-        auto json_string = rapidjson::utils::GetJsonString(doc);
+        auto json_string = rapidjson::utility::GetJsonString(doc);
         EXPECT_EQ(json_string, R"({"test":"dd"})");
     }
 
@@ -62,7 +62,7 @@ TEST_F(RapidJsonTest, document_test) {
         value.SetObject();
         value.AddMember("test", "dd", doc.GetAllocator());
         doc.AddMember("test", value, doc.GetAllocator());
-        auto json_string = rapidjson::utils::GetJsonString(doc);
+        auto json_string = rapidjson::utility::GetJsonString(doc);
         EXPECT_EQ(json_string, R"({"test":{"test":"dd"}})");
     }
 
@@ -72,7 +72,7 @@ TEST_F(RapidJsonTest, document_test) {
         doc.PushBack("1", doc.GetAllocator());
         doc.PushBack("2", doc.GetAllocator());
         doc.PushBack("3", doc.GetAllocator());
-        auto json_string = rapidjson::utils::GetJsonString(doc);
+        auto json_string = rapidjson::utility::GetJsonString(doc);
         EXPECT_EQ(json_string, R"(["1","2","3"])");
     }
 
@@ -88,7 +88,7 @@ TEST_F(RapidJsonTest, document_test) {
         };
 
         doc.AddMember("test", get_value(), doc.GetAllocator());
-        auto json_string = rapidjson::utils::GetJsonString(doc);
+        auto json_string = rapidjson::utility::GetJsonString(doc);
         EXPECT_EQ(json_string, R"({"test":{"test":"dd"}})");
     }
 
@@ -106,7 +106,7 @@ TEST_F(RapidJsonTest, document_test) {
 
         doc.AddMember("test", sub_doc, doc.GetAllocator());
 
-        auto json_string = rapidjson::utils::GetJsonString(doc);
+        auto json_string = rapidjson::utility::GetJsonString(doc);
         EXPECT_EQ(json_string, R"({"test":{"test":"dd"}})");
     }
 
@@ -116,7 +116,7 @@ TEST_F(RapidJsonTest, document_test) {
         rapidjson::Document sub_doc;
         sub_doc.SetString("dd");
         doc.PushBack(sub_doc, doc.GetAllocator());
-        auto json_string = rapidjson::utils::GetJsonString(doc);
+        auto json_string = rapidjson::utility::GetJsonString(doc);
         EXPECT_EQ(json_string, R"(["dd"])");
     }
 
@@ -124,7 +124,7 @@ TEST_F(RapidJsonTest, document_test) {
         rapidjson::Document doc;
         doc.SetObject();
 
-        auto sub_doc = std::invoke([]() -> rapidjson::utils::ResultOr<rapidjson::Document> {
+        auto sub_doc = std::invoke([]() -> rapidjson::utility::ResultOr<rapidjson::Document> {
             rapidjson::Document sub_doc;
             sub_doc.SetArray();
 
@@ -134,7 +134,7 @@ TEST_F(RapidJsonTest, document_test) {
             return sub_doc;
         });
 
-        auto sub_doc_1 = std::invoke([]() -> rapidjson::utils::ResultOr<rapidjson::Document> {
+        auto sub_doc_1 = std::invoke([]() -> rapidjson::utility::ResultOr<rapidjson::Document> {
             rapidjson::Document sub_doc_1;
             sub_doc_1.SetArray();
 
@@ -146,7 +146,7 @@ TEST_F(RapidJsonTest, document_test) {
 
         doc.AddMember(rapidjson::Value("test", doc.GetAllocator()).Move(), sub_doc.Value(), doc.GetAllocator());
         doc.AddMember(rapidjson::Value("test_1", doc.GetAllocator()).Move(), sub_doc_1.Value(), doc.GetAllocator());
-        auto json_string = rapidjson::utils::GetJsonString(doc);
+        auto json_string = rapidjson::utility::GetJsonString(doc);
         EXPECT_EQ(json_string, R"({"test":[1,2],"test_1":[3,4]})");
     }
 }
