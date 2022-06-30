@@ -10,7 +10,7 @@
 #include "./get_document.h"
 #include "./get_json_string.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
@@ -84,6 +84,6 @@ public:
 
 static const auto MergeObjects = internal::MergeObjectsClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_UTILITY_MERGE_OBJECTS_H

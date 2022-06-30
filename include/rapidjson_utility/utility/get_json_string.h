@@ -8,15 +8,15 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
 class GetJsonStringClass {
 public:
-    std::string operator()(const Document &doc) const {
-        auto buffer = StringBuffer();
-        auto pretty_writer = Writer<StringBuffer>(buffer);
+    std::string operator()(const rapidjson::Document &doc) const {
+        auto buffer = rapidjson::StringBuffer();
+        auto pretty_writer = rapidjson::Writer<rapidjson::StringBuffer>(buffer);
         doc.Accept(pretty_writer);
 
         return std::string(buffer.GetString());
@@ -27,6 +27,6 @@ public:
 
 static const auto GetJsonString = internal::GetJsonStringClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_UTILITY_GET_JSON_STRING_H

@@ -6,13 +6,13 @@
 #include "rapidjson/error/en.h"
 #include "rapidjson/error/error.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
 class GetPrettyParseErrorMessageClass {
 public:
-    std::string operator()(const ParseResult &parse_result) const {
+    std::string operator()(const rapidjson::ParseResult &parse_result) const {
         if (!parse_result.IsError()) {
             return GetParseError_En(parse_result.Code());
         }
@@ -26,6 +26,6 @@ public:
 
 static const auto GetPrettyParseErrorMessage = internal::GetPrettyParseErrorMessageClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_UTILITY_GET_PRETTY_PARSE_ERROR_MESSAGE_H

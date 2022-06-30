@@ -6,7 +6,7 @@
 #include "../types_check/has_rapidjson_utility_struct_schema_entrance.h"
 #include "./result.h"
 
-namespace rapidjson::utility::internal {
+namespace rapidjson_utility::internal {
 
 class StructInjectEntranceClass {
 public:
@@ -25,6 +25,6 @@ public:
 
 static const auto StructInjectEntrance = StructInjectEntranceClass();
 
-}  // namespace rapidjson::utility::internal
+}  // namespace rapidjson_utility::internal
 
 #endif  // RAPIDJSON_UTILITY_INTERNAL_STRUCT_INJECT_ENTRANCE_H

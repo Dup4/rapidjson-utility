@@ -5,7 +5,7 @@
 
 #include "rapidjson_utility/internal/schema_options.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 class SchemaOptionsTest : public testing::Test {
 protected:
@@ -33,4 +33,4 @@ TEST_F(SchemaOptionsTest, schema_options_test) {
     }
 }
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility

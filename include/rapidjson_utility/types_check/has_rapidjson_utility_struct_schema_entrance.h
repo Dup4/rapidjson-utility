@@ -6,7 +6,7 @@
 #include "../internal/result.h"
 #include "../internal/schema_options.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
@@ -41,6 +41,6 @@ template <typename T>
 inline constexpr bool has_rapidjson_utility_struct_schema_entrance_v =
         has_rapidjson_utility_struct_schema_entrance<T>::value;
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_TYPES_CHECK_HAS_RAPIDJSON_UTILITY_STRUCT_SCHEMA_ENTRANCE_H

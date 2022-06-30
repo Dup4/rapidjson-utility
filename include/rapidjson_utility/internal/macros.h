@@ -13,22 +13,22 @@
 
 #define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_BEGIN(Struct)                                                          \
 private:                                                                                                               \
-    friend class ::rapidjson::utility::has_rapidjson_utility_struct_schema_entrance<Struct>;                           \
-    friend class ::rapidjson::utility::has_rapidjson_utility_struct_schema_entrance<const Struct>;                     \
-    friend class ::rapidjson::utility::internal::StructInjectEntranceClass;                                            \
+    friend class ::rapidjson_utility::has_rapidjson_utility_struct_schema_entrance<Struct>;                            \
+    friend class ::rapidjson_utility::has_rapidjson_utility_struct_schema_entrance<const Struct>;                      \
+    friend class ::rapidjson_utility::internal::StructInjectEntranceClass;                                             \
                                                                                                                        \
     template <typename T, std::enable_if_t<std::is_same_v<Struct, T> || std::is_same_v<const Struct, T>, bool> = true, \
             typename Func>                                                                                             \
     static auto __RapidJsonUtility_StructSchemaEntrance(T* s, Func&& func) {
 //
-#define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(field, ...)                   \
-    {                                                                               \
-        auto options = ::rapidjson::utility::internal::CreateEntranceSchemaOptions( \
-                s, &(s->field), RAPIDJSON_UTILITY_STR(field), ##__VA_ARGS__);       \
-        auto res = func(&(s->field), options);                                      \
-        if (!res.IsOK()) {                                                          \
-            return res;                                                             \
-        }                                                                           \
+#define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(field, ...)                  \
+    {                                                                              \
+        auto options = ::rapidjson_utility::internal::CreateEntranceSchemaOptions( \
+                s, &(s->field), RAPIDJSON_UTILITY_STR(field), ##__VA_ARGS__);      \
+        auto res = func(&(s->field), options);                                     \
+        if (!res.IsOK()) {                                                         \
+            return res;                                                            \
+        }                                                                          \
     }
 
 #define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_END \

@@ -9,7 +9,7 @@
 #include "./merge_objects.h"                   // IWYU pragma: export
 #include "./to_json.h"                         // IWYU pragma: export
 
-namespace rapidjson::utility::internal {
+namespace rapidjson_utility::internal {
 
 class RapidJsonUtilityClass {
 public:
@@ -22,8 +22,8 @@ public:
     const ToJsonStringClass ToJson{ToJsonStringClass()};
 };
 
-}  // namespace rapidjson::utility::internal
+}  // namespace rapidjson_utility::internal
 
-static const auto RapidJsonUtility = rapidjson::utility::internal::RapidJsonUtilityClass();
+static const auto RapidJsonUtility = rapidjson_utility::internal::RapidJsonUtilityClass();
 
 #endif  // RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H

@@ -5,7 +5,7 @@
 #include <string>
 #include <string_view>
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 template <typename T>
 struct SchemaOptions {
@@ -47,6 +47,6 @@ public:
 
 static const auto SchemaOptionsBuilder = internal::SchemaOptionsBuilderClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  //  RAPIDJSON_UTILITY_INTERNAL_SCHEMA_PROPS_H

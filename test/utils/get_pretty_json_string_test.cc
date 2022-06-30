@@ -4,7 +4,7 @@
 #include "rapidjson_utility/rapidjson_utility.h"
 
 using namespace rapidjson;
-using namespace rapidjson::utility;
+using namespace rapidjson_utility;
 
 class GetPrettyFormatJsonStringTest : public testing::Test {
 protected:

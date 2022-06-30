@@ -8,7 +8,7 @@
 
 #include "./a.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 struct C {
     int int_;
@@ -148,4 +148,4 @@ RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(
         optional_vector_string_, SchemaOptionsBuilder.WithDefaultValue(std::vector<std::string>{"string", "string"}))
 RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_END
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility

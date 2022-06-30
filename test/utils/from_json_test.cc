@@ -10,7 +10,7 @@
 #include "../structs/c.h"
 #include "../structs/d.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 class FromJsonTest : public testing::Test {
 protected:
@@ -80,4 +80,4 @@ TEST_F(FromJsonTest, from_json_vector_test) {
     }
 }
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility

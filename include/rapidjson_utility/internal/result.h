@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 enum class ErrorCode {
     kOK = 0,
@@ -91,6 +91,6 @@ inline Result OtherErrorResult(std::string_view error_message = ErrorCodeToStr.a
     return Result(ErrorCode::kOtherError, error_message);
 }
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_INTERNAL_RESULT_H

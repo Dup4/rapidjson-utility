@@ -13,14 +13,14 @@
 #include "./get_json_string.h"
 #include "./get_pretty_json_string.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
 class ToJsonStringClass {
 public:
     template <typename T>
-    ResultOr<Document> GetDocument(T *t, rapidjson::Document &root_doc) const {
+    ResultOr<rapidjson::Document> GetDocument(T *t, rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetObject();
 
@@ -36,14 +36,14 @@ public:
     }
 
     template <typename T>
-    ResultOr<Document> GetDocument(T *t) const {
+    ResultOr<rapidjson::Document> GetDocument(T *t) const {
         rapidjson::Document root_doc;
         return GetDocument(t, root_doc);
     }
 
     template <typename T>
-    ResultOr<Document> GetDocument(const std::vector<T> *t) const {
-        Document doc;
+    ResultOr<rapidjson::Document> GetDocument(const std::vector<T> *t) const {
+        rapidjson::Document doc;
         doc.SetArray();
 
         for (const T &i : *t) {
@@ -59,7 +59,7 @@ public:
     }
 
     template <typename T>
-    ResultOr<Document> GetDocument(std::vector<T> *t) const {
+    ResultOr<rapidjson::Document> GetDocument(std::vector<T> *t) const {
         return GetDocument(static_cast<const std::vector<T> *>(t));
     }
 
@@ -70,7 +70,7 @@ public:
             return res;
         }
 
-        return ::rapidjson::utility::GetPrettyJsonString(res.Value());
+        return ::rapidjson_utility::GetPrettyJsonString(res.Value());
     }
 
     template <typename T>
@@ -80,7 +80,7 @@ public:
             return res;
         }
 
-        return ::rapidjson::utility::GetJsonString(res.Value());
+        return ::rapidjson_utility::GetJsonString(res.Value());
     }
 
     template <typename T>
@@ -90,7 +90,7 @@ public:
 
 private:
     template <typename T, std::enable_if_t<std::is_same_v<bool, std::remove_const_t<T>>, bool> = true, typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, [[maybe_unused]] rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetBool(*t);
@@ -98,7 +98,7 @@ private:
     }
 
     template <typename T, std::enable_if_t<std::is_same_v<float, std::remove_const_t<T>>, bool> = true, typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, [[maybe_unused]] rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetFloat(*t);
@@ -106,7 +106,7 @@ private:
     }
 
     template <typename T, std::enable_if_t<std::is_same_v<double, std::remove_const_t<T>>, bool> = true, typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, [[maybe_unused]] rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetDouble(*t);
@@ -118,7 +118,7 @@ private:
                                      std::is_same_v<int32_t, std::remove_const_t<T>>,
                     bool> = true,
             typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, [[maybe_unused]] rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetInt(*t);
@@ -130,7 +130,7 @@ private:
                                      std::is_same_v<uint32_t, std::remove_const_t<T>>,
                     bool> = true,
             typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, [[maybe_unused]] rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetUint(*t);
@@ -142,7 +142,7 @@ private:
                                      std::is_same_v<int64_t, std::remove_const_t<T>>,
                     bool> = true,
             typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, [[maybe_unused]] rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetInt64(*t);
@@ -154,7 +154,7 @@ private:
                                      std::is_same_v<uint64_t, std::remove_const_t<T>>,
                     bool> = true,
             typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, [[maybe_unused]] rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetUint64(*t);
@@ -163,7 +163,7 @@ private:
 
     template <typename T, std::enable_if_t<std::is_same_v<std::string, std::remove_const_t<T>>, bool> = true,
             typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const T *t, [[maybe_unused]] const F &options, rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetString(t->c_str(), t->length(), root_doc.GetAllocator());
@@ -171,7 +171,8 @@ private:
     }
 
     template <typename T, typename F>
-    ResultOr<Document> getSubDocument(const std::vector<T> *t, const F &options, rapidjson::Document &root_doc) const {
+    ResultOr<rapidjson::Document> getSubDocument(
+            const std::vector<T> *t, const F &options, rapidjson::Document &root_doc) const {
         rapidjson::Document doc;
         doc.SetArray();
 
@@ -188,12 +189,13 @@ private:
     }
 
     template <typename T, typename F>
-    ResultOr<Document> getSubDocument(std::vector<T> *t, const F &options, rapidjson::Document &root_doc) const {
+    ResultOr<rapidjson::Document> getSubDocument(
+            std::vector<T> *t, const F &options, rapidjson::Document &root_doc) const {
         return getSubDocument(static_cast<const std::vector<T> *>(t), options, root_doc);
     }
 
     template <typename T, typename F>
-    ResultOr<Document> getSubDocument(
+    ResultOr<rapidjson::Document> getSubDocument(
             const std::optional<T> *t, const F &options, rapidjson::Document &root_doc) const {
         if (t->has_value()) {
             return getSubDocument(&t->value(), options, root_doc);
@@ -205,12 +207,14 @@ private:
     }
 
     template <typename T, typename F>
-    ResultOr<Document> getSubDocument(std::optional<T> *t, const F &options, rapidjson::Document &root_doc) const {
+    ResultOr<rapidjson::Document> getSubDocument(
+            std::optional<T> *t, const F &options, rapidjson::Document &root_doc) const {
         return getSubDocument(static_cast<const std::optional<T> *>(t), options, root_doc);
     }
 
     template <typename T, std::enable_if_t<!is_basic_type_v<std::remove_const_t<T>>, bool> = true, typename F>
-    ResultOr<Document> getSubDocument(T *t, [[maybe_unused]] const F &options, rapidjson::Document &root_doc) const {
+    ResultOr<rapidjson::Document> getSubDocument(
+            T *t, [[maybe_unused]] const F &options, rapidjson::Document &root_doc) const {
         return GetDocument(t, root_doc);
     }
 
@@ -236,6 +240,6 @@ private:
 
 static const auto ToJson = internal::ToJsonStringClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_UTILITY_TO_JSON_H

@@ -5,7 +5,7 @@
 
 #include "./has_rapidjson_utility_struct_schema_entrance.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 template <typename T>
 class has_rapidjson_utility_external_struct_schema_entrance {
@@ -28,6 +28,6 @@ template <typename T>
 inline constexpr bool has_rapidjson_utility_external_struct_schema_entrance_v =
         has_rapidjson_utility_external_struct_schema_entrance<T>::value;
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_TYPES_CHECK_HAS_RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_ENTRANCE_H

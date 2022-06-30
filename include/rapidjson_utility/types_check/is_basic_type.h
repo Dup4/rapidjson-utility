@@ -4,7 +4,7 @@
 #include <string>
 #include <type_traits>
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 template <typename T>
 inline constexpr bool is_basic_type_v =

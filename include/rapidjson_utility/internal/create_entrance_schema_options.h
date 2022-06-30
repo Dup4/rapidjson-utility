@@ -7,7 +7,7 @@
 #include "./result.h"
 #include "./schema_options.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
@@ -15,7 +15,7 @@ class CreateEntranceSchemaOptionsClass {
 public:
     template <typename T, typename... Opt>
     auto operator()([[maybe_unused]] T* t, std::string_view field_name, Opt&&... opts) const {
-        auto options = rapidjson::utility::SchemaOptions<std::remove_const_t<T>>{};
+        auto options = rapidjson_utility::SchemaOptions<std::remove_const_t<T>>{};
         options.key_name = field_name;
         SchemaOptionsBuilder.ApplySchemaOptions(options, std::forward<Opt>(opts)...);
         return options;
@@ -23,7 +23,7 @@ public:
 
     template <typename T, typename... Opt>
     auto operator()([[maybe_unused]] std::optional<T>* t, std::string_view field_name, Opt&&... opts) const {
-        auto options = rapidjson::utility::SchemaOptions<std::remove_const_t<T>>{};
+        auto options = rapidjson_utility::SchemaOptions<std::remove_const_t<T>>{};
         options.key_name = field_name;
         SchemaOptionsBuilder.ApplySchemaOptions(options, std::forward<Opt>(opts)...);
         return options;
@@ -44,6 +44,6 @@ static const auto CreateEntranceSchemaOptions = internal::CreateEntranceSchemaOp
 
 }  // namespace internal
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_INTERNAL_CREATE_ENTRANCE_SCHEMA_OPTIONS_H

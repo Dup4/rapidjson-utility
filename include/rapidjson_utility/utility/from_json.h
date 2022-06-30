@@ -19,7 +19,7 @@
 #include "./get_document.h"
 #include "./get_pretty_parse_error_message.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
@@ -246,6 +246,6 @@ private:
 
 static const auto FromJson = internal::FromJsonStringClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_UTILITY_FROM_JSON_H

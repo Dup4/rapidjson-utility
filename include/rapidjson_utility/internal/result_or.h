@@ -3,7 +3,7 @@
 
 #include "./result.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 template <typename T>
 class ResultOr : public Result {
@@ -102,6 +102,6 @@ private:
     std::optional<T> value_{std::nullopt};
 };
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_INTERNAL_RESULT_OR_H

@@ -8,7 +8,7 @@
 
 #include "rapidjson_utility/rapidjson_utility.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 struct A {
     int int_;
@@ -923,4 +923,4 @@ public:
     }
 };
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility

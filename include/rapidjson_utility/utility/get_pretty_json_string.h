@@ -12,15 +12,15 @@
 #include "./get_document.h"
 #include "./get_pretty_parse_error_message.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
 class GetPrettyJsonStringClass {
 public:
-    std::string operator()(const Document &doc) const {
-        auto buffer = StringBuffer();
-        auto pretty_writer = PrettyWriter<StringBuffer>(buffer);
+    std::string operator()(const rapidjson::Document &doc) const {
+        auto buffer = rapidjson::StringBuffer();
+        auto pretty_writer = rapidjson::PrettyWriter<rapidjson::StringBuffer>(buffer);
 
         doc.Accept(pretty_writer);
 
@@ -41,6 +41,6 @@ public:
 
 static const auto GetPrettyJsonString = internal::GetPrettyJsonStringClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_UTILITY_GET_PRETTY_JSON_STRING_H

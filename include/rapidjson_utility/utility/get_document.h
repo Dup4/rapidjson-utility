@@ -9,16 +9,16 @@
 #include "../internal/result_or.h"
 #include "./get_pretty_parse_error_message.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 namespace internal {
 
 class GetDocumentClass {
 public:
-    ResultOr<Document> operator()(std::string_view json_string) const {
-        Document doc;
+    ResultOr<rapidjson::Document> operator()(std::string_view json_string) const {
+        rapidjson::Document doc;
 
-        ParseResult err = doc.Parse(json_string.data());
+        rapidjson::ParseResult err = doc.Parse(json_string.data());
 
         if (err.IsError()) {
             return ParseErrorResult(GetPrettyParseErrorMessage(err));
@@ -32,6 +32,6 @@ public:
 
 static const auto GetDocument = internal::GetDocumentClass();
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
 
 #endif  // RAPIDJSON_UTILITY_UTILITY_GET_DOCUMENT_H

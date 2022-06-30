@@ -3,7 +3,7 @@
 
 #include "rapidjson_utility/utility/merge_objects.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 class MergeObjectsTest : public testing::Test {
 protected:
@@ -34,4 +34,4 @@ TEST_F(MergeObjectsTest, merge_objects_test) {
     }
 }
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility

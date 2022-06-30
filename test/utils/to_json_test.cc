@@ -10,7 +10,7 @@
 #include "../structs/c.h"
 #include "../structs/d.h"
 
-namespace rapidjson::utility {
+namespace rapidjson_utility {
 
 class ToJsonTest : public testing::Test {
 protected:
@@ -187,4 +187,4 @@ TEST_F(ToJsonTest, to_json_a_and_c_test) {
     }
 }
 
-}  // namespace rapidjson::utility
+}  // namespace rapidjson_utility
