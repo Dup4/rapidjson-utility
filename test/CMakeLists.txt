@@ -68,6 +68,7 @@ target_link_libraries(
     unit_benchmark
 PRIVATE
     snapshot
+    gtest
     benchmark::benchmark
     benchmark::benchmark_main
 )
