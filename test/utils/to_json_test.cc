@@ -195,7 +195,6 @@ TEST_F(ToJsonTest, to_json_enum_test) {
     {
         F f;
         f.e = FEnum::B;
-
         auto res = ToJson(&f);
         EXPECT_TRUE(res.IsOK());
         auto json_string = res.Value();
