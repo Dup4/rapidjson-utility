@@ -74,17 +74,6 @@ TEST_F(FromJsonTest, from_json_b_and_d_test) {
     }
 }
 
-TEST_F(FromJsonTest, from_json_vector_test) {
-    {
-        auto tc = TestCase_A_1();
-        std::vector<A> a_list;
-        auto res = FromJson(tc.JsonString(), &a_list);
-        EXPECT_TRUE(res.IsOK());
-        EXPECT_EQ(a_list.size(), 2);
-        tc.Expected(a_list);
-    }
-}
-
 TEST_F(FromJsonTest, from_json_required_test) {
     {
         E e;
@@ -140,6 +129,30 @@ TEST_F(FromJsonTest, from_json_map_string_t_test) {
         EXPECT_TRUE(res.IsOK());
 
         tc.Expected(g);
+    }
+}
+
+TEST_F(FromJsonTest, from_json_vector_test) {
+    {
+        auto tc = TestCase_A_1();
+        std::vector<A> a_list;
+        auto res = FromJson(tc.JsonString(), &a_list);
+        EXPECT_TRUE(res.IsOK());
+        EXPECT_EQ(a_list.size(), 2);
+        tc.Expected(a_list);
+    }
+}
+
+TEST_F(FromJsonTest, from_json_map_test) {
+    {
+        auto tc = TestCase_A_2();
+
+        std::map<std::string, A> map_a;
+
+        auto res = FromJson(tc.JsonString(), &map_a);
+        EXPECT_TRUE(res.IsOK());
+
+        tc.Expected(map_a);
     }
 }
 

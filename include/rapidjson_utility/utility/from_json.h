@@ -69,6 +69,30 @@ public:
     }
 
     template <typename T>
+    Result operator()(rapidjson::Document& doc, std::map<std::string, T>* target) const {
+        if (!doc.IsObject()) {
+            return ParseErrorResult("Document is not an object.");
+        }
+
+        for (auto& member : doc.GetObject()) {
+            if (!member.value.IsObject()) {
+                return ParseErrorResult("Object member is not an object.");
+            }
+
+            T target_instance;
+
+            auto res = this->operator()(member.value, &target_instance);
+            if (!res.IsOK()) {
+                return res;
+            }
+
+            target->emplace(member.name.GetString(), std::move(target_instance));
+        }
+
+        return OKResult();
+    }
+
+    template <typename T>
     Result operator()(std::string_view json_string, T* t) const {
         auto doc_res = GetDocument(json_string);
         if (!doc_res.IsOK()) {

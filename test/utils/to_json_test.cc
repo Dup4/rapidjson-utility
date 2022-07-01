@@ -226,4 +226,28 @@ TEST_F(ToJsonTest, to_json_map_string_t_test) {
     }
 }
 
+TEST_F(ToJsonTest, to_json_map_test) {
+    {
+        auto tc = TestCase_A_2();
+
+        auto map_a = tc.Instance();
+
+        {
+            auto res = ToJson(&map_a);
+            EXPECT_TRUE(res.IsOK());
+
+            auto json_string = res.Value();
+            EXPECT_EQ(json_string, tc.ToJsonStringRes());
+        }
+
+        {
+            auto res = ToJson.GetPrettyJsonString(&map_a);
+            EXPECT_TRUE(res.IsOK());
+
+            auto pretty_json_string = res.Value();
+            EXPECT_EQ(pretty_json_string, tc.ToPrettyJsonStringRes());
+        }
+    }
+}
+
 }  // namespace rapidjson_utility

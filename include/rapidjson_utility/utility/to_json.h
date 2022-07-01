@@ -1,8 +1,10 @@
 #ifndef RAPIDJSON_UTILITY_UTILITY_TO_JSON_H
 #define RAPIDJSON_UTILITY_UTILITY_TO_JSON_H
 
+#include <map>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 #include "rapidjson/document.h"
 
@@ -62,6 +64,29 @@ public:
     template <typename T>
     ResultOr<rapidjson::Document> GetDocument(std::vector<T> *t) const {
         return GetDocument(static_cast<const std::vector<T> *>(t));
+    }
+
+    template <typename T>
+    ResultOr<rapidjson::Document> GetDocument(const std::map<std::string, T> *t) const {
+        rapidjson::Document doc;
+        doc.SetObject();
+
+        for (const auto &[k, v] : *t) {
+            auto res = this->GetDocument(&v, doc);
+            if (!res.IsOK()) {
+                return res;
+            }
+
+            doc.AddMember(rapidjson::Value(k.c_str(), k.length(), doc.GetAllocator()).Move(), std::move(res.Value()),
+                    doc.GetAllocator());
+        }
+
+        return doc;
+    }
+
+    template <typename T>
+    ResultOr<rapidjson::Document> GetDocument(std::map<std::string, T> *t) const {
+        return GetDocument(static_cast<const std::map<std::string, T> *>(t));
     }
 
     template <typename T>
@@ -221,8 +246,8 @@ private:
                 return res;
             }
 
-            doc.AddMember(rapidjson::Value(k.c_str(), k.length(), root_doc.GetAllocator()), std::move(res.Value()),
-                    root_doc.GetAllocator());
+            doc.AddMember(rapidjson::Value(k.c_str(), k.length(), root_doc.GetAllocator()).Move(),
+                    std::move(res.Value()), root_doc.GetAllocator());
         }
 
         return doc;
