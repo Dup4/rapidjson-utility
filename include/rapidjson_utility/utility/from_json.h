@@ -216,6 +216,27 @@ private:
         return OKResult();
     }
 
+    template <typename T>
+    Result typeHandle(rapidjson::Value& value, std::map<std::string, T>* target,
+            const internal::SchemaOptionsStruct<std::map<std::string, T>>& options) const {
+        if (!value.IsObject()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected: object");
+        }
+
+        for (auto& item : value.GetObject()) {
+            T target_instance;
+
+            auto res = this->typeHandle(item.value, &target_instance, options);
+            if (!res.IsOK()) {
+                return res;
+            }
+
+            target->emplace(item.name.GetString(), std::move(target_instance));
+        }
+
+        return OKResult();
+    }
+
     template <typename T, typename F>
     Result objectHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.HasMember(options.key_name.c_str())) {
