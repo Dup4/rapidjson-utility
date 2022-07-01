@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
+#include "rapidjson_utility/internal/macros.h"
 #include "snapshot/snapshot.h"
 
 #include <limits>
+#include <string>
 
 #include "rapidjson_utility/rapidjson_utility.h"
 
@@ -9,6 +11,7 @@
 #include "../structs/b.h"
 #include "../structs/c.h"
 #include "../structs/d.h"
+#include "../structs/e.h"
 
 namespace rapidjson_utility {
 
@@ -77,6 +80,36 @@ TEST_F(FromJsonTest, from_json_vector_test) {
         EXPECT_TRUE(res.IsOK());
         EXPECT_EQ(a_list.size(), 2);
         tc.Expected(a_list);
+    }
+}
+
+TEST_F(FromJsonTest, from_json_required_test) {
+    {
+        E e;
+
+        std::string json_string = R"(
+{
+    "b": 3
+}
+        )";
+
+        auto res = FromJson(json_string, &e);
+        EXPECT_EQ(res.Message(), std::string("a not found"));
+    }
+
+    {
+        E e;
+        std::string json_string = R"(
+{
+    "a": 1
+}
+        )";
+
+        auto res = FromJson(json_string, &e);
+        EXPECT_TRUE(res.IsOK());
+
+        EXPECT_EQ(e.a, 1);
+        EXPECT_EQ(e.b, 2);
     }
 }
 

@@ -214,6 +214,8 @@ private:
                 return OKResult();
             } else if (options.required) {
                 return MemberNotFoundErrorResult(options.key_name + " not found");
+            } else {
+                return OKResult();
             }
         }
 

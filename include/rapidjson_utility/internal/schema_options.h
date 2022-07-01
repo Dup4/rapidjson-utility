@@ -33,7 +33,6 @@ public:
         };
     }
 
-    template <typename T>
     static auto WithRequired(bool required = true) {
         return [required](auto& options) {
             options.required = required;
