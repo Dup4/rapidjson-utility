@@ -288,7 +288,8 @@ private:
             }
         }
 
-        doc.AddMember(rapidjson::Value(options.key_name.c_str(), root_doc.GetAllocator()).Move(),
+        doc.AddMember(
+                rapidjson::Value(options.key_name.c_str(), options.key_name.length(), root_doc.GetAllocator()).Move(),
                 std::move(sub_document_res.Value()), root_doc.GetAllocator());
 
         return OKResult();
