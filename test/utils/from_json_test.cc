@@ -133,31 +133,13 @@ TEST_F(FromJsonTest, from_json_enum_test) {
 
 TEST_F(FromJsonTest, from_json_map_string_t_test) {
     {
-        auto tc = TestCase_A_0();
-        std::string json_string = R"(
-{
-    "map_a": {
-        )";
-
-        json_string += R"("a": )";
-        json_string += tc.JsonString();
-
-        json_string += ",";
-
-        json_string += R"("b": )";
-        json_string += tc.JsonString();
-
-        json_string += "}";
-        json_string += "}";
+        auto tc = TestCase_G_0();
 
         G g;
-
-        auto res = FromJson(json_string, &g);
+        auto res = FromJson(tc.JsonString(), &g);
         EXPECT_TRUE(res.IsOK());
-        EXPECT_EQ(g.map_a.size(), 2);
 
-        tc.Expected(g.map_a["a"]);
-        tc.Expected(g.map_a["b"]);
+        tc.Expected(g);
     }
 }
 

@@ -1,3 +1,4 @@
+#include "rapidjson_utility/utility/to_json.h"
 #include "gtest/gtest.h"
 #include "snapshot/snapshot.h"
 
@@ -9,7 +10,9 @@
 #include "../structs/b.h"
 #include "../structs/c.h"
 #include "../structs/d.h"
+#include "../structs/e.h"
 #include "../structs/f.h"
+#include "../structs/g.h"
 
 namespace rapidjson_utility {
 
@@ -196,7 +199,30 @@ TEST_F(ToJsonTest, to_json_enum_test) {
         auto res = ToJson(&f);
         EXPECT_TRUE(res.IsOK());
         auto json_string = res.Value();
-        EXPECT_EQ(json_string, std::string(R"({"e":1})"));
+        EXPECT_EQ(json_string, R"({"e":1})");
+    }
+}
+
+TEST_F(ToJsonTest, to_json_map_string_t_test) {
+    {
+        auto tc = TestCase_G_0();
+        auto g = tc.Instance();
+
+        {
+            auto res = ToJson(&g);
+            EXPECT_TRUE(res.IsOK());
+
+            auto json_string = res.Value();
+            EXPECT_EQ(json_string, tc.ToJsonStringRes());
+        }
+
+        {
+            auto res = ToJson.GetPrettyJsonString(&g);
+            EXPECT_TRUE(res.IsOK());
+
+            auto pretty_json_string = res.Value();
+            EXPECT_EQ(pretty_json_string, tc.ToPrettyJsonStringRes());
+        }
     }
 }
 

@@ -9,6 +9,7 @@
 #include "../internal/result.h"
 #include "../internal/result_or.h"
 #include "../internal/schema_options.h"
+#include "../internal/struct_inject_entrance.h"
 #include "../types_check/index.h"
 #include "./get_json_string.h"
 #include "./get_pretty_json_string.h"
@@ -206,6 +207,31 @@ private:
     ResultOr<rapidjson::Document> getSubDocument(
             std::vector<T> *t, const F &options, rapidjson::Document &root_doc) const {
         return getSubDocument(static_cast<const std::vector<T> *>(t), options, root_doc);
+    }
+
+    template <typename T, typename F>
+    ResultOr<rapidjson::Document> getSubDocument(
+            const std::map<std::string, T> *t, const F &options, rapidjson::Document &root_doc) const {
+        rapidjson::Document doc;
+        doc.SetObject();
+
+        for (const auto &[k, v] : *t) {
+            auto res = getSubDocument(&v, options, root_doc);
+            if (!res.IsOK()) {
+                return res;
+            }
+
+            doc.AddMember(rapidjson::Value(k.c_str(), k.length(), root_doc.GetAllocator()), std::move(res.Value()),
+                    root_doc.GetAllocator());
+        }
+
+        return doc;
+    }
+
+    template <typename T, typename F>
+    ResultOr<rapidjson::Document> getSubDocument(
+            std::map<std::string, T> *t, const F &options, rapidjson::Document &root_doc) const {
+        return getSubDocument(static_cast<const std::map<std::string, T> *>(t), options, root_doc);
     }
 
     template <typename T, typename F>
