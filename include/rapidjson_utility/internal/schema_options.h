@@ -13,6 +13,7 @@ template <typename T>
 struct SchemaOptionsStruct {
     std::string key_name{""};
     std::optional<T> default_value{std::nullopt};
+    bool required{false};
 };
 
 }  // namespace internal
@@ -29,6 +30,13 @@ public:
     static auto WithDefaultValue(T&& default_value) {
         return [default_value = std::forward<T>(default_value)](auto& options) {
             options.default_value = default_value;
+        };
+    }
+
+    template <typename T>
+    static auto WithRequired(bool required = true) {
+        return [required](auto& options) {
+            options.required = required;
         };
     }
 

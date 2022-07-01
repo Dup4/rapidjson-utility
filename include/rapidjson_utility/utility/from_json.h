@@ -212,7 +212,7 @@ private:
             if (options.default_value.has_value()) {
                 *target = options.default_value.value();
                 return OKResult();
-            } else {
+            } else if (options.required) {
                 return MemberNotFoundErrorResult(options.key_name + " not found");
             }
         }
