@@ -78,26 +78,25 @@ struct A {
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(string_)
 
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_int_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int>::min()))
+            optional_int_, SchemaOptions::WithDefaultValue(std::numeric_limits<int>::min()))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_unsigned_int_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<unsigned int>::max()))
+            optional_unsigned_int_, SchemaOptions::WithDefaultValue(std::numeric_limits<unsigned int>::max()))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_int32_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int32_t>::min()))
+            optional_int32_t_, SchemaOptions::WithDefaultValue(std::numeric_limits<int32_t>::min()))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_uint32_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<uint32_t>::max()))
+            optional_uint32_t_, SchemaOptions::WithDefaultValue(std::numeric_limits<uint32_t>::max()))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_long_long_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<long long>::min()))
+            optional_long_long_, SchemaOptions::WithDefaultValue(std::numeric_limits<long long>::min()))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_unsigned_long_long_,
-            SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<unsigned long long>::max()))
+            SchemaOptions::WithDefaultValue(std::numeric_limits<unsigned long long>::max()))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_int64_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<int64_t>::min()))
+            optional_int64_t_, SchemaOptions::WithDefaultValue(std::numeric_limits<int64_t>::min()))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_uint64_t_, SchemaOptionsBuilder.WithDefaultValue(std::numeric_limits<uint64_t>::max()))
-    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_bool_, SchemaOptionsBuilder.WithDefaultValue(true))
-    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_float_, SchemaOptionsBuilder.WithDefaultValue(1.5))
-    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_double_, SchemaOptionsBuilder.WithDefaultValue(100000000000000.5))
-    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_string_, SchemaOptionsBuilder.WithDefaultValue("string"))
+            optional_uint64_t_, SchemaOptions::WithDefaultValue(std::numeric_limits<uint64_t>::max()))
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_bool_, SchemaOptions::WithDefaultValue(true))
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_float_, SchemaOptions::WithDefaultValue(1.5))
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_double_, SchemaOptions::WithDefaultValue(100000000000000.5))
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_string_, SchemaOptions::WithDefaultValue("string"))
 
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(vector_int_)
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(vector_unsigned_int_)
@@ -113,37 +112,37 @@ struct A {
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(vector_string_)
 
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int_,
-            SchemaOptionsBuilder.WithDefaultValue(
+            SchemaOptions::WithDefaultValue(
                     std::vector<int>{std::numeric_limits<int>::min(), std::numeric_limits<int>::min()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_int_,
-            SchemaOptionsBuilder.WithDefaultValue(std::vector<unsigned int>{
+            SchemaOptions::WithDefaultValue(std::vector<unsigned int>{
                     std::numeric_limits<unsigned int>::max(), std::numeric_limits<unsigned int>::max()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int32_t_,
-            SchemaOptionsBuilder.WithDefaultValue(
+            SchemaOptions::WithDefaultValue(
                     std::vector<int32_t>{std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::min()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint32_t_,
-            SchemaOptionsBuilder.WithDefaultValue(
+            SchemaOptions::WithDefaultValue(
                     std::vector<uint32_t>{std::numeric_limits<uint32_t>::max(), std::numeric_limits<uint32_t>::max()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_long_long_,
-            SchemaOptionsBuilder.WithDefaultValue(std::vector<long long>{
+            SchemaOptions::WithDefaultValue(std::vector<long long>{
                     std::numeric_limits<long long>::min(), std::numeric_limits<long long>::min()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_unsigned_long_long_,
-            SchemaOptionsBuilder.WithDefaultValue(std::vector<unsigned long long>{
+            SchemaOptions::WithDefaultValue(std::vector<unsigned long long>{
                     std::numeric_limits<unsigned long long>::max(), std::numeric_limits<unsigned long long>::max()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_int64_t_,
-            SchemaOptionsBuilder.WithDefaultValue(
+            SchemaOptions::WithDefaultValue(
                     std::vector<int64_t>{std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::min()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_uint64_t_,
-            SchemaOptionsBuilder.WithDefaultValue(
+            SchemaOptions::WithDefaultValue(
                     std::vector<uint64_t>{std::numeric_limits<uint64_t>::max(), std::numeric_limits<uint64_t>::max()}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_vector_bool_, SchemaOptionsBuilder.WithDefaultValue(std::vector<bool>{true, true}))
+            optional_vector_bool_, SchemaOptions::WithDefaultValue(std::vector<bool>{true, true}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
-            optional_vector_float_, SchemaOptionsBuilder.WithDefaultValue(std::vector<float>{1.5, 1.5}))
+            optional_vector_float_, SchemaOptions::WithDefaultValue(std::vector<float>{1.5, 1.5}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_double_,
-            SchemaOptionsBuilder.WithDefaultValue(std::vector<double>{100000000000000.5, 100000000000000.5}))
-    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(optional_vector_string_,
-            SchemaOptionsBuilder.WithDefaultValue(std::vector<std::string>{"string", "string"}))
+            SchemaOptions::WithDefaultValue(std::vector<double>{100000000000000.5, 100000000000000.5}))
+    RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(
+            optional_vector_string_, SchemaOptions::WithDefaultValue(std::vector<std::string>{"string", "string"}))
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_END
 };
 

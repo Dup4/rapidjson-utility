@@ -14,10 +14,9 @@ protected:
 
 TEST_F(SchemaOptionsTest, schema_options_test) {
     {
-        SchemaOptions<int> o;
+        internal::SchemaOptionsStruct<int> o;
 
-        SchemaOptionsBuilder.ApplySchemaOptions(
-                o, SchemaOptionsBuilder.WithKeyName("key"), SchemaOptionsBuilder.WithDefaultValue(1));
+        SchemaOptions::ApplySchemaOptions(o, SchemaOptions::WithKeyName("key"), SchemaOptions::WithDefaultValue(1));
 
         EXPECT_EQ(o.key_name, "key");
         EXPECT_TRUE(o.default_value.has_value());
@@ -25,8 +24,8 @@ TEST_F(SchemaOptionsTest, schema_options_test) {
     }
 
     {
-        SchemaOptions<std::vector<int>> o;
-        SchemaOptionsBuilder.ApplySchemaOptions(o, SchemaOptionsBuilder.WithDefaultValue(std::vector<int>({1, 2, 3})));
+        internal::SchemaOptionsStruct<std::vector<int>> o;
+        SchemaOptions::ApplySchemaOptions(o, SchemaOptions::WithDefaultValue(std::vector<int>({1, 2, 3})));
         EXPECT_TRUE(o.default_value.has_value());
         auto expected = std::vector<int>({1, 2, 3});
         EXPECT_EQ(*o.default_value, expected);

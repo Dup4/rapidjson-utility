@@ -186,8 +186,8 @@ private:
     }
 
     template <typename T>
-    Result typeHandle(
-            rapidjson::Value& value, std::vector<T>* target, const SchemaOptions<std::vector<T>>& options) const {
+    Result typeHandle(rapidjson::Value& value, std::vector<T>* target,
+            const internal::SchemaOptionsStruct<std::vector<T>>& options) const {
         if (!value.IsArray()) {
             return ParseErrorResult(options.key_name + " type invalid, expected: array");
         }
@@ -222,7 +222,8 @@ private:
     }
 
     template <typename T>
-    Result objectHandle(rapidjson::Value& value, std::optional<T>* target, const SchemaOptions<T>& options) const {
+    Result objectHandle(
+            rapidjson::Value& value, std::optional<T>* target, const internal::SchemaOptionsStruct<T>& options) const {
         if (!value.HasMember(options.key_name.c_str())) {
             if (options.default_value.has_value()) {
                 *target = options.default_value.value();
