@@ -12,6 +12,7 @@
 #include "../structs/c.h"
 #include "../structs/d.h"
 #include "../structs/e.h"
+#include "../structs/f.h"
 
 namespace rapidjson_utility {
 
@@ -110,6 +111,22 @@ TEST_F(FromJsonTest, from_json_required_test) {
 
         EXPECT_EQ(e.a, 1);
         EXPECT_EQ(e.b, 2);
+    }
+}
+
+TEST_F(FromJsonTest, from_json_enum_test) {
+    {
+        F f;
+        std::string json_string = R"(
+{
+    "e": 1
+}
+        )";
+
+        auto res = FromJson(json_string, &f);
+        EXPECT_TRUE(res.IsOK());
+
+        EXPECT_EQ(f.e, FEnum::B);
     }
 }
 

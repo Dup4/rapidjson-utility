@@ -176,6 +176,16 @@ private:
         return OKResult();
     }
 
+    template <typename T, std::enable_if_t<std::is_enum_v<T>, bool> = true, typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsNumber()) {
+            return ParseErrorResult(options.key_name + " type invalid, expected: number");
+        }
+
+        *target = static_cast<T>(value.GetInt());
+        return OKResult();
+    }
+
     template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsObject()) {
