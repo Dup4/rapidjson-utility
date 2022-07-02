@@ -40,8 +40,18 @@ public:
 
     template <typename T>
     ResultOr<rapidjson::Document> GetDocument(T *t) const {
-        rapidjson::Document root_doc;
-        return GetDocument(t, root_doc);
+        rapidjson::Document doc;
+        doc.SetObject();
+
+        auto res = StructInjectEntrance(t, [&doc, this](auto &&t, auto &&options) -> Result {
+            return this->handleObject(t, doc, options, doc);
+        });
+
+        if (!res.IsOK()) {
+            return res;
+        }
+
+        return doc;
     }
 
     template <typename T>

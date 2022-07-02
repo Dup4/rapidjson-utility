@@ -1,6 +1,9 @@
 #ifndef RAPIDJSON_UTILITY_INTERNAL_RESULT_OR_H
 #define RAPIDJSON_UTILITY_INTERNAL_RESULT_OR_H
 
+#include <optional>
+#include <type_traits>
+
 #include "./result.h"
 
 namespace rapidjson_utility {
@@ -14,21 +17,15 @@ public:
 
     ResultOr(Result&& result) : Result(result) {}
 
-    template <typename F>
-    ResultOr(const ResultOr<F>& other) : Result(other) {}
-
     ResultOr(const ResultOr<T>& other) : Result(other), value_(other.value_) {}
 
-    template <typename F>
-    ResultOr(ResultOr<F>&& other) : Result(other) {}
+    template <typename F, std::enable_if_t<!std::is_same_v<F, T>, bool> = true>
+    ResultOr(const ResultOr<F>& other) : Result(other) {}
 
     ResultOr(ResultOr<T>&& other) : Result(other), value_(std::move(other.value_)) {}
 
-    template <typename F>
-    ResultOr<T>& operator=(const ResultOr<F>& other) {
-        Result::operator=(other);
-        return *this;
-    }
+    template <typename F, std::enable_if_t<!std::is_same_v<F, T>, bool> = true>
+    ResultOr(ResultOr<F>&& other) : Result(other) {}
 
     ResultOr<T>& operator=(const ResultOr<T>& other) {
         Result::operator=(other);
@@ -36,8 +33,8 @@ public:
         return *this;
     }
 
-    template <typename F>
-    ResultOr<T>& operator=(ResultOr<F>&& other) {
+    template <typename F, std::enable_if_t<!std::is_same_v<F, T>, bool> = true>
+    ResultOr<T>& operator=(const ResultOr<F>& other) {
         Result::operator=(other);
         return *this;
     }
@@ -45,6 +42,12 @@ public:
     ResultOr<T>& operator=(ResultOr<T>&& other) {
         Result::operator=(other);
         value_ = std::move(other.value_);
+        return *this;
+    }
+
+    template <typename F, std::enable_if_t<!std::is_same_v<F, T>, bool> = true>
+    ResultOr<T>& operator=(ResultOr<F>&& other) {
+        Result::operator=(other);
         return *this;
     }
 
