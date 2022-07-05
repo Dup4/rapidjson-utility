@@ -21,14 +21,14 @@ private:                                                                        
             typename Func>                                                                                             \
     static auto __RapidJsonUtility_StructSchemaEntrance(T* s, Func&& func) {
 //
-#define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(field, ...)                  \
-    {                                                                              \
-        auto options = ::rapidjson_utility::internal::CreateEntranceSchemaOptions( \
-                s, &(s->field), RAPIDJSON_UTILITY_STR(field), ##__VA_ARGS__);      \
-        auto res = func(&(s->field), options);                                     \
-        if (!res.IsOK()) {                                                         \
-            return res;                                                            \
-        }                                                                          \
+#define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(field, ...)                               \
+    {                                                                                           \
+        static const auto options = ::rapidjson_utility::internal::CreateEntranceSchemaOptions( \
+                s, &(s->field), RAPIDJSON_UTILITY_STR(field), ##__VA_ARGS__);                   \
+        auto res = func(&(s->field), options);                                                  \
+        if (!res.IsOK()) {                                                                      \
+            return res;                                                                         \
+        }                                                                                       \
     }
 
 #define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_END \
