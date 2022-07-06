@@ -17,7 +17,8 @@ public:
         } else if constexpr (has_rapidjson_utility_external_struct_schema_entrance_v<T>) {
             return __RapidJsonUtilityExternal_StructSchemaEntrance(t, func);
         } else {
-            static_assert(false_v<T>,
+            static_assert(
+                    false_v<T>,
                     "T does not have T::__RapidJsonUtility_StructSchemaEntrance() member function or __RapidJsonUtilityExternal_StructSchemaEntrance() external function");
         }
     }

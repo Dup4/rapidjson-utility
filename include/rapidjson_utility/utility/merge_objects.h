@@ -6,7 +6,6 @@
 #include "rapidjson/document.h"
 
 #include "../internal/result.h"
-#include "../internal/result_or.h"
 #include "./get_document.h"
 #include "./get_json_string.h"
 
@@ -16,8 +15,9 @@ namespace internal {
 
 class MergeObjectsClass {
 public:
-    Result operator()(rapidjson::Value& dstObject, rapidjson::Value& srcObject,
-            rapidjson::Document::AllocatorType& allocator) const {
+    Result operator()(rapidjson::Value& dstObject,
+                      rapidjson::Value& srcObject,
+                      rapidjson::Document::AllocatorType& allocator) const {
         for (auto srcIt = srcObject.MemberBegin(); srcIt != srcObject.MemberEnd(); ++srcIt) {
             auto dstIt = dstObject.FindMember(srcIt->name);
             if (dstIt == dstObject.MemberEnd()) {
@@ -31,13 +31,17 @@ public:
                 dstName.CopyFrom(srcIt->name, allocator);
                 dstIt = dstObject.FindMember(dstName);
                 if (dstIt == dstObject.MemberEnd()) {
-                    return OtherErrorResult("append element failed");
+                    return Result::Builder(Result::ErrorCode::OtherError)
+                            .WithErrorMessage("append element failed")
+                            .Build();
                 }
             } else {
                 auto srcT = srcIt->value.GetType();
                 auto dstT = dstIt->value.GetType();
                 if (srcT != dstT) {
-                    return OtherErrorResult("srcType not equal to dstType");
+                    return Result::Builder(Result::ErrorCode::OtherError)
+                            .WithErrorMessage("srcType not equal to dstType")
+                            .Build();
                 }
 
                 if (srcIt->value.IsArray()) {
@@ -57,7 +61,7 @@ public:
             }
         }
 
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     ResultOr<std::string> operator()(std::string_view dst, std::string_view src) const {

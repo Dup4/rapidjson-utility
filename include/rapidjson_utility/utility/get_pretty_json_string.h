@@ -8,7 +8,7 @@
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 
-#include "../internal/result_or.h"
+#include "../internal/result.h"
 #include "./get_document.h"
 #include "./get_pretty_parse_error_message.h"
 

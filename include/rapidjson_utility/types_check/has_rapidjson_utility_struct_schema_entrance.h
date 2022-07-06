@@ -14,7 +14,7 @@ class FakeEntranceFunc {
 public:
     template <typename T, typename F>
     Result operator()([[maybe_unused]] T* t, [[maybe_unused]] const F& options) const {
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 };
 
@@ -24,9 +24,10 @@ template <typename T>
 class has_rapidjson_utility_struct_schema_entrance {
 private:
     template <typename U>
-    static constexpr auto check(int) -> decltype(U::__RapidJsonUtility_StructSchemaEntrance(std::declval<U*>(),
-                                                         std::declval<internal::FakeEntranceFunc>()),
-            std::true_type());
+    static constexpr auto check(int)
+            -> decltype(U::__RapidJsonUtility_StructSchemaEntrance(std::declval<U*>(),
+                                                                   std::declval<internal::FakeEntranceFunc>()),
+                        std::true_type());
 
     template <typename>
     static constexpr std::false_type check(...);

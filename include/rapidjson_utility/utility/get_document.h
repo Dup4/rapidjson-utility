@@ -6,7 +6,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/error/error.h"
 
-#include "../internal/result_or.h"
+#include "../internal/result.h"
 #include "./get_pretty_parse_error_message.h"
 
 namespace rapidjson_utility {
@@ -21,7 +21,9 @@ public:
         rapidjson::ParseResult err = doc.Parse(json_string.data());
 
         if (err.IsError()) {
-            return ParseErrorResult(GetPrettyParseErrorMessage(err));
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(GetPrettyParseErrorMessage(err))
+                    .Build();
         }
 
         return std::move(doc);

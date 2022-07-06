@@ -23,23 +23,32 @@ FetchContent_Declare(
     GIT_TAG v1.1.0
 )
 
+FetchContent_Declare(
+    result_cpp
+    GIT_REPOSITORY https://github.com/Dup4/result-cpp.git
+    GIT_TAG v0.0.0
+)
+
 set(RAPIDJSON_BUILD_DOC OFF CACHE INTERNAL "")
 set(RAPIDJSON_BUILD_EXAMPLES OFF CACHE INTERNAL "")
 set(RAPIDJSON_BUILD_TESTS OFF CACHE INTERNAL "")
 
-FetchContent_MakeAvailable(rapidjson)
-FetchContent_GetProperties(rapidjson)
+FetchContent_MakeAvailable(rapidjson result_cpp)
+FetchContent_GetProperties(rapidjson result_cpp)
 set(RAPIDJSON_INCLUDE_DIR ${rapidjson_SOURCE_DIR}/include)
+set(RESULT_CPP_INCLUDE_DIR ${result_cpp_SOURCE_DIR}/include)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/include/
     ${RAPIDJSON_INCLUDE_DIR}
+    ${RESULT_CPP_INCLUDE_DIR}
 )
 
 add_library(rapidjson-utility INTERFACE)
 target_include_directories(rapidjson-utility INTERFACE
     ${PROJECT_SOURCE_DIR}/include/
     ${RAPIDJSON_INCLUDE_DIR}
+    ${RESULT_CPP_INCLUDE_DIR}
 )
 
 if(RAPIDJSON_UTILITY_BUILD_TESTS)

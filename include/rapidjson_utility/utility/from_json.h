@@ -11,7 +11,6 @@
 
 #include "../internal/overload.h"
 #include "../internal/result.h"
-#include "../internal/result_or.h"
 #include "../internal/schema_options.h"
 #include "../internal/struct_inject_entrance.h"
 #include "../types_check/index.h"
@@ -37,7 +36,9 @@ public:
     template <typename T>
     Result operator()(rapidjson::Document& doc, T* t) const {
         if (!doc.IsObject()) {
-            return ParseErrorResult("Document is not an object.");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage("Document is not an object.")
+                    .Build();
         }
 
         rapidjson::Value value = doc.GetObject();
@@ -47,12 +48,14 @@ public:
     template <typename T>
     Result operator()(rapidjson::Document& doc, std::vector<T>* target) const {
         if (!doc.IsArray()) {
-            return ParseErrorResult("Document is not an array.");
+            return Result::Builder(Result::ErrorCode::ParseError).WithErrorMessage("Document is not an array.").Build();
         }
 
         for (rapidjson::Value& item : doc.GetArray()) {
             if (!item.IsObject()) {
-                return ParseErrorResult("Array item is not an object.");
+                return Result::Builder(Result::ErrorCode::ParseError)
+                        .WithErrorMessage("Array item is not an object.")
+                        .Build();
             }
 
             T target_instance;
@@ -65,18 +68,22 @@ public:
             target->push_back(target_instance);
         }
 
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T>
     Result operator()(rapidjson::Document& doc, std::map<std::string, T>* target) const {
         if (!doc.IsObject()) {
-            return ParseErrorResult("Document is not an object.");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage("Document is not an object.")
+                    .Build();
         }
 
         for (auto& member : doc.GetObject()) {
             if (!member.value.IsObject()) {
-                return ParseErrorResult("Object member is not an object.");
+                return Result::Builder(Result::ErrorCode::ParseError)
+                        .WithErrorMessage("Object member is not an object.")
+                        .Build();
             }
 
             T target_instance;
@@ -89,7 +96,7 @@ public:
             target->emplace(member.name.GetString(), std::move(target_instance));
         }
 
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T>
@@ -118,112 +125,138 @@ private:
     template <typename T, std::enable_if_t<std::is_same_v<bool, T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsBool()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected bool");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected bool")
+                    .Build();
         }
 
         *target = value.GetBool();
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T, std::enable_if_t<std::is_same_v<float, T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsFloat()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected float");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected float")
+                    .Build();
         }
 
         *target = value.GetFloat();
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T, std::enable_if_t<std::is_same_v<double, T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsDouble()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected double");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected double")
+                    .Build();
         }
 
         *target = value.GetDouble();
-        return OKResult();
-    }
-
-    template <typename T, std::enable_if_t<std::is_same_v<int, T> || std::is_same_v<int32_t, T>, bool> = true,
-            typename F>
-    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
-        if (!value.IsInt()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: int32_t");
-        }
-
-        *target = value.GetInt();
-        return OKResult();
-    }
-
-    template <typename T, std::enable_if_t<std::is_same_v<unsigned int, T> || std::is_same_v<uint32_t, T>, bool> = true,
-            typename F>
-    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
-        if (!value.IsUint()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: uint32_t");
-        }
-
-        *target = value.GetUint();
-        return OKResult();
-    }
-
-    template <typename T, std::enable_if_t<std::is_same_v<long long, T> || std::is_same_v<int64_t, T>, bool> = true,
-            typename F>
-    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
-        if (!value.IsInt64()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: int64_t");
-        }
-
-        *target = value.GetInt64();
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T,
-            std::enable_if_t<std::is_same_v<unsigned long long, T> || std::is_same_v<uint64_t, T>, bool> = true,
-            typename F>
+              std::enable_if_t<std::is_same_v<int, T> || std::is_same_v<int32_t, T>, bool> = true,
+              typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsInt()) {
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected int")
+                    .Build();
+        }
+
+        *target = value.GetInt();
+        return Result::Builder(Result::ErrorCode::OK).Build();
+    }
+
+    template <typename T,
+              std::enable_if_t<std::is_same_v<unsigned int, T> || std::is_same_v<uint32_t, T>, bool> = true,
+              typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsUint()) {
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected uint32_t")
+                    .Build();
+        }
+
+        *target = value.GetUint();
+        return Result::Builder(Result::ErrorCode::OK).Build();
+    }
+
+    template <typename T,
+              std::enable_if_t<std::is_same_v<long long, T> || std::is_same_v<int64_t, T>, bool> = true,
+              typename F>
+    Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
+        if (!value.IsInt64()) {
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected int64_t")
+                    .Build();
+        }
+
+        *target = value.GetInt64();
+        return Result::Builder(Result::ErrorCode::OK).Build();
+    }
+
+    template <typename T,
+              std::enable_if_t<std::is_same_v<unsigned long long, T> || std::is_same_v<uint64_t, T>, bool> = true,
+              typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsUint64()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: uint64_t");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected uint64_t")
+                    .Build();
         }
 
         *target = value.GetUint64();
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename F>
     Result typeHandle(rapidjson::Value& value, std::string* target, const F& options) const {
         if (!value.IsString()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: string");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected std::string")
+                    .Build();
         }
 
         *target = std::string(value.GetString());
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T, std::enable_if_t<std::is_enum_v<T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsNumber()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: number");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected number")
+                    .Build();
         }
 
         *target = static_cast<T>(value.GetInt());
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T, std::enable_if_t<!is_basic_type_v<T>, bool> = true, typename F>
     Result typeHandle(rapidjson::Value& value, T* target, const F& options) const {
         if (!value.IsObject()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: object");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected object")
+                    .Build();
         }
 
         return this->operator()(value, target);
     }
 
     template <typename T>
-    Result typeHandle(rapidjson::Value& value, std::vector<T>* target,
-            const internal::SchemaOptionsStruct<std::vector<T>>& options) const {
+    Result typeHandle(rapidjson::Value& value,
+                      std::vector<T>* target,
+                      const internal::SchemaOptionsStruct<std::vector<T>>& options) const {
         if (!value.IsArray()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: array");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected array")
+                    .Build();
         }
 
         for (rapidjson::Value& item : value.GetArray()) {
@@ -237,14 +270,17 @@ private:
             target->push_back(target_instance);
         }
 
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T>
-    Result typeHandle(rapidjson::Value& value, std::map<std::string, T>* target,
-            const internal::SchemaOptionsStruct<std::map<std::string, T>>& options) const {
+    Result typeHandle(rapidjson::Value& value,
+                      std::map<std::string, T>* target,
+                      const internal::SchemaOptionsStruct<std::map<std::string, T>>& options) const {
         if (!value.IsObject()) {
-            return ParseErrorResult(options.key_name + " type invalid, expected: object");
+            return Result::Builder(Result::ErrorCode::ParseError)
+                    .WithErrorMessage(options.key_name + " type invalid, expected object")
+                    .Build();
         }
 
         for (auto& item : value.GetObject()) {
@@ -258,7 +294,7 @@ private:
             target->emplace(item.name.GetString(), std::move(target_instance));
         }
 
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 
     template <typename T, typename F>
@@ -266,11 +302,13 @@ private:
         if (!value.HasMember(options.key_name.c_str())) {
             if (options.default_value.has_value()) {
                 *target = options.default_value.value();
-                return OKResult();
+                return Result::Builder(Result::ErrorCode::OK).Build();
             } else if (options.required) {
-                return MemberNotFoundErrorResult(options.key_name + " not found");
+                return Result::Builder(Result::ErrorCode::ParseError)
+                        .WithErrorMessage(options.key_name + " not found")
+                        .Build();
             } else {
-                return OKResult();
+                return Result::Builder(Result::ErrorCode::OK).Build();
             }
         }
 
@@ -279,8 +317,9 @@ private:
     }
 
     template <typename T>
-    Result objectHandle(
-            rapidjson::Value& value, std::optional<T>* target, const internal::SchemaOptionsStruct<T>& options) const {
+    Result objectHandle(rapidjson::Value& value,
+                        std::optional<T>* target,
+                        const internal::SchemaOptionsStruct<T>& options) const {
         if (!value.HasMember(options.key_name.c_str())) {
             if (options.default_value.has_value()) {
                 *target = options.default_value.value();
@@ -296,7 +335,7 @@ private:
             *target = options.default_value;
         }
 
-        return OKResult();
+        return Result::Builder(Result::ErrorCode::OK).Build();
     }
 };
 
