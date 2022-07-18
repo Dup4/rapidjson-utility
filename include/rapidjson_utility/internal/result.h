@@ -11,6 +11,7 @@ namespace rapidjson_utility {
 
 enum class ErrorCode {
     OK = 0,
+    NestedError,
     ParseError,
     MemberNotFoundError,
     ValidateError,
@@ -20,6 +21,7 @@ enum class ErrorCode {
 inline auto ErrorCodeToStr(ErrorCode error_code) {
     static const std::map<ErrorCode, std::string> ErrorCodeToStrMap = {
             {ErrorCode::OK, "OK"},
+            {ErrorCode::NestedError, "NestedError"},
             {ErrorCode::ParseError, "ParseError"},
             {ErrorCode::MemberNotFoundError, "MemberNotFoundError"},
             {ErrorCode::ValidateError, "ValidateError"},

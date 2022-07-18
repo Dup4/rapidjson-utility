@@ -26,7 +26,7 @@ FetchContent_Declare(
 FetchContent_Declare(
     result_cpp
     GIT_REPOSITORY https://github.com/Dup4/result-cpp.git
-    GIT_TAG v0.0.0
+    GIT_TAG v0.0.9
 )
 
 set(RAPIDJSON_BUILD_DOC OFF CACHE INTERNAL "")
