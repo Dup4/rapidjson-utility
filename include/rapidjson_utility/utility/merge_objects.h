@@ -8,6 +8,7 @@
 #include "../internal/result.h"
 #include "./get_document.h"
 #include "./get_json_string.h"
+#include "result/macros.h"
 
 namespace rapidjson_utility {
 
@@ -31,17 +32,19 @@ public:
                 dstName.CopyFrom(srcIt->name, allocator);
                 dstIt = dstObject.FindMember(dstName);
                 if (dstIt == dstObject.MemberEnd()) {
-                    return Result::Builder(Result::ErrorCode::OtherError)
-                            .WithErrorMessage("append element failed")
-                            .Build();
+                    auto res = Result::Builder(Result::ErrorCode::OtherError)
+                                       .WithErrorMessage("append element failed")
+                                       .Build();
+                    RESULT_DIRECT_RETURN(res);
                 }
             } else {
                 auto srcT = srcIt->value.GetType();
                 auto dstT = dstIt->value.GetType();
                 if (srcT != dstT) {
-                    return Result::Builder(Result::ErrorCode::OtherError)
-                            .WithErrorMessage("srcType not equal to dstType")
-                            .Build();
+                    auto res = Result::Builder(Result::ErrorCode::OtherError)
+                                       .WithErrorMessage("srcType not equal to dstType")
+                                       .Build();
+                    RESULT_DIRECT_RETURN(res);
                 }
 
                 if (srcIt->value.IsArray()) {
@@ -51,36 +54,23 @@ public:
                         dstIt->value.PushBack(dstVal, allocator);
                     }
                 } else if (srcIt->value.IsObject()) {
-                    auto res = operator()(dstIt->value, srcIt->value, allocator);
-                    if (!res.IsOK()) {
-                        return res;
-                    }
+                    RESULT_OK_OR_RETURN(this->operator()(dstIt->value, srcIt->value, allocator));
                 } else {
                     dstIt->value.CopyFrom(srcIt->value, allocator);
                 }
             }
         }
 
-        return Result::Builder(Result::ErrorCode::OK).Build();
+        return Result::OK();
     }
 
     ResultOr<std::string> operator()(std::string_view dst, std::string_view src) const {
-        auto doc_dst = GetDocument(dst);
-        if (!doc_dst.IsOK()) {
-            return doc_dst;
-        }
+        RESULT_VALUE_OR_RETURN(auto doc_dst, GetDocument(dst));
+        RESULT_VALUE_OR_RETURN(auto doc_src, GetDocument(src));
 
-        auto doc_src = GetDocument(src);
-        if (!doc_src.IsOK()) {
-            return doc_src;
-        }
+        RESULT_OK_OR_RETURN(this->operator()(doc_dst, doc_src, doc_dst.GetAllocator()));
 
-        auto res = operator()(doc_dst.Value(), doc_src.Value(), doc_dst.Value().GetAllocator());
-        if (!res.IsOK()) {
-            return res;
-        }
-
-        return GetJsonString(doc_dst.Value());
+        return GetJsonString(doc_dst);
     }
 };
 

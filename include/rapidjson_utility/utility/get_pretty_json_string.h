@@ -28,12 +28,8 @@ public:
     }
 
     ResultOr<std::string> operator()(std::string_view json_string) const {
-        auto doc_res = GetDocument(json_string);
-        if (!doc_res.IsOK()) {
-            return doc_res;
-        }
-
-        return operator()(doc_res.Value());
+        RESULT_VALUE_OR_RETURN(auto doc, GetDocument(json_string));
+        return this->operator()(doc);
     }
 };
 
