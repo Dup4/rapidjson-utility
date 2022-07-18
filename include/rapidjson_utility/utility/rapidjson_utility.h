@@ -1,5 +1,5 @@
-#ifndef RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H
-#define RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H
+#ifndef RAPIDJSON_UTILITY_UTILITY_RAPIDJSON_UTILITY_H
+#define RAPIDJSON_UTILITY_UTILITY_RAPIDJSON_UTILITY_H
 
 #include "./from_json.h"                       // IWYU pragma: export
 #include "./get_document.h"                    // IWYU pragma: export
@@ -26,4 +26,4 @@ public:
 
 static const auto RapidJsonUtility = rapidjson_utility::internal::RapidJsonUtilityClass();
 
-#endif  // RAPIDJSON_UTILITY_RAPIDJSON_UTILITY_H
+#endif  // RAPIDJSON_UTILITY_UTILITY_RAPIDJSON_UTILITY_H
