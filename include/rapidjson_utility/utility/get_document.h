@@ -17,13 +17,13 @@ class GetDocumentClass {
 public:
     ResultOr<rapidjson::Document> operator()(std::string_view json_string) const {
         rapidjson::Document doc;
-
         rapidjson::ParseResult err = doc.Parse(json_string.data());
 
         if (err.IsError()) {
-            return Result::Builder(Result::ErrorCode::ParseError)
-                    .WithErrorMessage(GetPrettyParseErrorMessage(err))
-                    .Build();
+            auto res = Result::Builder(Result::ErrorCode::ParseError)
+                               .WithErrorMessage(GetPrettyParseErrorMessage(err))
+                               .Build();
+            RESULT_DIRECT_RETURN(res);
         }
 
         return std::move(doc);
