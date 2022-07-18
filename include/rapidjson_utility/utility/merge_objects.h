@@ -8,7 +8,6 @@
 #include "../internal/result.h"
 #include "./get_document.h"
 #include "./get_json_string.h"
-#include "result/macros.h"
 
 namespace rapidjson_utility {
 

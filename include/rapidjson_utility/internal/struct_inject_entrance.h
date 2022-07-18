@@ -13,9 +13,9 @@ public:
     template <typename T, typename Func>
     Result operator()(T* t, Func&& func) const {
         if constexpr (has_rapidjson_utility_struct_schema_entrance_v<T>) {
-            return T::__RapidJsonUtility_StructSchemaEntrance(t, func);
+            RESULT_DIRECT_RETURN(T::__RapidJsonUtility_StructSchemaEntrance(t, func));
         } else if constexpr (has_rapidjson_utility_external_struct_schema_entrance_v<T>) {
-            return __RapidJsonUtilityExternal_StructSchemaEntrance(t, func);
+            RESULT_DIRECT_RETURN(__RapidJsonUtilityExternal_StructSchemaEntrance(t, func));
         } else {
             static_assert(
                     false_v<T>,

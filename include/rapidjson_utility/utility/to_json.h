@@ -26,13 +26,9 @@ public:
         rapidjson::Document doc;
         doc.SetObject();
 
-        auto res = StructInjectEntrance(t, [&doc, &root_doc, this](auto &&t, auto &&options) -> Result {
+        RESULT_OK_OR_RETURN(StructInjectEntrance(t, [&doc, &root_doc, this](auto &&t, auto &&options) -> Result {
             return this->handleObject(t, doc, options, root_doc);
-        });
-
-        if (!res.IsOK()) {
-            return res;
-        }
+        }));
 
         return doc;
     }
@@ -42,13 +38,9 @@ public:
         rapidjson::Document doc;
         doc.SetObject();
 
-        auto res = StructInjectEntrance(t, [&doc, this](auto &&t, auto &&options) -> Result {
+        RESULT_OK_OR_RETURN(StructInjectEntrance(t, [&doc, this](auto &&t, auto &&options) -> Result {
             return this->handleObject(t, doc, options, doc);
-        });
-
-        if (!res.IsOK()) {
-            return res;
-        }
+        }));
 
         return doc;
     }
@@ -59,12 +51,8 @@ public:
         doc.SetArray();
 
         for (const T &i : *t) {
-            auto res = this->GetDocument(&i, doc);
-            if (!res.IsOK()) {
-                return res;
-            }
-
-            doc.PushBack(std::move(res.Value()), doc.GetAllocator());
+            RESULT_VALUE_OR_RETURN(auto res, this->GetDocument(&i, doc));
+            doc.PushBack(res, doc.GetAllocator());
         }
 
         return doc;
@@ -72,7 +60,7 @@ public:
 
     template <typename T>
     ResultOr<rapidjson::Document> GetDocument(std::vector<T> *t) const {
-        return GetDocument(static_cast<const std::vector<T> *>(t));
+        RESULT_DIRECT_RETURN(GetDocument(static_cast<const std::vector<T> *>(t)));
     }
 
     template <typename T>
@@ -81,14 +69,8 @@ public:
         doc.SetObject();
 
         for (const auto &[k, v] : *t) {
-            auto res = this->GetDocument(&v, doc);
-            if (!res.IsOK()) {
-                return res;
-            }
-
-            doc.AddMember(rapidjson::Value(k.c_str(), k.length(), doc.GetAllocator()).Move(),
-                          std::move(res.Value()),
-                          doc.GetAllocator());
+            RESULT_VALUE_OR_RETURN(auto res, this->GetDocument(&v, doc));
+            doc.AddMember(rapidjson::Value(k.c_str(), k.length(), doc.GetAllocator()).Move(), res, doc.GetAllocator());
         }
 
         return doc;
@@ -96,32 +78,24 @@ public:
 
     template <typename T>
     ResultOr<rapidjson::Document> GetDocument(std::map<std::string, T> *t) const {
-        return GetDocument(static_cast<const std::map<std::string, T> *>(t));
+        RESULT_DIRECT_RETURN(GetDocument(static_cast<const std::map<std::string, T> *>(t)));
     }
 
     template <typename T>
     ResultOr<std::string> GetPrettyJsonString(T *t) const {
-        auto res = GetDocument(t);
-        if (!res.IsOK()) {
-            return res;
-        }
-
-        return ::rapidjson_utility::GetPrettyJsonString(res.Value());
+        RESULT_VALUE_OR_RETURN(auto doc, GetDocument(t));
+        return ::rapidjson_utility::GetPrettyJsonString(doc);
     }
 
     template <typename T>
     ResultOr<std::string> GetJsonString(T *t) const {
-        auto res = GetDocument(t);
-        if (!res.IsOK()) {
-            return res;
-        }
-
-        return ::rapidjson_utility::GetJsonString(res.Value());
+        RESULT_VALUE_OR_RETURN(auto doc, GetDocument(t));
+        return ::rapidjson_utility::GetJsonString(doc);
     }
 
     template <typename T>
     ResultOr<std::string> operator()(T *t) const {
-        return GetJsonString(t);
+        RESULT_DIRECT_RETURN(GetJsonString(t));
     }
 
 private:
@@ -228,7 +202,7 @@ private:
     ResultOr<rapidjson::Document> getSubDocument(T *t,
                                                  [[maybe_unused]] const F &options,
                                                  rapidjson::Document &root_doc) const {
-        return GetDocument(t, root_doc);
+        RESULT_DIRECT_RETURN(GetDocument(t, root_doc));
     }
 
     template <typename T, typename F>
@@ -239,12 +213,8 @@ private:
         doc.SetArray();
 
         for (const T &item : *t) {
-            auto res = getSubDocument(&item, options, root_doc);
-            if (!res.IsOK()) {
-                return res;
-            }
-
-            doc.PushBack(std::move(res.Value()), root_doc.GetAllocator());
+            RESULT_VALUE_OR_RETURN(auto res, getSubDocument(&item, options, root_doc));
+            doc.PushBack(res, root_doc.GetAllocator());
         }
 
         return doc;
@@ -254,7 +224,7 @@ private:
     ResultOr<rapidjson::Document> getSubDocument(std::vector<T> *t,
                                                  const F &options,
                                                  rapidjson::Document &root_doc) const {
-        return getSubDocument(static_cast<const std::vector<T> *>(t), options, root_doc);
+        RESULT_DIRECT_RETURN(getSubDocument(static_cast<const std::vector<T> *>(t), options, root_doc));
     }
 
     template <typename T, typename F>
@@ -265,13 +235,9 @@ private:
         doc.SetObject();
 
         for (const auto &[k, v] : *t) {
-            auto res = getSubDocument(&v, options, root_doc);
-            if (!res.IsOK()) {
-                return res;
-            }
-
+            RESULT_VALUE_OR_RETURN(auto res, getSubDocument(&v, options, root_doc));
             doc.AddMember(rapidjson::Value(k.c_str(), k.length(), root_doc.GetAllocator()).Move(),
-                          std::move(res.Value()),
+                          res,
                           root_doc.GetAllocator());
         }
 
@@ -282,7 +248,7 @@ private:
     ResultOr<rapidjson::Document> getSubDocument(std::map<std::string, T> *t,
                                                  const F &options,
                                                  rapidjson::Document &root_doc) const {
-        return getSubDocument(static_cast<const std::map<std::string, T> *>(t), options, root_doc);
+        RESULT_DIRECT_RETURN(getSubDocument(static_cast<const std::map<std::string, T> *>(t), options, root_doc));
     }
 
     template <typename T, typename F>
@@ -290,13 +256,14 @@ private:
                                                  const F &options,
                                                  rapidjson::Document &root_doc) const {
         if (t->has_value()) {
-            return getSubDocument(&t->value(), options, root_doc);
+            RESULT_DIRECT_RETURN(getSubDocument(&t->value(), options, root_doc));
         } else if (options.default_value.has_value()) {
-            return getSubDocument(&options.default_value.value(), options, root_doc);
+            RESULT_DIRECT_RETURN(getSubDocument(&options.default_value.value(), options, root_doc));
         } else {
-            return Result::Builder(Result::ErrorCode::MemberNotFoundError)
-                    .WithErrorMessage(options.key_name + " not found")
-                    .Build();
+            auto res = Result::Builder(Result::ErrorCode::MemberNotFoundError)
+                               .WithErrorMessage(options.key_name + " not found")
+                               .Build();
+            RESULT_DIRECT_RETURN(res);
         }
     }
 
@@ -304,7 +271,7 @@ private:
     ResultOr<rapidjson::Document> getSubDocument(std::optional<T> *t,
                                                  const F &options,
                                                  rapidjson::Document &root_doc) const {
-        return getSubDocument(static_cast<const std::optional<T> *>(t), options, root_doc);
+        RESULT_DIRECT_RETURN(getSubDocument(static_cast<const std::optional<T> *>(t), options, root_doc));
     }
 
     template <typename T, typename F>
@@ -312,9 +279,9 @@ private:
         auto sub_document_res = getSubDocument(t, options, root_doc);
         if (!sub_document_res.IsOK()) {
             if (sub_document_res.Is(Result::ErrorCode::MemberNotFoundError)) {
-                return Result::Builder(Result::ErrorCode::OK).Build();
+                return Result::OK();
             } else {
-                return sub_document_res;
+                RESULT_DIRECT_RETURN(sub_document_res);
             }
         }
 
@@ -323,7 +290,7 @@ private:
                 std::move(sub_document_res.Value()),
                 root_doc.GetAllocator());
 
-        return Result::Builder(Result::ErrorCode::OK).Build();
+        return Result::OK();
     }
 };
 
