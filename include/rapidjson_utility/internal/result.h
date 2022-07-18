@@ -4,8 +4,8 @@
 #include <map>
 #include <string>
 
-#include "result/result.h"
-#include "result/result_or.h"
+#include "result/result.h"     // IWYU pragma: export
+#include "result/result_or.h"  // IWYU pragma: export
 
 namespace rapidjson_utility {
 
