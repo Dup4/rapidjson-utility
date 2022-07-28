@@ -32,8 +32,8 @@ private:                                                                        
         }                                                                                       \
     }
 
-#define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_END        \
-    return Result::Builder(Result::ErrorCode::OK).Build(); \
+#define RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_END                                                  \
+    return ::rapidjson_utility::Result::Builder(::rapidjson_utility::Result::ErrorCode::OK).Build(); \
     }
 
 #define RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_BEGIN(Struct)                                     \
@@ -45,8 +45,8 @@ private:                                                                        
 #define RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_FIELD(field, ...) \
     RAPIDJSON_UTILITY_STRUCT_SCHEMA_DECLARE_FIELD(field, ##__VA_ARGS__)
 
-#define RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_END \
-    return Result::Builder(Result::ErrorCode::OK).Build();   \
+#define RAPIDJSON_UTILITY_EXTERNAL_STRUCT_SCHEMA_DECLARE_END                                         \
+    return ::rapidjson_utility::Result::Builder(::rapidjson_utility::Result::ErrorCode::OK).Build(); \
     }
 
 #endif  // RAPIDJSON_UTILITY_INTERNAL_MACROS_H
