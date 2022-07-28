@@ -2,7 +2,7 @@ option(RAPIDJSON_UTILITY_BUILD_TESTS "Build all of rapidjson-utility's own tests
 
 cmake_minimum_required(VERSION 3.14)
 
-project(rapidjson-utility VERSION 0.0.6)
+project(rapidjson-utility VERSION 0.0.7)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
