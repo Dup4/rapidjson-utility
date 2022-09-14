@@ -21,8 +21,15 @@ public:
     std::string operator()(const rapidjson::Document &doc) const {
         auto buffer = rapidjson::StringBuffer();
         auto pretty_writer = rapidjson::PrettyWriter<rapidjson::StringBuffer>(buffer);
-
         doc.Accept(pretty_writer);
+
+        return std::string(buffer.GetString());
+    }
+
+    std::string operator()(const rapidjson::Value &value) const {
+        auto buffer = rapidjson::StringBuffer();
+        auto pretty_writer = rapidjson::PrettyWriter<rapidjson::StringBuffer>(buffer);
+        value.Accept(pretty_writer);
 
         return std::string(buffer.GetString());
     }
