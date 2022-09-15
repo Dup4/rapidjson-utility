@@ -22,7 +22,7 @@ TEST_F(JoinJsonStringToArrayTest, join_json_string_to_array) {
             };
 
             RESULT_VALUE_OR_RETURN(auto json_string, JoinJsonStringToArray(json_string_array));
-            EXPECT_EQ(json_string, std::string(R"([{"a":1,"b":4},{"a":1,"b":4},{"a":1}])"));
+            EXPECT_EQ(json_string, std::string(R"([{"a":1,"b":2},{"a":3,"b":4},{"a":1}])"));
 
             return Result::OK();
         }).NotOKThen([]([[maybe_unused]] auto&& res) {

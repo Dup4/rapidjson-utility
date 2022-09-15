@@ -2,7 +2,6 @@
 #define RAPIDJSON_UTILITY_UTILITY_JOIN_JSON_STRING_TO_ARRAY_H
 
 #include <string>
-#include <string_view>
 #include <vector>
 
 #include "rapidjson/document.h"
@@ -18,13 +17,23 @@ namespace internal {
 class JoinJsonStringToArrayClass {
 public:
     ResultOr<std::string> operator()(const std::vector<std::string>& json_string_list) const {
-        rapidjson::Document doc;
-        doc.SetArray();
+        std::string json_string = "[";
 
+        bool first = true;
         for (const auto& j : json_string_list) {
-            RESULT_VALUE_OR_RETURN(auto sub_doc, GetDocument(j));
-            doc.PushBack(sub_doc, doc.GetAllocator());
+            if (!first) {
+                json_string += ",";
+            } else {
+                first = false;
+            }
+
+            json_string += j;
         }
+
+        json_string += "]";
+
+        // prevent invalid json string
+        RESULT_VALUE_OR_RETURN(auto doc, GetDocument(json_string));
 
         return GetJsonString(doc);
     }
