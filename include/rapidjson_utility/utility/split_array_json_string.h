@@ -22,7 +22,7 @@ public:
 
         if (!doc.IsArray()) {
             auto res = Result::Builder(Result::ErrorCode::ParseError)
-                               .WithErrorMessage("this json string is not array")
+                               .WithErrorMessage("this json string is not a array")
                                .Build();
             RESULT_DIRECT_RETURN(res);
         }
