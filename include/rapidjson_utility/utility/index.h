@@ -3,6 +3,7 @@
 #include "./get_json_string.h"                 // IWYU pragma: export
 #include "./get_pretty_json_string.h"          // IWYU pragma: export
 #include "./get_pretty_parse_error_message.h"  // IWYU pragma: export
+#include "./join_json_string_to_array.h"       // IWYU pragma: export
 #include "./merge_objects.h"                   // IWYU pragma: export
 #include "./rapidjson_utility.h"               // IWYU pragma: export
 #include "./split_array_json_string.h"         // IWYU pragma: export
