@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "rapidjson_utility/internal/schema_options.h"
+#include "rapidjson-utility/internal/schema_options.h"
 
 namespace rapidjson_utility {
 

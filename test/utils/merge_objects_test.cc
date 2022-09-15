@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "snapshot/snapshot.h"
 
-#include "rapidjson_utility/utility/merge_objects.h"
+#include "rapidjson-utility/utility/merge_objects.h"
 
 namespace rapidjson_utility {
 

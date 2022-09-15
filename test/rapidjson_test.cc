@@ -3,7 +3,7 @@
 
 #include "rapidjson/document.h"
 
-#include "rapidjson_utility/rapidjson_utility.h"
+#include "rapidjson-utility/rapidjson-utility.h"
 
 class RapidJsonTest : public testing::Test {
 protected:

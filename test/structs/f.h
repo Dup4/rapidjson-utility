@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rapidjson_utility/rapidjson_utility.h"
+#include "rapidjson-utility/rapidjson-utility.h"
 
 namespace rapidjson_utility {
 

@@ -3,7 +3,7 @@
 
 #include <string_view>
 
-#include "rapidjson_utility/utility/join_json_string_to_array.h"
+#include "rapidjson-utility/utility/join_json_string_to_array.h"
 
 namespace rapidjson_utility {
 

@@ -1,10 +1,10 @@
-#include "rapidjson_utility/utility/to_json.h"
 #include "gtest/gtest.h"
 #include "snapshot/snapshot.h"
 
 #include <limits>
 
-#include "rapidjson_utility/rapidjson_utility.h"
+#include "rapidjson-utility/rapidjson-utility.h"
+#include "rapidjson-utility/utility/to_json.h"
 
 #include "../structs/a.h"
 #include "../structs/b.h"

@@ -1,6 +1,6 @@
 #include <benchmark/benchmark.h>
 
-#include "rapidjson_utility/rapidjson_utility.h"
+#include "rapidjson-utility/rapidjson-utility.h"
 
 #include "../structs/a.h"
 

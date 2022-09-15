@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "rapidjson_utility/rapidjson_utility.h"
+#include "rapidjson-utility/rapidjson-utility.h"
 
 using namespace rapidjson;
 using namespace rapidjson_utility;

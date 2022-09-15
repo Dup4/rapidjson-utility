@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
-#include "rapidjson_utility/internal/macros.h"
+#include "rapidjson-utility/internal/macros.h"
 #include "snapshot/snapshot.h"
 
 #include <limits>
 #include <string>
 
-#include "rapidjson_utility/rapidjson_utility.h"
+#include "rapidjson-utility/rapidjson-utility.h"
 
 #include "../structs/a.h"
 #include "../structs/b.h"
