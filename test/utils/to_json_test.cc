@@ -1,4 +1,6 @@
 #include "gtest/gtest.h"
+#include "rapidjson-utility/utility/from_json.h"
+#include "result/macros.h"
 #include "snapshot/snapshot.h"
 
 #include <limits>
@@ -13,6 +15,7 @@
 #include "../structs/e.h"
 #include "../structs/f.h"
 #include "../structs/g.h"
+#include "../structs/h.h"
 
 namespace rapidjson_utility {
 
@@ -246,6 +249,37 @@ TEST_F(ToJsonTest, to_json_map_test) {
             auto pretty_json_string = res.Value();
             EXPECT_EQ(pretty_json_string, tc.ToPrettyJsonStringRes());
         }
+    }
+}
+
+TEST_F(ToJsonTest, to_json_with_option_field) {
+    {
+        auto h = H{};
+        h.a = 1;
+        h.b = 2;
+
+        std::string json_string;
+        std::string expected_json_string;
+
+        std::invoke([&]() -> Result {
+            RESULT_VALUE_OR_RETURN(json_string, ToJson(&h));
+            expected_json_string = std::string(R"({"a":1,"b":2})");
+
+            EXPECT_EQ(json_string, expected_json_string);
+            return Result::OK();
+        }).NotOKThen([](auto&& res) {
+            EXPECT_TRUE(res.IsOK()) << res.PrettyMessage() << std::endl;
+        });
+
+        std::invoke([&json_string, &expected_json_string]() -> Result {
+            RESULT_VALUE_OR_RETURN(auto h, FromJson.New<H>(json_string));
+            RESULT_VALUE_OR_RETURN(auto _json_string, ToJson(&h));
+            EXPECT_EQ(_json_string, expected_json_string);
+
+            return Result::OK();
+        }).NotOKThen([](auto&& res) {
+            EXPECT_TRUE(res.IsOK()) << res.PrettyMessage() << std::endl;
+        });
     }
 }
 

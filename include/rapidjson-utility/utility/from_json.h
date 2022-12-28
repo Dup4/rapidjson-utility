@@ -326,7 +326,7 @@ private:
             T target_instance;
             RESULT_OK_OR_RETURN(this->typeHandle(sub_value, &target_instance, options));
 
-            *target = options.default_value;
+            *target = target_instance;
         }
 
         return Result::OK();
