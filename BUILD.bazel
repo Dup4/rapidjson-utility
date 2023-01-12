@@ -1,0 +1,58 @@
+package(default_visibility = ["//visibility:public"])
+
+common_copts = [
+    "-std=c++17",
+    "-O3",
+    "-g",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+]
+
+cc_library(
+    name = "rapidjson-utility",
+    hdrs = glob([
+        "include/rapidjson-utility/*.h",
+        "include/rapidjson-utility/**/*.h",
+    ]),
+    copts = common_copts,
+    includes = [
+        "include",
+    ],
+    deps = [
+        "@rapidjson",
+        "@result-cpp",
+    ],
+)
+
+cc_test(
+    name = "unittest",
+    srcs = glob([
+        "test/*_test.cc",
+        "test/**/*_test.cc",
+        "test/**/*.h",
+    ]),
+    copts = common_copts + [
+        "-fno-access-control",
+    ],
+    deps = [
+        ":rapidjson-utility",
+        "@gtest//:gtest_main",
+        "@snapshot",
+    ],
+)
+
+cc_binary(
+    name = "benchmark",
+    srcs = glob([
+        "test/*_benchmark.cc",
+        "test/**/*_benchmark.cc",
+        "test/**/*.h",
+    ]),
+    copts = common_copts,
+    deps = [
+        ":rapidjson-utility",
+        "@google_benchmark//:benchmark_main",
+        "@gtest",
+    ],
+)

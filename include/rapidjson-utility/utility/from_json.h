@@ -63,7 +63,7 @@ public:
                 RESULT_DIRECT_RETURN(res);
             }
 
-            T target_instance;
+            T target_instance = T{};
             RESULT_OK_OR_RETURN(this->operator()(item, &target_instance));
 
             target->push_back(target_instance);
@@ -89,7 +89,7 @@ public:
                 RESULT_DIRECT_RETURN(res);
             }
 
-            T target_instance;
+            T target_instance = T{};
             RESULT_OK_OR_RETURN(this->operator()(member.value, &target_instance));
 
             target->emplace(member.name.GetString(), std::move(target_instance));
@@ -262,7 +262,7 @@ private:
         }
 
         for (rapidjson::Value& item : value.GetArray()) {
-            T target_instance;
+            T target_instance = T{};
             RESULT_OK_OR_RETURN(this->typeHandle(item, &target_instance, options));
 
             target->push_back(target_instance);
@@ -283,7 +283,7 @@ private:
         }
 
         for (auto& item : value.GetObject()) {
-            T target_instance;
+            T target_instance = T{};
             RESULT_OK_OR_RETURN(this->typeHandle(item.value, &target_instance, options));
 
             target->emplace(item.name.GetString(), std::move(target_instance));
@@ -323,7 +323,7 @@ private:
         } else {
             rapidjson::Value& sub_value = value[options.key_name.c_str()];
 
-            T target_instance;
+            T target_instance = T{};
             RESULT_OK_OR_RETURN(this->typeHandle(sub_value, &target_instance, options));
 
             *target = target_instance;
