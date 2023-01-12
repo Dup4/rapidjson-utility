@@ -24,6 +24,7 @@
         }
     },
     "cSpell.words": [
+        "Bazel",
         "cmake",
         "codecov",
         "declval",
