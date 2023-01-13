@@ -38,13 +38,13 @@ git_repository(
 
 git_repository(
     name = "rapidjson",
-    branch = "v1.1.0",
     build_file = "@bazel_build_files//rapidjson:BUILD.bazel",
     remote = "https://github.com/Tencent/rapidjson.git",
+    tag = "v1.1.0",
 )
 
 git_repository(
     name = "result-cpp",
     remote = "https://github.com/Dup4/result-cpp.git",
-    tag = "v0.0.15",
+    tag = "v0.0.17",
 )
