@@ -7,6 +7,29 @@
 [![codecov](https://codecov.io/gh/Dup4/rapidjson-utility/branch/main/graph/badge.svg)](https://codecov.io/gh/Dup4/rapidjson-utility)
 [![GitHub release](https://img.shields.io/github/release/Dup4/rapidjson-utility.svg)](https://GitHub.com/Dup4/rapidjson-utility/releases/)
 
+## Integration
+
+### CMake
+
+```cmake
+FetchContent_Declare(
+    rapidjson-utility
+    QUIET
+    GIT_REPOSITORY https://github.com/Dup4/rapidjson-utility.git
+    GIT_TAG v{x.y.z} # Where `x.y.z` is the release version you want to use.
+)
+```
+
+### Bazel
+
+```bazel
+git_repository(
+    name = "rapidjson-utility",
+    remote = "https://github.com/Dup4/rapidjson-utility.git",
+    tag = "v{x.y.z}",  # Where `x.y.z` is the release version you want to use.
+)
+```
+
 ## License
 
 [MIT](./LICENSE) License © 2022 - PRESENT [Dup4][dup4]
