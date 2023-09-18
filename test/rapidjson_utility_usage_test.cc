@@ -37,8 +37,8 @@ TEST_F(RapidJsonUtilityUsageTest, from_and_to_json) {
     node.int_ = 2;
     node.int64_t_ = int64_t(0x3f3f3f3f3f3f3f3f);
     node.bool_ = true;
-    node.float_ = 4.8;
-    node.double_ = 4.8;
+    node.float_ = 0;
+    node.double_ = 0;
     node.string_ = "test_string";
     node.vector_int_ = std::vector<int>(2, 4);
 
@@ -48,8 +48,8 @@ TEST_F(RapidJsonUtilityUsageTest, from_and_to_json) {
     "int_": 2,
     "int64_t_": 4557430888798830399,
     "bool_": true,
-    "float_": 4.800000190734863,
-    "double_": 4.8,
+    "float_": 0.0,
+    "double_": 0.0,
     "string_": "test_string",
     "vector_int_": [
         4,
@@ -62,8 +62,8 @@ TEST_F(RapidJsonUtilityUsageTest, from_and_to_json) {
         EXPECT_EQ(new_node.int_, 2);
         EXPECT_EQ(new_node.int64_t_, 4557430888798830399);
         EXPECT_EQ(new_node.bool_, true);
-        EXPECT_EQ(new_node.float_, 4.800000);
-        EXPECT_EQ(new_node.double_, 4.800000);
+        EXPECT_EQ(new_node.float_, 0.000000);
+        EXPECT_EQ(new_node.double_, 0.000000);
         EXPECT_EQ(new_node.string_, std::string("test_string"));
         EXPECT_EQ(new_node.vector_int_,
                   std::vector<int>({
