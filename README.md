@@ -30,6 +30,10 @@ git_repository(
 )
 ```
 
+## Usage
+
+See the usage in the [unit test](./test/rapidjson_utility_usage_test.cc)
+
 ## License
 
 [MIT](./LICENSE) License © 2022 - PRESENT [Dup4][dup4]
